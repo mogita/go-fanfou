@@ -8,7 +8,7 @@ A Fanfou API Client for Gophers
 package main
 
 import (
-  "git.mogita.com/fanfou"
+  "git.mogita.com/mogita/go-fanfou"
 )
 
 const (
