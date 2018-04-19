@@ -28,6 +28,14 @@ func main() {
 	}
 
 	fmt.Printf("%+v", res)
+
+	resS, _, err := client.StatusesUpdate("let's have some fun", nil, nil, nil, nil)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%#v", resS)
 }
 ```
 
