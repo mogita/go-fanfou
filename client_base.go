@@ -56,7 +56,7 @@ func (client *baseClient) query(method, path string, params map[string]string) (
 			return nil, fmt.Errorf("Could not read response body: %#v", err)
 		}
 
-		return bits, nil
+		return []byte(strings.TrimSpace(string(bits))), nil
 	case http.StatusBadRequest:
 		return nil, errors.New("Bad Request")
 	case http.StatusNotFound:
@@ -117,7 +117,6 @@ func (client *baseClient) StatusesUpdate(status string, inReplyToStatusID, inRep
 	}
 
 	ret := responseStatus{}
-	dataTrim := strings.TrimSpace(string(data))
-	err = json.Unmarshal([]byte(dataTrim), &ret)
+	err = json.Unmarshal(data, &ret)
 	return &ret, data, err
 }
