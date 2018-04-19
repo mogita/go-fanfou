@@ -39,3 +39,26 @@ type responseUser struct {
 		InReplyToScreenName string `json:"in_reply_to_screen_name"`
 	} `json:"status"`
 }
+
+type responseStatus struct {
+	CreatedAt           string       `json:"created_at"`
+	ID                  string       `json:"id"`
+	Rawid               int          `json:"rawid"`
+	Text                string       `json:"text"`
+	Source              string       `json:"source"`
+	Truncated           bool         `json:"truncated"`
+	InReplyToStatusID   string       `json:"in_reply_to_status_id"`
+	InReplyToUserID     string       `json:"in_reply_to_user_id"`
+	InReplyToScreenName string       `json:"in_reply_to_screen_name"`
+	RepostStatusID      string       `json:"repost_status_id"`
+	RepostStatus        string       `json:"repost_status"`
+	RepostUserID        string       `json:"repost_user_id"`
+	RepostScreenName    string       `json:"repost_screen_name"`
+	Favorited           bool         `json:"favorited"`
+	User                responseUser `json:"user"`
+	Photo               struct {
+		Imageurl string `json:"imageurl"`
+		Thumburl string `json:"thumburl"`
+		Largeurl string `json:"largeurl"`
+	} `json:"photo"`
+}
