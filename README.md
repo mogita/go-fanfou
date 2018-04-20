@@ -21,15 +21,19 @@ const (
 func main() {
 	client, _ := fanfou.NewClientWithXAuth(consumerKey, consumerSecret, username, password)
 
-	res, _, err := client.UserShow("mogita")
+	res, _, err := client.UserShow(&fanfou.ReqParams{
+		ID: "mogita",
+	})
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("%+v", res)
+	fmt.Printf("%#v\n\n", res)
 
-	resS, _, err := client.StatusesUpdate("let's have some fun", nil, nil, nil, nil)
+	resS, _, err := client.StatusesUpdate(&fanfou.ReqParams{
+		Status: "niubi",
+	})
 
 	if err != nil {
 		log.Fatal(err)
