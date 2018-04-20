@@ -9,13 +9,13 @@ import (
 // XAuthClient wraps a base client and an oauth consumer
 type XAuthClient struct {
 	baseClient
-	OAuthConsumer *oauth.Consumer
+	oAuthConsumer *oauth.Consumer
 }
 
 // NewClientWithXAuth returns an authorized client
 func NewClientWithXAuth(consumerKey, consumerSecret, username, password string) (*XAuthClient, error) {
 	newClient := new(XAuthClient)
-	newClient.OAuthConsumer = oauth.NewConsumer(
+	newClient.oAuthConsumer = oauth.NewConsumer(
 		consumerKey,
 		consumerSecret,
 		oauth.ServiceProvider{
@@ -25,10 +25,10 @@ func NewClientWithXAuth(consumerKey, consumerSecret, username, password string) 
 		},
 	)
 
-	newClient.OAuthConsumer.AdditionalParams["x_auth_username"] = username
-	newClient.OAuthConsumer.AdditionalParams["x_auth_password"] = password
-	newClient.OAuthConsumer.AdditionalParams["x_auth_mode"] = "client_auth"
-	newClient.OAuthConsumer.Debug(false)
+	newClient.oAuthConsumer.AdditionalParams["x_auth_username"] = username
+	newClient.oAuthConsumer.AdditionalParams["x_auth_password"] = password
+	newClient.oAuthConsumer.AdditionalParams["x_auth_mode"] = "client_auth"
+	newClient.oAuthConsumer.Debug(false)
 
 	err := newClient.doXAuth()
 
@@ -41,13 +41,13 @@ func NewClientWithXAuth(consumerKey, consumerSecret, username, password string) 
 
 func (client *XAuthClient) doXAuth() error {
 	reqToken := oauth.RequestToken{}
-	accessToken, err := client.OAuthConsumer.AuthorizeToken(&reqToken, "")
+	accessToken, err := client.oAuthConsumer.AuthorizeToken(&reqToken, "")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	client.HTTPConn, err = client.OAuthConsumer.MakeHttpClient(accessToken)
+	client.http, err = client.oAuthConsumer.MakeHttpClient(accessToken)
 
 	if err != nil {
 		log.Fatal(err)

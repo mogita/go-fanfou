@@ -52,7 +52,7 @@ func (client *OAuthClient) DoAuth() error {
 		log.Fatal(err)
 	}
 
-	client.HTTPConn, err = client.OAuthConsumer.MakeHttpClient(accessToken)
+	client.http, err = client.OAuthConsumer.MakeHttpClient(accessToken)
 
 	if err != nil {
 		log.Fatal(err)
