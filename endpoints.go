@@ -7,8 +7,13 @@ import (
 )
 
 const (
-	apiBase                      = "http://api.fanfou.com"
-	apiSearchPublicTimeline      = apiBase + "/search/public_timeline.json"
+	apiBase = "http://api.fanfou.com"
+
+	// search
+	apiSearchPublicTimeline = apiBase + "/search/public_timeline.json"
+	apiSearchUsers          = apiBase + "/search/users.json"
+	apiSearchUserTimeline   = apiBase + "/search/user_timeline.json"
+
 	apiUserShow                  = apiBase + "/users/show.json"
 	apiStatusesUpdate            = apiBase + "/statuses/update.json"
 	apiAccountVerifyCredentials  = apiBase + "/account/verify_credentials.json"
@@ -23,7 +28,31 @@ func (client *baseClient) SearchPublicTimeline(params *ReqParams) ([]*responseSt
 	data, err := client.makeRequest(http.MethodGet, apiSearchPublicTimeline, params)
 
 	if err != nil {
-		return nil, nil, fmt.Errorf("Failed to request StatusesUpdate: %+v", err)
+		return nil, nil, fmt.Errorf("Failed to request SearchPublicTimeline: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) SearchUsers(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiSearchUsers, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request SearchUsers: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) SearchUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiSearchUserTimeline, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request SearchUserTimeline: %+v", err)
 	}
 
 	ret := []*responseStatus{}
