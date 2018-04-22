@@ -41,24 +41,39 @@ type responseUser struct {
 }
 
 type responseStatus struct {
-	CreatedAt           string       `json:"created_at"`
-	ID                  string       `json:"id"`
-	Rawid               int          `json:"rawid"`
-	Text                string       `json:"text"`
-	Source              string       `json:"source"`
-	Truncated           bool         `json:"truncated"`
-	InReplyToStatusID   string       `json:"in_reply_to_status_id"`
-	InReplyToUserID     string       `json:"in_reply_to_user_id"`
-	InReplyToScreenName string       `json:"in_reply_to_screen_name"`
-	RepostStatusID      string       `json:"repost_status_id"`
-	RepostStatus        string       `json:"repost_status"`
-	RepostUserID        string       `json:"repost_user_id"`
-	RepostScreenName    string       `json:"repost_screen_name"`
-	Favorited           bool         `json:"favorited"`
-	User                responseUser `json:"user"`
+	CreatedAt           string               `json:"created_at"`
+	ID                  string               `json:"id"`
+	Rawid               int                  `json:"rawid"`
+	Text                string               `json:"text"`
+	Source              string               `json:"source"`
+	Truncated           bool                 `json:"truncated"`
+	InReplyToStatusID   string               `json:"in_reply_to_status_id"`
+	InReplyToUserID     string               `json:"in_reply_to_user_id"`
+	InReplyToScreenName string               `json:"in_reply_to_screen_name"`
+	RepostStatusID      string               `json:"repost_status_id"`
+	RepostStatus        responseRepostStatus `json:"repost_status"`
+	RepostUserID        string               `json:"repost_user_id"`
+	RepostScreenName    string               `json:"repost_screen_name"`
+	Favorited           bool                 `json:"favorited"`
+	User                responseUser         `json:"user"`
 	Photo               struct {
 		Imageurl string `json:"imageurl"`
 		Thumburl string `json:"thumburl"`
 		Largeurl string `json:"largeurl"`
 	} `json:"photo"`
+}
+
+type responseRepostStatus struct {
+	ID                  string       `json:"id"`
+	CreatedAt           string       `json:"created_at"`
+	InReplyToScreenName string       `json:"in_reply_to_screen_name"`
+	Rawid               int          `json:"rawid"`
+	InReplyToStatusID   string       `json:"in_reply_to_status_id"`
+	Location            string       `json:"location"`
+	InReplyToUserID     string       `json:"in_reply_to_user_id"`
+	Text                string       `json:"text"`
+	Truncated           bool         `json:"truncated"`
+	Favorited           bool         `json:"favorited"`
+	IsSelf              bool         `json:"is_self"`
+	User                responseUser `json:"user"`
 }
