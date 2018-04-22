@@ -8,6 +8,7 @@ import (
 
 const (
 	apiBase                      = "http://api.fanfou.com"
+	apiSearchPublicTimeline      = apiBase + "/search/public_timeline.json"
 	apiUserShow                  = apiBase + "/users/show.json"
 	apiStatusesUpdate            = apiBase + "/statuses/update.json"
 	apiAccountVerifyCredentials  = apiBase + "/account/verify_credentials.json"
@@ -18,9 +19,20 @@ const (
 	apiAccountUpdateProfileImage = apiBase + "/account/update_profile_image.json"
 )
 
+func (client *baseClient) SearchPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiSearchPublicTimeline, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesUpdate: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
 func (client *baseClient) UserShow(params *ReqParams) (*responseUser, []byte, error) {
-	requestURL := fmt.Sprintf("%s?id=%s", apiUserShow, params.ID)
-	data, err := client.makeRequest(http.MethodGet, requestURL, nil)
+	data, err := client.makeRequest(http.MethodGet, apiUserShow, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UserShow: %+v", err)

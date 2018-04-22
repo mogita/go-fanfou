@@ -33,7 +33,10 @@ func (client *baseClient) makeRequest(method, path string, params *ReqParams) (b
 
 	switch method {
 	case http.MethodGet:
-		resp, err = client.http.Get(path)
+		paramValues := client.paramsToURLValues(params)
+		queryString := paramValues.Encode()
+		requestPath := fmt.Sprintf("%s?%s", path, queryString)
+		resp, err = client.http.Get(requestPath)
 	case http.MethodPost:
 		resp, err = client.http.PostForm(path, client.paramsToURLValues(params))
 	case "photo":
