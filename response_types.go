@@ -1,7 +1,10 @@
 package fanfou
 
+type userID string
+
 type responseUser struct {
-	ID                        string `json:"id"`
+	ID                        userID `json:"id"`
+	UniqueID                  string `json:"unique_id"`
 	Name                      string `json:"name"`
 	ScreenName                string `json:"screen_name"`
 	Location                  string `json:"location"`
@@ -77,3 +80,5 @@ type responseRepostStatus struct {
 	IsSelf              bool         `json:"is_self"`
 	User                responseUser `json:"user"`
 }
+
+type responseBlockIDs []userID
