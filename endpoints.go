@@ -219,13 +219,103 @@ func (client *baseClient) UsersFriends(params *ReqParams) ([]*responseUser, []by
 }
 
 const (
-	apiStatusesUpdate            = apiBase + "/statuses/update.json"
 	apiAccountVerifyCredentials  = apiBase + "/account/verify_credentials.json"
-	apiAccountUpdateProfile      = apiBase + "/account/update_profile.json"
-	apiAccountUpdateNotifyNum    = apiBase + "/account/update_notify_num.json"
-	apiSavedSearchesCreate       = apiBase + "/saved_searches/create.json"
-	apiPhotosUpload              = apiBase + "/photos/upload.json"
 	apiAccountUpdateProfileImage = apiBase + "/account/update_profile_image.json"
+	apiAccountRateLimitStatus    = apiBase + "/account/rate_limit_status.json"
+	apiAccountUpdateProfile      = apiBase + "/account/update_profile.json"
+	apiAccountNotification       = apiBase + "/account/notification.json"
+	apiAccountUpdateNotifyNum    = apiBase + "/account/update_notify_num.json"
+	apiAccountNotifyNum          = apiBase + "/account/notify_num.json"
+)
+
+func (client *baseClient) AccountVerifyCredentials(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiAccountVerifyCredentials, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request AccountVerifyCredentials: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) AccountUpdateProfileImage(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiAccountUpdateProfileImage, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request AccountUpdateProfileImage: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) AccountRateLimitStatus(params *ReqParams) (*responseRateLimitStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiAccountRateLimitStatus, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request AccountRateLimitStatus: %+v", err)
+	}
+
+	ret := responseRateLimitStatus{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) AccountUpdateProfile(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiAccountUpdateProfile, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request AccountUpdateProfile: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) AccountNotification(params *ReqParams) (*responseAccountNotification, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiAccountNotification, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request AccountNotification: %+v", err)
+	}
+
+	ret := responseAccountNotification{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) AccountUpdateNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiAccountUpdateNotifyNum, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request AccountUpdateNotifyNum: %+v", err)
+	}
+
+	ret := responseNotifyNum{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) AccountNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiAccountNotifyNum, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request AccountNotifyNum: %+v", err)
+	}
+
+	ret := responseNotifyNum{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+const (
+	apiStatusesUpdate      = apiBase + "/statuses/update.json"
+	apiSavedSearchesCreate = apiBase + "/saved_searches/create.json"
+	apiPhotosUpload        = apiBase + "/photos/upload.json"
 )
 
 func (client *baseClient) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {

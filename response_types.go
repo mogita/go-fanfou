@@ -86,3 +86,21 @@ type responseRepostStatus struct {
 type responseBlockIDs []userID
 
 type responseTags []tag
+
+type responseRateLimitStatus struct {
+	ResetTime          string `json:"reset_time"`
+	RemainingHits      int    `json:"remaining_hits"`
+	HourlyLimit        int    `json:"hourly_limit"`
+	ResetTimeInSeconds int    `json:"reset_time_in_seconds"`
+}
+
+type responseAccountNotification struct {
+	Mentions       int `json:"mentions"`
+	DirectMessages int `json:"direct_messages"`
+	FriendRequests int `json:"friend_requests"`
+}
+
+type responseNotifyNum struct {
+	Result    string `json:"result"`
+	NotifyNum int    `json:"notify_num"`
+}
