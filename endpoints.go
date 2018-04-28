@@ -125,7 +125,100 @@ func (client *baseClient) BlocksDestroy(params *ReqParams) (*responseUser, []byt
 }
 
 const (
-	apiUserShow                  = apiBase + "/users/show.json"
+	apiUsersTagged               = apiBase + "/users/tagged.json"
+	apiUsersShow                 = apiBase + "/users/show.json"
+	apiUsersTagList              = apiBase + "/users/tag_list.json"
+	apiUsersFollowers            = apiBase + "/users/followers.json"
+	apiUsersRecommendation       = apiBase + "/2/users/recommendation.json"
+	apiUsersCancelRecommendation = apiBase + "/2/users/cancel_recommendation.json"
+	apiUsersFriends              = apiBase + "/users/friends.json"
+)
+
+func (client *baseClient) UsersTagged(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiUsersTagged, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request UsersTagged: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) UsersShow(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiUsersShow, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request UsersShow: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) UsersTagList(params *ReqParams) (responseTags, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiUsersTagList, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request UsersTagList: %+v", err)
+	}
+
+	ret := responseTags{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) UsersFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiUsersFollowers, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request UsersFollowers: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) UsersRecommendation(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiUsersRecommendation, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request UsersRecommendation: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) UsersCancelRecommendation(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiUsersCancelRecommendation, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request UsersCancelRecommendation: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) UsersFriends(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiUsersFriends, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request UsersFriends: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+const (
 	apiStatusesUpdate            = apiBase + "/statuses/update.json"
 	apiAccountVerifyCredentials  = apiBase + "/account/verify_credentials.json"
 	apiAccountUpdateProfile      = apiBase + "/account/update_profile.json"
@@ -134,18 +227,6 @@ const (
 	apiPhotosUpload              = apiBase + "/photos/upload.json"
 	apiAccountUpdateProfileImage = apiBase + "/account/update_profile_image.json"
 )
-
-func (client *baseClient) UserShow(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, apiUserShow, params)
-
-	if err != nil {
-		return nil, nil, fmt.Errorf("Failed to request UserShow: %+v", err)
-	}
-
-	ret := responseUser{}
-	err = json.Unmarshal(data, &ret)
-	return &ret, data, err
-}
 
 func (client *baseClient) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiStatusesUpdate, params)

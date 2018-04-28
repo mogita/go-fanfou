@@ -2,6 +2,8 @@ package fanfou
 
 type userID string
 
+type tag string
+
 type responseUser struct {
 	ID                        userID `json:"id"`
 	UniqueID                  string `json:"unique_id"`
@@ -82,3 +84,5 @@ type responseRepostStatus struct {
 }
 
 type responseBlockIDs []userID
+
+type responseTags []tag
