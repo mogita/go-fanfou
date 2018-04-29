@@ -429,6 +429,48 @@ func (client *baseClient) FollowersIDs(params *ReqParams) ([]*responseUser, []by
 }
 
 const (
+	apiFavoritesDestroy = apiBase + "/favorites/destroy.json"
+	apiFavorites        = apiBase + "/favorites.json"
+	apiFavoritesCreate  = apiBase + "/favorites/create.json"
+)
+
+func (client *baseClient) FavoritesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiFavoritesDestroy, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FavoritesDestroy: %+v", err)
+	}
+
+	ret := responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) Favorites(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiFavorites, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request Favorites: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) FavoritesCreate(params *ReqParams) (*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiFavoritesCreate, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FavoritesCreate: %+v", err)
+	}
+
+	ret := responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+const (
 	apiStatusesUpdate = apiBase + "/statuses/update.json"
 )
 
