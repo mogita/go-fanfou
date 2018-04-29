@@ -413,6 +413,22 @@ func (client *baseClient) TrendsList(params *ReqParams) (*responseTrends, []byte
 }
 
 const (
+	apiFollowersIDs = apiBase + "/followers/ids.json"
+)
+
+func (client *baseClient) FollowersIDs(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiFollowersIDs, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FollowersIDs: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+const (
 	apiStatusesUpdate = apiBase + "/statuses/update.json"
 )
 
