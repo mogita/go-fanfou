@@ -104,3 +104,10 @@ type responseNotifyNum struct {
 	Result    string `json:"result"`
 	NotifyNum int    `json:"notify_num"`
 }
+
+type responseSavedSearch struct {
+	ID        int    `json:"id"`
+	Query     string `json:"query"`
+	Name      string `json:"name"`
+	CreatedAt string `json:"created_at"`
+}

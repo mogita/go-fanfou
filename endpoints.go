@@ -313,9 +313,63 @@ func (client *baseClient) AccountNotifyNum(params *ReqParams) (*responseNotifyNu
 }
 
 const (
-	apiStatusesUpdate      = apiBase + "/statuses/update.json"
-	apiSavedSearchesCreate = apiBase + "/saved_searches/create.json"
-	apiPhotosUpload        = apiBase + "/photos/upload.json"
+	apiSavedSearchesCreate  = apiBase + "/saved_searches/create.json"
+	apiSavedSearchesDestroy = apiBase + "/saved_searches/destroy.json"
+	apiSavedSearchesShow    = apiBase + "/saved_searches/show.json"
+	apiSavedSearchesList    = apiBase + "/saved_searches/list.json"
+)
+
+func (client *baseClient) SavedSearchesCreate(params *ReqParams) (*responseSavedSearch, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiSavedSearchesCreate, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request SavedSearchesCreate: %+v", err)
+	}
+
+	ret := responseSavedSearch{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) SavedSearchesDestroy(params *ReqParams) (*responseSavedSearch, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiSavedSearchesDestroy, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request SavedSearchesDestroy: %+v", err)
+	}
+
+	ret := responseSavedSearch{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) SavedSearchesShow(params *ReqParams) (*responseSavedSearch, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiSavedSearchesShow, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request SavedSearchesShow: %+v", err)
+	}
+
+	ret := responseSavedSearch{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) SavedSearchesList(params *ReqParams) ([]*responseSavedSearch, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiSavedSearchesList, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request SavedSearchesList: %+v", err)
+	}
+
+	ret := []*responseSavedSearch{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+const (
+	apiStatusesUpdate = apiBase + "/statuses/update.json"
+	apiPhotosUpload   = apiBase + "/photos/upload.json"
 )
 
 func (client *baseClient) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {
