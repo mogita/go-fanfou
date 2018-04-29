@@ -725,3 +725,84 @@ func (client *baseClient) StatusesShow(params *ReqParams) (*responseStatus, []by
 	err = json.Unmarshal(data, &ret)
 	return &ret, data, err
 }
+
+const (
+	apiDirectMessagesDestroy          = apiBase + "/direct_messages/destroy.json"
+	apiDirectMessagesConversation     = apiBase + "/direct_messages/conversation.json"
+	apiDirectMessagesNew              = apiBase + "/direct_messages/new.json"
+	apiDirectMessagesConversationList = apiBase + "/direct_messages/conversation_list.json"
+	apiDirectMessagesInbox            = apiBase + "/direct_messages/inbox.json"
+	apiDirectMessagesSent             = apiBase + "/direct_messages/sent.json"
+)
+
+func (client *baseClient) DirectMessagesDestroy(params *ReqParams) (*responseDirectMessage, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiDirectMessagesDestroy, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request DirectMessagesDestroy: %+v", err)
+	}
+
+	ret := responseDirectMessage{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) DirectMessagesConversation(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesConversation, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request DirectMessagesConversation: %+v", err)
+	}
+
+	ret := []*responseDirectMessage{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) DirectMessagesNew(params *ReqParams) (*responseDirectMessage, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiDirectMessagesNew, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request DirectMessagesNew: %+v", err)
+	}
+
+	ret := responseDirectMessage{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) DirectMessagesConversationList(params *ReqParams) ([]*responseDirectMessageConversationItem, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesConversationList, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request DirectMessagesConversationList: %+v", err)
+	}
+
+	ret := []*responseDirectMessageConversationItem{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) DirectMessagesInbox(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesInbox, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request DirectMessagesInbox: %+v", err)
+	}
+
+	ret := []*responseDirectMessage{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) DirectMessagesSent(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesSent, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request DirectMessagesSent: %+v", err)
+	}
+
+	ret := []*responseDirectMessage{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
