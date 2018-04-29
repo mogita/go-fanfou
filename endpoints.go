@@ -368,8 +368,36 @@ func (client *baseClient) SavedSearchesList(params *ReqParams) ([]*responseSaved
 }
 
 const (
+	apiPhotosUserTimeline = apiBase + "/photos/user_timeline.json"
+	apiPhotosUpload       = apiBase + "/photos/upload.json"
+)
+
+func (client *baseClient) PhotosUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiPhotosUserTimeline, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request PhotosUserTimeline: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) PhotosUpload(params *ReqParams) (*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiPhotosUpload, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request PhotosUpload: %+v", err)
+	}
+
+	ret := responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+const (
 	apiStatusesUpdate = apiBase + "/statuses/update.json"
-	apiPhotosUpload   = apiBase + "/photos/upload.json"
 )
 
 func (client *baseClient) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {
