@@ -565,6 +565,22 @@ func (client *baseClient) FriendshipsShow(params *ReqParams) (*responseFriendshi
 }
 
 const (
+	apiFriendsIDs = apiBase + "/friends/ids.json"
+)
+
+func (client *baseClient) FriendsIDs(params *ReqParams) (responseFriendsIDs, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiFriendsIDs, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendsIDs: %+v", err)
+	}
+
+	ret := responseFriendsIDs{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+const (
 	apiStatusesUpdate = apiBase + "/statuses/update.json"
 )
 

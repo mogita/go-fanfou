@@ -141,3 +141,5 @@ type responseFriendship struct {
 		} `json:"target"`
 	} `json:"relationship"`
 }
+
+type responseFriendsIDs []responseUserID
