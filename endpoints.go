@@ -397,6 +397,22 @@ func (client *baseClient) PhotosUpload(params *ReqParams) (*responseStatus, []by
 }
 
 const (
+	apiTrendsList = apiBase + "/trends/list.json"
+)
+
+func (client *baseClient) TrendsList(params *ReqParams) (*responseTrends, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiTrendsList, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request TrendsList: %+v", err)
+	}
+
+	ret := responseTrends{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+const (
 	apiStatusesUpdate = apiBase + "/statuses/update.json"
 )
 

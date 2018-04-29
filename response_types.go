@@ -1,37 +1,37 @@
 package fanfou
 
-type userID string
+type responseUserID string
 
-type tag string
+type responseTag string
 
 type responseUser struct {
-	ID                        userID `json:"id"`
-	UniqueID                  string `json:"unique_id"`
-	Name                      string `json:"name"`
-	ScreenName                string `json:"screen_name"`
-	Location                  string `json:"location"`
-	Gender                    string `json:"gender"`
-	Birthday                  string `json:"birthday"`
-	Description               string `json:"description"`
-	ProfileImageURL           string `json:"profile_image_url"`
-	ProfileImageURLLarge      string `json:"profile_image_url_large"`
-	URL                       string `json:"url"`
-	Protected                 bool   `json:"protected"`
-	FollowersCount            int    `json:"followers_count"`
-	FriendsCount              int    `json:"friends_count"`
-	FavouritesCount           int    `json:"favourites_count"`
-	StatusesCount             int    `json:"statuses_count"`
-	Following                 bool   `json:"following"`
-	Notifications             bool   `json:"notifications"`
-	CreatedAt                 string `json:"created_at"`
-	UtcOffset                 int    `json:"utc_offset"`
-	ProfileBackgroundColor    string `json:"profile_background_color"`
-	ProfileTextColor          string `json:"profile_text_color"`
-	ProfileLinkColor          string `json:"profile_link_color"`
-	ProfileSidebarFillColor   string `json:"profile_sidebar_fill_color"`
-	ProfileSidebarBorderColor string `json:"profile_sidebar_border_color"`
-	ProfileBackgroundImageURL string `json:"profile_background_image_url"`
-	ProfileBackgroundTile     bool   `json:"profile_background_tile"`
+	ID                        responseUserID `json:"id"`
+	UniqueID                  string         `json:"unique_id"`
+	Name                      string         `json:"name"`
+	ScreenName                string         `json:"screen_name"`
+	Location                  string         `json:"location"`
+	Gender                    string         `json:"gender"`
+	Birthday                  string         `json:"birthday"`
+	Description               string         `json:"description"`
+	ProfileImageURL           string         `json:"profile_image_url"`
+	ProfileImageURLLarge      string         `json:"profile_image_url_large"`
+	URL                       string         `json:"url"`
+	Protected                 bool           `json:"protected"`
+	FollowersCount            int            `json:"followers_count"`
+	FriendsCount              int            `json:"friends_count"`
+	FavouritesCount           int            `json:"favourites_count"`
+	StatusesCount             int            `json:"statuses_count"`
+	Following                 bool           `json:"following"`
+	Notifications             bool           `json:"notifications"`
+	CreatedAt                 string         `json:"created_at"`
+	UtcOffset                 int            `json:"utc_offset"`
+	ProfileBackgroundColor    string         `json:"profile_background_color"`
+	ProfileTextColor          string         `json:"profile_text_color"`
+	ProfileLinkColor          string         `json:"profile_link_color"`
+	ProfileSidebarFillColor   string         `json:"profile_sidebar_fill_color"`
+	ProfileSidebarBorderColor string         `json:"profile_sidebar_border_color"`
+	ProfileBackgroundImageURL string         `json:"profile_background_image_url"`
+	ProfileBackgroundTile     bool           `json:"profile_background_tile"`
 	Status                    struct {
 		CreatedAt           string `json:"created_at"`
 		ID                  string `json:"id"`
@@ -83,9 +83,9 @@ type responseRepostStatus struct {
 	User                responseUser `json:"user"`
 }
 
-type responseBlockIDs []userID
+type responseBlockIDs []responseUserID
 
-type responseTags []tag
+type responseTags []responseTag
 
 type responseRateLimitStatus struct {
 	ResetTime          string `json:"reset_time"`
@@ -110,4 +110,15 @@ type responseSavedSearch struct {
 	Query     string `json:"query"`
 	Name      string `json:"name"`
 	CreatedAt string `json:"created_at"`
+}
+
+type responseTrend struct {
+	Name  string `json:"name"`
+	Query string `json:"query"`
+	URL   string `json:"url"`
+}
+
+type responseTrends struct {
+	AsOf   string `json:"as_of"`
+	Trends []responseTrend
 }
