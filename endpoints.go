@@ -581,14 +581,144 @@ func (client *baseClient) FriendsIDs(params *ReqParams) (responseFriendsIDs, []b
 }
 
 const (
-	apiStatusesUpdate = apiBase + "/statuses/update.json"
+	apiStatusesDestroy         = apiBase + "/statuses/destroy.json"
+	apiStatusesHomeTimeline    = apiBase + "/statuses/home_timeline.json"
+	apiStatusesPublicTimeline  = apiBase + "/statuses/public_timeline.json"
+	apiStatusesReplies         = apiBase + "/statuses/replies.json"
+	apiStatusesFollowers       = apiBase + "/statuses/followers.json"
+	apiStatusesUpdate          = apiBase + "/statuses/update.json"
+	apiStatusesUserTimeline    = apiBase + "/statuses/user_timeline.json"
+	apiStatusesFriends         = apiBase + "/statuses/friends.json"
+	apiStatusesContextTimeline = apiBase + "/statuses/context_timeline.json"
+	apiStatusesMentions        = apiBase + "/statuses/mentions.json"
+	apiStatusesShow            = apiBase + "/statuses/show.json"
 )
+
+func (client *baseClient) StatusesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiStatusesDestroy, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesDestroy: %+v", err)
+	}
+
+	ret := responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) StatusesHomeTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesHomeTimeline, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesHomeTimeline: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) StatusesPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesPublicTimeline, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesPublicTimeline: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) StatusesReplies(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesReplies, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesReplies: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) StatusesFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesFollowers, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesFollowers: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
 
 func (client *baseClient) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiStatusesUpdate, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesUpdate: %+v", err)
+	}
+
+	ret := responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) StatusesUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesUserTimeline, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesUserTimeline: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) StatusesFriends(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesFriends, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesFriends: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) StatusesContextTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesContextTimeline, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesContextTimeline: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) StatusesMentions(params *ReqParams) ([]*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesMentions, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesMentions: %+v", err)
+	}
+
+	ret := []*responseStatus{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) StatusesShow(params *ReqParams) (*responseStatus, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiStatusesShow, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request StatusesShow: %+v", err)
 	}
 
 	ret := responseStatus{}
