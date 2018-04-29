@@ -122,3 +122,22 @@ type responseTrends struct {
 	AsOf   string `json:"as_of"`
 	Trends []responseTrend
 }
+
+type responseFriendship struct {
+	Relationship struct {
+		Source struct {
+			ID                   string `json:"id"`
+			ScreenName           string `json:"screen_name"`
+			Following            string `json:"following"`
+			FollowedBy           string `json:"followed_by"`
+			NotificationsEnabled string `json:"notifications_enabled"`
+			Blocking             string `json:"blocking"`
+		} `json:"source"`
+		Target struct {
+			ID         string `json:"id"`
+			ScreenName string `json:"screen_name"`
+			Following  string `json:"following"`
+			FollowedBy string `json:"followed_by"`
+		} `json:"target"`
+	} `json:"relationship"`
+}

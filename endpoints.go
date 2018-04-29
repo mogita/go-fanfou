@@ -471,6 +471,100 @@ func (client *baseClient) FavoritesCreate(params *ReqParams) (*responseStatus, [
 }
 
 const (
+	apiFriendshipsCreate   = apiBase + "/friendships/create.json"
+	apiFriendshipsDestroy  = apiBase + "/friendships/destroy.json"
+	apiFriendshipsRequests = apiBase + "/friendships/requests.json"
+	apiFriendshipsDeny     = apiBase + "/friendships/deny.json"
+	apiFriendshipsExists   = apiBase + "/friendships/exists.json"
+	apiFriendshipsAccept   = apiBase + "/friendships/accept.json"
+	apiFriendshipsShow     = apiBase + "/friendships/show.json"
+)
+
+func (client *baseClient) FriendshipsCreate(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiFriendshipsCreate, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendshipsCreate: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) FriendshipsDestroy(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiFriendshipsDestroy, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendshipsDestroy: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) FriendshipsRequests(params *ReqParams) ([]*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiFriendshipsRequests, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendshipsRequests: %+v", err)
+	}
+
+	ret := []*responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return ret, data, err
+}
+
+func (client *baseClient) FriendshipsDeny(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiFriendshipsDeny, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendshipsDeny: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) FriendshipsExists(params *ReqParams) (*bool, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiFriendshipsExists, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendshipsExists: %+v", err)
+	}
+
+	var ret bool
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) FriendshipsAccept(params *ReqParams) (*responseUser, []byte, error) {
+	data, err := client.makeRequest(http.MethodPost, apiFriendshipsAccept, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendshipsAccept: %+v", err)
+	}
+
+	ret := responseUser{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+func (client *baseClient) FriendshipsShow(params *ReqParams) (*responseFriendship, []byte, error) {
+	data, err := client.makeRequest(http.MethodGet, apiFriendshipsShow, params)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("Failed to request FriendshipsShow: %+v", err)
+	}
+
+	ret := responseFriendship{}
+	err = json.Unmarshal(data, &ret)
+	return &ret, data, err
+}
+
+const (
 	apiStatusesUpdate = apiBase + "/statuses/update.json"
 )
 
