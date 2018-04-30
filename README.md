@@ -1,6 +1,6 @@
 # GO FANFOU
 
-A Fanfou API Client SDK for [Go](http://golang.org/)
+A Fanfou API Client SDK library for [Go](http://golang.org/)
 
 [![Build Status](https://travis-ci.org/mogita/go-fanfou.svg?branch=master)](https://travis-ci.org/mogita/go-fanfou)
 [![GoDoc](https://godoc.org/github.com/mogita/go-fanfou?status.png)](https://godoc.org/github.com/mogita/go-fanfou)
