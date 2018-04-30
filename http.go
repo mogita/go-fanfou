@@ -65,29 +65,34 @@ func (client *baseClient) makeRequest(method, path string, params *ReqParams) (b
 
 	defer resp.Body.Close()
 
+	// read response body data
+	respBodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("Could not read response body: %#v", err)
+	}
+
+	if resp.StatusCode >= http.StatusOK && resp.StatusCode < http.StatusBadRequest {
+		// return nice responses
+		return []byte(strings.TrimSpace(string(respBodyBytes))), nil
+	}
+
+	// process and return bad responses
+	respErr := responseError{}
+	if err = json.Unmarshal(respBodyBytes, &respErr); err != nil {
+		return nil, fmt.Errorf("Malformed error response body: %+v. Original error: [%d] %#v", err, resp.StatusCode, string(respBodyBytes))
+	}
+
 	switch resp.StatusCode {
-	case http.StatusOK:
-		bits, err := ioutil.ReadAll(resp.Body)
-
-		if err != nil {
-			return nil, fmt.Errorf("Could not read response body: %#v", err)
-		}
-
-		return []byte(strings.TrimSpace(string(bits))), nil
-	case http.StatusAccepted:
-		// according to what the docs describes, 202 should be almost obsolete
-		// https://github.com/FanfouAPI/FanFouAPIDoc/wiki/ErrorCodes_Responses#http-status-codes
-		return nil, nil
 	case http.StatusBadRequest:
-		return nil, errors.New("Bad Request")
+		return nil, fmt.Errorf("Bad Request: %s. %s", respErr.Request, respErr.Error)
 	case http.StatusUnauthorized:
-		return nil, errors.New("Unauthorized")
+		return nil, fmt.Errorf("Unauthorized: %s. %s", respErr.Request, respErr.Error)
 	case http.StatusForbidden:
-		return nil, errors.New("Forbidden")
+		return nil, fmt.Errorf("Forbidden: %s. %s", respErr.Request, respErr.Error)
 	case http.StatusNotFound:
-		return nil, errors.New("Not Found")
+		return nil, fmt.Errorf("Not Found: %s. %s", respErr.Request, respErr.Error)
 	default:
-		return nil, errors.New("General Error Response")
+		return nil, fmt.Errorf("Other errors: %s. %s", respErr.Request, respErr.Error)
 	}
 }
 

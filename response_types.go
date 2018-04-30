@@ -1,5 +1,10 @@
 package fanfou
 
+type responseError struct {
+	Request string `json:"request"`
+	Error   string `json:"error"`
+}
+
 type responseUserID string
 
 type responseTag string
