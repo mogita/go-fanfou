@@ -41,7 +41,7 @@ func (client *baseClient) makeRequest(method, path string, params *ReqParams) (b
 		resp, err = client.http.PostForm(path, client.paramsToURLValues(params))
 	case "photo":
 		// invoked by photos upload
-		req, nfurRrr := client.newfileUploadRequest(apiAccountUpdateProfileImage, map[string]string{"status": params.Status}, "photo", params.Photo)
+		req, nfurRrr := client.newfileUploadRequest(apiPhotosUpload, map[string]string{"status": params.Status}, "photo", params.Photo)
 		if nfurRrr != nil {
 			return nil, fmt.Errorf("Could not initialize the photos upload request: %#v", nfurRrr)
 		}

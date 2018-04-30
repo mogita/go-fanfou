@@ -241,7 +241,7 @@ func (client *baseClient) AccountVerifyCredentials(params *ReqParams) (*response
 }
 
 func (client *baseClient) AccountUpdateProfileImage(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, apiAccountUpdateProfileImage, params)
+	data, err := client.makeRequest("image", "", params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountUpdateProfileImage: %+v", err)
@@ -385,7 +385,7 @@ func (client *baseClient) PhotosUserTimeline(params *ReqParams) ([]*responseStat
 }
 
 func (client *baseClient) PhotosUpload(params *ReqParams) (*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, apiPhotosUpload, params)
+	data, err := client.makeRequest("photo", "", params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request PhotosUpload: %+v", err)
