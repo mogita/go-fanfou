@@ -20,11 +20,11 @@ const (
 	accessTokenURL    = "http://fanfou.com/oauth/access_token"
 )
 
-type baseClient struct {
+type httpClientWrapper struct {
 	http *http.Client
 }
 
-func (client *baseClient) makeRequest(method, path string, params *ReqParams) (byteData []byte, err error) {
+func (client *httpClientWrapper) makeRequest(method, path string, params *ReqParams) (byteData []byte, err error) {
 	var resp *http.Response
 
 	if client.http == nil {
@@ -33,15 +33,15 @@ func (client *baseClient) makeRequest(method, path string, params *ReqParams) (b
 
 	switch method {
 	case http.MethodGet:
-		paramValues := client.paramsToURLValues(params)
+		paramValues := paramsToURLValues(params)
 		queryString := paramValues.Encode()
 		requestPath := fmt.Sprintf("%s?%s", path, queryString)
 		resp, err = client.http.Get(requestPath)
 	case http.MethodPost:
-		resp, err = client.http.PostForm(path, client.paramsToURLValues(params))
+		resp, err = client.http.PostForm(path, paramsToURLValues(params))
 	case "photo":
 		// invoked by photos upload
-		req, nfurRrr := client.newfileUploadRequest(apiPhotosUpload, map[string]string{"status": params.Status}, "photo", params.Photo)
+		req, nfurRrr := newfileUploadRequest(apiPhotosUpload, map[string]string{"status": params.Status}, "photo", params.Photo)
 		if nfurRrr != nil {
 			return nil, fmt.Errorf("Could not initialize the photos upload request: %#v", nfurRrr)
 		}
@@ -49,7 +49,7 @@ func (client *baseClient) makeRequest(method, path string, params *ReqParams) (b
 		resp, err = client.http.Do(req)
 	case "image":
 		// invoked by account update profile image
-		req, nfurRrr := client.newfileUploadRequest(apiAccountUpdateProfileImage, map[string]string{"status": params.Status}, "image", params.Image)
+		req, nfurRrr := newfileUploadRequest(apiAccountUpdateProfileImage, map[string]string{"status": params.Status}, "image", params.Image)
 		if nfurRrr != nil {
 			return nil, fmt.Errorf("Could not initialize the image upload request: %#v", nfurRrr)
 		}
@@ -96,16 +96,7 @@ func (client *baseClient) makeRequest(method, path string, params *ReqParams) (b
 	}
 }
 
-func (client *baseClient) paramsToJSON(params *ReqParams) (*string, error) {
-	json, err := json.Marshal(params)
-	if err != nil {
-		return nil, fmt.Errorf("Could not marshal json: %#v", err)
-	}
-	jsonStr := string(json)
-	return &jsonStr, nil
-}
-
-func (client *baseClient) paramsToURLValues(params *ReqParams) (values url.Values) {
+func paramsToURLValues(params *ReqParams) (values url.Values) {
 	values = url.Values{}
 
 	paramsVals := reflect.ValueOf(params).Elem()
@@ -124,7 +115,7 @@ func (client *baseClient) paramsToURLValues(params *ReqParams) (values url.Value
 	return
 }
 
-func (client *baseClient) newfileUploadRequest(uri string, params map[string]string, paramName, path string) (*http.Request, error) {
+func newfileUploadRequest(uri string, params map[string]string, paramName, path string) (*http.Request, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err

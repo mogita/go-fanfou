@@ -18,7 +18,7 @@ const (
 	apiSearchUserTimeline   = apiBase + "/search/user_timeline.json"
 )
 
-func (client *baseClient) SearchPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) SearchPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiSearchPublicTimeline, params)
 
 	if err != nil {
@@ -30,7 +30,7 @@ func (client *baseClient) SearchPublicTimeline(params *ReqParams) ([]*responseSt
 	return ret, data, err
 }
 
-func (client *baseClient) SearchUsers(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) SearchUsers(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiSearchUsers, params)
 
 	if err != nil {
@@ -42,7 +42,7 @@ func (client *baseClient) SearchUsers(params *ReqParams) ([]*responseUser, []byt
 	return ret, data, err
 }
 
-func (client *baseClient) SearchUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) SearchUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiSearchUserTimeline, params)
 
 	if err != nil {
@@ -64,7 +64,7 @@ const (
 	apiBlocksDestroy  = apiBase + "/blocks/destroy.json"
 )
 
-func (client *baseClient) BlocksIDs(params *ReqParams) (*responseBlockIDs, []byte, error) {
+func (client *httpClientWrapper) BlocksIDs(params *ReqParams) (*responseBlockIDs, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiBlocksIDs, params)
 
 	if err != nil {
@@ -76,7 +76,7 @@ func (client *baseClient) BlocksIDs(params *ReqParams) (*responseBlockIDs, []byt
 	return &ret, data, err
 }
 
-func (client *baseClient) BlocksBlocking(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) BlocksBlocking(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiBlocksBlocking, params)
 
 	if err != nil {
@@ -88,7 +88,7 @@ func (client *baseClient) BlocksBlocking(params *ReqParams) ([]*responseUser, []
 	return ret, data, err
 }
 
-func (client *baseClient) BlocksCreate(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) BlocksCreate(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiBlocksCreate, params)
 
 	if err != nil {
@@ -100,7 +100,7 @@ func (client *baseClient) BlocksCreate(params *ReqParams) (*responseUser, []byte
 	return &ret, data, err
 }
 
-func (client *baseClient) BlocksExists(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) BlocksExists(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiBlocksExists, params)
 
 	if err != nil {
@@ -112,7 +112,7 @@ func (client *baseClient) BlocksExists(params *ReqParams) (*responseUser, []byte
 	return &ret, data, err
 }
 
-func (client *baseClient) BlocksDestroy(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) BlocksDestroy(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiBlocksDestroy, params)
 
 	if err != nil {
@@ -134,7 +134,7 @@ const (
 	apiUsersFriends              = apiBase + "/users/friends.json"
 )
 
-func (client *baseClient) UsersTagged(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) UsersTagged(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiUsersTagged, params)
 
 	if err != nil {
@@ -146,7 +146,7 @@ func (client *baseClient) UsersTagged(params *ReqParams) ([]*responseUser, []byt
 	return ret, data, err
 }
 
-func (client *baseClient) UsersShow(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) UsersShow(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiUsersShow, params)
 
 	if err != nil {
@@ -158,7 +158,7 @@ func (client *baseClient) UsersShow(params *ReqParams) (*responseUser, []byte, e
 	return &ret, data, err
 }
 
-func (client *baseClient) UsersTagList(params *ReqParams) (responseTags, []byte, error) {
+func (client *httpClientWrapper) UsersTagList(params *ReqParams) (responseTags, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiUsersTagList, params)
 
 	if err != nil {
@@ -170,7 +170,7 @@ func (client *baseClient) UsersTagList(params *ReqParams) (responseTags, []byte,
 	return ret, data, err
 }
 
-func (client *baseClient) UsersFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) UsersFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiUsersFollowers, params)
 
 	if err != nil {
@@ -182,7 +182,7 @@ func (client *baseClient) UsersFollowers(params *ReqParams) ([]*responseUser, []
 	return ret, data, err
 }
 
-func (client *baseClient) UsersRecommendation(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) UsersRecommendation(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiUsersRecommendation, params)
 
 	if err != nil {
@@ -194,7 +194,7 @@ func (client *baseClient) UsersRecommendation(params *ReqParams) ([]*responseUse
 	return ret, data, err
 }
 
-func (client *baseClient) UsersCancelRecommendation(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) UsersCancelRecommendation(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiUsersCancelRecommendation, params)
 
 	if err != nil {
@@ -206,7 +206,7 @@ func (client *baseClient) UsersCancelRecommendation(params *ReqParams) (*respons
 	return &ret, data, err
 }
 
-func (client *baseClient) UsersFriends(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) UsersFriends(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiUsersFriends, params)
 
 	if err != nil {
@@ -228,7 +228,7 @@ const (
 	apiAccountNotifyNum          = apiBase + "/account/notify_num.json"
 )
 
-func (client *baseClient) AccountVerifyCredentials(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) AccountVerifyCredentials(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiAccountVerifyCredentials, params)
 
 	if err != nil {
@@ -240,7 +240,7 @@ func (client *baseClient) AccountVerifyCredentials(params *ReqParams) (*response
 	return &ret, data, err
 }
 
-func (client *baseClient) AccountUpdateProfileImage(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) AccountUpdateProfileImage(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest("image", "", params)
 
 	if err != nil {
@@ -252,7 +252,7 @@ func (client *baseClient) AccountUpdateProfileImage(params *ReqParams) (*respons
 	return &ret, data, err
 }
 
-func (client *baseClient) AccountRateLimitStatus(params *ReqParams) (*responseRateLimitStatus, []byte, error) {
+func (client *httpClientWrapper) AccountRateLimitStatus(params *ReqParams) (*responseRateLimitStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiAccountRateLimitStatus, params)
 
 	if err != nil {
@@ -264,7 +264,7 @@ func (client *baseClient) AccountRateLimitStatus(params *ReqParams) (*responseRa
 	return &ret, data, err
 }
 
-func (client *baseClient) AccountUpdateProfile(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) AccountUpdateProfile(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiAccountUpdateProfile, params)
 
 	if err != nil {
@@ -276,7 +276,7 @@ func (client *baseClient) AccountUpdateProfile(params *ReqParams) (*responseUser
 	return &ret, data, err
 }
 
-func (client *baseClient) AccountNotification(params *ReqParams) (*responseAccountNotification, []byte, error) {
+func (client *httpClientWrapper) AccountNotification(params *ReqParams) (*responseAccountNotification, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiAccountNotification, params)
 
 	if err != nil {
@@ -288,7 +288,7 @@ func (client *baseClient) AccountNotification(params *ReqParams) (*responseAccou
 	return &ret, data, err
 }
 
-func (client *baseClient) AccountUpdateNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
+func (client *httpClientWrapper) AccountUpdateNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiAccountUpdateNotifyNum, params)
 
 	if err != nil {
@@ -300,7 +300,7 @@ func (client *baseClient) AccountUpdateNotifyNum(params *ReqParams) (*responseNo
 	return &ret, data, err
 }
 
-func (client *baseClient) AccountNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
+func (client *httpClientWrapper) AccountNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiAccountNotifyNum, params)
 
 	if err != nil {
@@ -319,7 +319,7 @@ const (
 	apiSavedSearchesList    = apiBase + "/saved_searches/list.json"
 )
 
-func (client *baseClient) SavedSearchesCreate(params *ReqParams) (*responseSavedSearch, []byte, error) {
+func (client *httpClientWrapper) SavedSearchesCreate(params *ReqParams) (*responseSavedSearch, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiSavedSearchesCreate, params)
 
 	if err != nil {
@@ -331,7 +331,7 @@ func (client *baseClient) SavedSearchesCreate(params *ReqParams) (*responseSaved
 	return &ret, data, err
 }
 
-func (client *baseClient) SavedSearchesDestroy(params *ReqParams) (*responseSavedSearch, []byte, error) {
+func (client *httpClientWrapper) SavedSearchesDestroy(params *ReqParams) (*responseSavedSearch, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiSavedSearchesDestroy, params)
 
 	if err != nil {
@@ -343,7 +343,7 @@ func (client *baseClient) SavedSearchesDestroy(params *ReqParams) (*responseSave
 	return &ret, data, err
 }
 
-func (client *baseClient) SavedSearchesShow(params *ReqParams) (*responseSavedSearch, []byte, error) {
+func (client *httpClientWrapper) SavedSearchesShow(params *ReqParams) (*responseSavedSearch, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiSavedSearchesShow, params)
 
 	if err != nil {
@@ -355,7 +355,7 @@ func (client *baseClient) SavedSearchesShow(params *ReqParams) (*responseSavedSe
 	return &ret, data, err
 }
 
-func (client *baseClient) SavedSearchesList(params *ReqParams) ([]*responseSavedSearch, []byte, error) {
+func (client *httpClientWrapper) SavedSearchesList(params *ReqParams) ([]*responseSavedSearch, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiSavedSearchesList, params)
 
 	if err != nil {
@@ -372,7 +372,7 @@ const (
 	apiPhotosUpload       = apiBase + "/photos/upload.json"
 )
 
-func (client *baseClient) PhotosUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) PhotosUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiPhotosUserTimeline, params)
 
 	if err != nil {
@@ -384,7 +384,7 @@ func (client *baseClient) PhotosUserTimeline(params *ReqParams) ([]*responseStat
 	return ret, data, err
 }
 
-func (client *baseClient) PhotosUpload(params *ReqParams) (*responseStatus, []byte, error) {
+func (client *httpClientWrapper) PhotosUpload(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest("photo", "", params)
 
 	if err != nil {
@@ -400,7 +400,7 @@ const (
 	apiTrendsList = apiBase + "/trends/list.json"
 )
 
-func (client *baseClient) TrendsList(params *ReqParams) (*responseTrends, []byte, error) {
+func (client *httpClientWrapper) TrendsList(params *ReqParams) (*responseTrends, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiTrendsList, params)
 
 	if err != nil {
@@ -416,7 +416,7 @@ const (
 	apiFollowersIDs = apiBase + "/followers/ids.json"
 )
 
-func (client *baseClient) FollowersIDs(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) FollowersIDs(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiFollowersIDs, params)
 
 	if err != nil {
@@ -434,7 +434,7 @@ const (
 	apiFavoritesCreate  = apiBase + "/favorites/create.json"
 )
 
-func (client *baseClient) FavoritesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
+func (client *httpClientWrapper) FavoritesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiFavoritesDestroy, params)
 
 	if err != nil {
@@ -446,7 +446,7 @@ func (client *baseClient) FavoritesDestroy(params *ReqParams) (*responseStatus, 
 	return &ret, data, err
 }
 
-func (client *baseClient) Favorites(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) Favorites(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiFavorites, params)
 
 	if err != nil {
@@ -458,7 +458,7 @@ func (client *baseClient) Favorites(params *ReqParams) ([]*responseStatus, []byt
 	return ret, data, err
 }
 
-func (client *baseClient) FavoritesCreate(params *ReqParams) (*responseStatus, []byte, error) {
+func (client *httpClientWrapper) FavoritesCreate(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiFavoritesCreate, params)
 
 	if err != nil {
@@ -480,7 +480,7 @@ const (
 	apiFriendshipsShow     = apiBase + "/friendships/show.json"
 )
 
-func (client *baseClient) FriendshipsCreate(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) FriendshipsCreate(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiFriendshipsCreate, params)
 
 	if err != nil {
@@ -492,7 +492,7 @@ func (client *baseClient) FriendshipsCreate(params *ReqParams) (*responseUser, [
 	return &ret, data, err
 }
 
-func (client *baseClient) FriendshipsDestroy(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) FriendshipsDestroy(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiFriendshipsDestroy, params)
 
 	if err != nil {
@@ -504,7 +504,7 @@ func (client *baseClient) FriendshipsDestroy(params *ReqParams) (*responseUser, 
 	return &ret, data, err
 }
 
-func (client *baseClient) FriendshipsRequests(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) FriendshipsRequests(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiFriendshipsRequests, params)
 
 	if err != nil {
@@ -516,7 +516,7 @@ func (client *baseClient) FriendshipsRequests(params *ReqParams) ([]*responseUse
 	return ret, data, err
 }
 
-func (client *baseClient) FriendshipsDeny(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) FriendshipsDeny(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiFriendshipsDeny, params)
 
 	if err != nil {
@@ -528,7 +528,7 @@ func (client *baseClient) FriendshipsDeny(params *ReqParams) (*responseUser, []b
 	return &ret, data, err
 }
 
-func (client *baseClient) FriendshipsExists(params *ReqParams) (*bool, []byte, error) {
+func (client *httpClientWrapper) FriendshipsExists(params *ReqParams) (*bool, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiFriendshipsExists, params)
 
 	if err != nil {
@@ -540,7 +540,7 @@ func (client *baseClient) FriendshipsExists(params *ReqParams) (*bool, []byte, e
 	return &ret, data, err
 }
 
-func (client *baseClient) FriendshipsAccept(params *ReqParams) (*responseUser, []byte, error) {
+func (client *httpClientWrapper) FriendshipsAccept(params *ReqParams) (*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiFriendshipsAccept, params)
 
 	if err != nil {
@@ -552,7 +552,7 @@ func (client *baseClient) FriendshipsAccept(params *ReqParams) (*responseUser, [
 	return &ret, data, err
 }
 
-func (client *baseClient) FriendshipsShow(params *ReqParams) (*responseFriendship, []byte, error) {
+func (client *httpClientWrapper) FriendshipsShow(params *ReqParams) (*responseFriendship, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiFriendshipsShow, params)
 
 	if err != nil {
@@ -568,7 +568,7 @@ const (
 	apiFriendsIDs = apiBase + "/friends/ids.json"
 )
 
-func (client *baseClient) FriendsIDs(params *ReqParams) (responseFriendsIDs, []byte, error) {
+func (client *httpClientWrapper) FriendsIDs(params *ReqParams) (responseFriendsIDs, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiFriendsIDs, params)
 
 	if err != nil {
@@ -594,7 +594,7 @@ const (
 	apiStatusesShow            = apiBase + "/statuses/show.json"
 )
 
-func (client *baseClient) StatusesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiStatusesDestroy, params)
 
 	if err != nil {
@@ -606,7 +606,7 @@ func (client *baseClient) StatusesDestroy(params *ReqParams) (*responseStatus, [
 	return &ret, data, err
 }
 
-func (client *baseClient) StatusesHomeTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesHomeTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesHomeTimeline, params)
 
 	if err != nil {
@@ -618,7 +618,7 @@ func (client *baseClient) StatusesHomeTimeline(params *ReqParams) ([]*responseSt
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesPublicTimeline, params)
 
 	if err != nil {
@@ -630,7 +630,7 @@ func (client *baseClient) StatusesPublicTimeline(params *ReqParams) ([]*response
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesReplies(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesReplies(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesReplies, params)
 
 	if err != nil {
@@ -642,7 +642,7 @@ func (client *baseClient) StatusesReplies(params *ReqParams) ([]*responseStatus,
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) StatusesFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesFollowers, params)
 
 	if err != nil {
@@ -654,7 +654,7 @@ func (client *baseClient) StatusesFollowers(params *ReqParams) ([]*responseUser,
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiStatusesUpdate, params)
 
 	if err != nil {
@@ -666,7 +666,7 @@ func (client *baseClient) StatusesUpdate(params *ReqParams) (*responseStatus, []
 	return &ret, data, err
 }
 
-func (client *baseClient) StatusesUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesUserTimeline, params)
 
 	if err != nil {
@@ -678,7 +678,7 @@ func (client *baseClient) StatusesUserTimeline(params *ReqParams) ([]*responseSt
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesFriends(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) StatusesFriends(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesFriends, params)
 
 	if err != nil {
@@ -690,7 +690,7 @@ func (client *baseClient) StatusesFriends(params *ReqParams) ([]*responseUser, [
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesContextTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesContextTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesContextTimeline, params)
 
 	if err != nil {
@@ -702,7 +702,7 @@ func (client *baseClient) StatusesContextTimeline(params *ReqParams) ([]*respons
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesMentions(params *ReqParams) ([]*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesMentions(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesMentions, params)
 
 	if err != nil {
@@ -714,7 +714,7 @@ func (client *baseClient) StatusesMentions(params *ReqParams) ([]*responseStatus
 	return ret, data, err
 }
 
-func (client *baseClient) StatusesShow(params *ReqParams) (*responseStatus, []byte, error) {
+func (client *httpClientWrapper) StatusesShow(params *ReqParams) (*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiStatusesShow, params)
 
 	if err != nil {
@@ -735,7 +735,7 @@ const (
 	apiDirectMessagesSent             = apiBase + "/direct_messages/sent.json"
 )
 
-func (client *baseClient) DirectMessagesDestroy(params *ReqParams) (*responseDirectMessage, []byte, error) {
+func (client *httpClientWrapper) DirectMessagesDestroy(params *ReqParams) (*responseDirectMessage, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiDirectMessagesDestroy, params)
 
 	if err != nil {
@@ -747,7 +747,7 @@ func (client *baseClient) DirectMessagesDestroy(params *ReqParams) (*responseDir
 	return &ret, data, err
 }
 
-func (client *baseClient) DirectMessagesConversation(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
+func (client *httpClientWrapper) DirectMessagesConversation(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesConversation, params)
 
 	if err != nil {
@@ -759,7 +759,7 @@ func (client *baseClient) DirectMessagesConversation(params *ReqParams) ([]*resp
 	return ret, data, err
 }
 
-func (client *baseClient) DirectMessagesNew(params *ReqParams) (*responseDirectMessage, []byte, error) {
+func (client *httpClientWrapper) DirectMessagesNew(params *ReqParams) (*responseDirectMessage, []byte, error) {
 	data, err := client.makeRequest(http.MethodPost, apiDirectMessagesNew, params)
 
 	if err != nil {
@@ -771,7 +771,7 @@ func (client *baseClient) DirectMessagesNew(params *ReqParams) (*responseDirectM
 	return &ret, data, err
 }
 
-func (client *baseClient) DirectMessagesConversationList(params *ReqParams) ([]*responseDirectMessageConversationItem, []byte, error) {
+func (client *httpClientWrapper) DirectMessagesConversationList(params *ReqParams) ([]*responseDirectMessageConversationItem, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesConversationList, params)
 
 	if err != nil {
@@ -783,7 +783,7 @@ func (client *baseClient) DirectMessagesConversationList(params *ReqParams) ([]*
 	return ret, data, err
 }
 
-func (client *baseClient) DirectMessagesInbox(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
+func (client *httpClientWrapper) DirectMessagesInbox(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesInbox, params)
 
 	if err != nil {
@@ -795,7 +795,7 @@ func (client *baseClient) DirectMessagesInbox(params *ReqParams) ([]*responseDir
 	return ret, data, err
 }
 
-func (client *baseClient) DirectMessagesSent(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
+func (client *httpClientWrapper) DirectMessagesSent(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, apiDirectMessagesSent, params)
 
 	if err != nil {
