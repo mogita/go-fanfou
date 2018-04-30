@@ -1,3 +1,4 @@
+//Package fanfou is an API client SDK for fanfou.com
 package fanfou
 
 import (
@@ -10,7 +11,11 @@ type OAuthClient struct {
 	OAuthConsumer *oauth.Consumer
 }
 
-// NewClientWithOAuth returns a client without authorization
+// NewClientWithOAuth returns a client without authorization. In order to authorize the client, you need to:
+//
+// 1) Call "GetTokenAndAuthURL" method to obtain a request token and the auth URL. Let your user access the auth URL and grant access to the request token.
+//
+// 2) Call "DoAuth" method to complete the auth process after the request token has been authorized by the user.
 func NewClientWithOAuth(consumerKey, consumerSecret string) *OAuthClient {
 	newClient := new(OAuthClient)
 	newClient.OAuthConsumer = oauth.NewConsumer(
@@ -28,7 +33,9 @@ func NewClientWithOAuth(consumerKey, consumerSecret string) *OAuthClient {
 	return newClient
 }
 
-// NewClientWithXAuth returns an authorized client
+// NewClientWithXAuth returns an authorized client. The client is ready to call all API methods immediately.
+//
+// For more information on XAuth authorization method, please refer to https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Xauth
 func NewClientWithXAuth(consumerKey, consumerSecret, username, password string) (*OAuthClient, error) {
 	newClient := NewClientWithOAuth(consumerKey, consumerSecret)
 
