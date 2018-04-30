@@ -37,7 +37,7 @@ go run examples/upload_photo/upload_photo.go
 
 ## Contributing
 
-First of all, thank you very much for paying attention to this library. If you feel like to help improve it, please kindly make sure to follow the instructions:
+First of all, thank you very much for paying attention to this library. If you feel like helping improve it, please kindly make sure to follow the instructions:
 
 Please link the pre-commit hook which runs tests and go-fmt before committing
 
