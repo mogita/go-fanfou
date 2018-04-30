@@ -1,46 +1,44 @@
 # FANFOU GO
 
-A Fanfou API Client for Gophers
+A Fanfou API Client SDK for [Go](http://golang.org/)
+
+[![Build Status](https://travis-ci.org/mogita/go-fanfou.svg?branch=master)](https://travis-ci.org/mogita/go-fanfou)
+[![GoDoc](https://godoc.org/github.com/mogita/go-fanfou?status.png)](https://godoc.org/github.com/mogita/go-fanfou)
+
+> Please note that the library is at a very early stage of development. Things could be changing at times. Breaking changes are expected but I'll make it as less as possible. The stable versions will begin with the first [release](https://github.com/mogita/go-fanfou/releases) in the future.
 
 ## Usage
 
-```go
-package main
+```
+go get -u github.com/mogita/go-fanfou
+```
 
-import (
-  "git.mogita.com/mogita/go-fanfou"
-)
+Please refer to the `examples` folder for the basic usages of this library.
 
-const (
-	consumerKey    = "xxx"
-	consumerSecret = "xxx"
-	username       = "xxx"
-	password       = "xxx"
-)
+Before running the examples, please make sure you've modified the `def.go`'s content to your corresponding API keys and such. For obtaining a new API key, please refer to https://fanfou.com/apps
 
-func main() {
-	client, _ := fanfou.NewClientWithXAuth(consumerKey, consumerSecret, username, password)
+You can run the examples to see how this library works:
 
-	res, _, err := client.UserShow(&fanfou.ReqParams{
-		ID: "mogita",
-	})
+```
+go run examples/oauth/oauth.go
+go run examples/xauth/xauth.go
+go run examples/upload_photo/upload_photo.go
+```
 
-	if err != nil {
-		log.Fatal(err)
-	}
+## Contributing
 
-	fmt.Printf("%#v\n\n", res)
+First of all, thank you very much for paying attention to this library. If you feel like to help improve it, please kindly make sure to follow the instructions:
 
-	resS, _, err := client.StatusesUpdate(&fanfou.ReqParams{
-		Status: "niubi",
-	})
+Please link the pre-commit hook which runs tests and go-fmt before committing
 
-	if err != nil {
-		log.Fatal(err)
-	}
+```
+ln -s $PWD/pre-commit.sh .git/hooks/pre-commit
+```
 
-	fmt.Printf("%#v", resS)
-}
+Please always run tests before committing
+
+```
+go test ./...
 ```
 
 ## License
