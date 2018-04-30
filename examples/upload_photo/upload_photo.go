@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"git.mogita.com/mogita/go-fanfou/examples"
-	"git.mogita.com/mogita/go-fanfou/fanfou"
+	"github.com/mogita/go-fanfou/examples"
+	"github.com/mogita/go-fanfou/fanfou"
 )
 
 // modify the credentials in def.go to your own keys etc.
