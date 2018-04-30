@@ -25,7 +25,7 @@ func main() {
 
 Please refer to the `examples` folder for the basic usages of this library.
 
-Before running the examples, please modify the content in `def.go` to your corresponding API keys and such. For obtaining a new API key please refer to https://fanfou.com/apps
+Before running the examples, please fill the constants in `def.go` with your API keys and such. For obtaining a new API key please refer to https://fanfou.com/apps
 
 You can run the examples to see how this library works:
 

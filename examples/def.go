@@ -1,11 +1,10 @@
 package examples
 
-// Uncomment the constants below and fill them with your credentials etc.
-
-// const (
-// ConsumerKey    = ""
-// ConsumerSecret = ""
-// CallbackURL    = ""
-// Username       = ""
-// Password       = ""
-// )
+// Fill the constants with your keys and credentials.
+const (
+	ConsumerKey    = ""
+	ConsumerSecret = ""
+	CallbackURL    = ""
+	Username       = ""
+	Password       = ""
+)
