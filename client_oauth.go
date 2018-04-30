@@ -1,9 +1,6 @@
 package fanfou
 
 import (
-	"fmt"
-	"log"
-
 	"github.com/mrjones/oauth"
 )
 
@@ -31,32 +28,46 @@ func NewClientWithOAuth(consumerKey, consumerSecret string) *OAuthClient {
 	return newClient
 }
 
-// DoAuth completes the oauth authorization process
-func (client *OAuthClient) DoAuth() error {
-	requestToken, loginURL, err := client.OAuthConsumer.GetRequestTokenAndUrl("oob")
-
+// GetTokenAndAuthURL returns the request token and the url for authorizing this token
+func (client *OAuthClient) GetTokenAndAuthURL(callbackURL string) (*oauth.RequestToken, string, error) {
+	rToken, authURL, err := client.OAuthConsumer.GetRequestTokenAndUrl(callbackURL)
 	if err != nil {
-		log.Fatal(err)
+		return nil, "", err
 	}
 
-	fmt.Println("(1) Go to: " + loginURL)
-	fmt.Println("(2) Grant access, you should get back a verification code.")
-	fmt.Println("(3) Enter that verification code here:")
+	return rToken, authURL, nil
+}
 
-	verificationCode := ""
-	fmt.Scanln(&verificationCode)
-
-	accessToken, err := client.OAuthConsumer.AuthorizeToken(requestToken, verificationCode)
+// DoAuth completes the oauth authorization process
+func (client *OAuthClient) DoAuth(rToken *oauth.RequestToken) error {
+	accessToken, err := client.OAuthConsumer.AuthorizeToken(rToken, "")
 
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	client.http, err = client.OAuthConsumer.MakeHttpClient(accessToken)
 
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
-	return err
+	return nil
+}
+
+// DoAuthOob completes the oauth authorization process
+func (client *OAuthClient) DoAuthOob(rToken *oauth.RequestToken, verificationCode string) error {
+	accessToken, err := client.OAuthConsumer.AuthorizeToken(rToken, verificationCode)
+
+	if err != nil {
+		return err
+	}
+
+	client.http, err = client.OAuthConsumer.MakeHttpClient(accessToken)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
