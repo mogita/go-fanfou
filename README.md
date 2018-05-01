@@ -37,6 +37,10 @@ go run examples/xauth/xauth.go
 go run examples/upload_photo/upload_photo.go
 ```
 
+## Built With
+
+* [oauth](https://github.com/mrjones/oauth) - OAuth 1.0 implementation in go (golang). http://www.mrjon.es
+
 ## Contributing
 
 First of all, thank you very much for paying attention to this library. If you feel like helping improve it, please kindly make sure to follow the instructions:
