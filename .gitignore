@@ -4,3 +4,4 @@ thumbs.db
 !.gitkeep
 
 examples/def_local.go
+coverage.out
