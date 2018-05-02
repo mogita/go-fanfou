@@ -1,7 +1,6 @@
 package fanfou
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -36,9 +35,12 @@ func TestClients(t *testing.T) {
 						continue
 					}
 
-					v := reflect.ValueOf(client).MethodByName(method.Name).Call([]reflect.Value{reflect.ValueOf(&ReqParams{})})
-					fmt.Println(v[2])
+					reflect.ValueOf(client).MethodByName(method.Name).Call([]reflect.Value{reflect.ValueOf(&ReqParams{})})
+					// TODO: fmt.Println(v[2])
 				}
+
+				// WIP: making sure the test breaks
+				assert.Nil(t, 1)
 			},
 		},
 	}
