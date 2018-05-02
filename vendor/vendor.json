@@ -1,55 +1,61 @@
 {
-  "comment": "",
-  "ignore": "test",
-  "package": [
-    {
-      "checksumSHA1": "CSPbwbyzqA6sfORicn4HFtIhF/c=",
-      "path": "github.com/davecgh/go-spew/spew",
-      "revision": "8991bc29aa16c548c550c7ff78260e27b9ab7c73",
-      "revisionTime": "2018-02-21T22:46:20Z"
-    },
-    {
-      "checksumSHA1": "Zm/r7h71RiCuKCzqZfwSIMIXSqs=",
-      "path": "github.com/mrjones/oauth",
-      "revision": "78d64468d6ec7b74e4b0d47cf61b4f4e288b944b",
-      "revisionTime": "2018-02-07T00:50:41Z"
-    },
-    {
-      "checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
-      "path": "github.com/pmezard/go-difflib/difflib",
-      "revision": "792786c7400a136282c1664665ae0a8db921c6c2",
-      "revisionTime": "2016-01-10T10:55:54Z"
-    },
-    {
-      "checksumSHA1": "n+vQ7Bmp+ODWGmCp8cI5MFsaZVA=",
-      "path": "github.com/stretchr/objx",
-      "revision": "a5cfa15c000af5f09784e5355969ba7eb66ef0de",
-      "revisionTime": "2018-04-26T10:50:06Z"
-    },
-    {
-      "checksumSHA1": "nj123dGxKPIF17B6y3VEK2pihRk=",
-      "path": "github.com/stretchr/testify",
-      "revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
-      "revisionTime": "2018-03-14T08:05:35Z"
-    },
-    {
-      "checksumSHA1": "6LwXZI7kXm1C0h4Ui0Y52p9uQhk=",
-      "path": "github.com/stretchr/testify/assert",
-      "revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
-      "revisionTime": "2018-03-14T08:05:35Z"
-    },
-    {
-      "checksumSHA1": "fg3TzS9/QK3wZbzei3Z6O8XPLHg=",
-      "path": "github.com/stretchr/testify/http",
-      "revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
-      "revisionTime": "2018-03-14T08:05:35Z"
-    },
-    {
-      "checksumSHA1": "Qloi2PTvZv+D9FDHXM/banCoaFY=",
-      "path": "github.com/stretchr/testify/mock",
-      "revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
-      "revisionTime": "2018-03-14T08:05:35Z"
-    }
-  ],
-  "rootPath": "github.com/mogita/go-fanfou"
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "CSPbwbyzqA6sfORicn4HFtIhF/c=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "8991bc29aa16c548c550c7ff78260e27b9ab7c73",
+			"revisionTime": "2018-02-21T22:46:20Z"
+		},
+		{
+			"checksumSHA1": "Zm/r7h71RiCuKCzqZfwSIMIXSqs=",
+			"path": "github.com/mrjones/oauth",
+			"revision": "78d64468d6ec7b74e4b0d47cf61b4f4e288b944b",
+			"revisionTime": "2018-02-07T00:50:41Z"
+		},
+		{
+			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
+			"path": "github.com/pmezard/go-difflib/difflib",
+			"revision": "792786c7400a136282c1664665ae0a8db921c6c2",
+			"revisionTime": "2016-01-10T10:55:54Z"
+		},
+		{
+			"checksumSHA1": "n+vQ7Bmp+ODWGmCp8cI5MFsaZVA=",
+			"path": "github.com/stretchr/objx",
+			"revision": "a5cfa15c000af5f09784e5355969ba7eb66ef0de",
+			"revisionTime": "2018-04-26T10:50:06Z"
+		},
+		{
+			"checksumSHA1": "nj123dGxKPIF17B6y3VEK2pihRk=",
+			"path": "github.com/stretchr/testify",
+			"revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
+			"revisionTime": "2018-03-14T08:05:35Z"
+		},
+		{
+			"checksumSHA1": "6LwXZI7kXm1C0h4Ui0Y52p9uQhk=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
+			"revisionTime": "2018-03-14T08:05:35Z"
+		},
+		{
+			"checksumSHA1": "fg3TzS9/QK3wZbzei3Z6O8XPLHg=",
+			"path": "github.com/stretchr/testify/http",
+			"revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
+			"revisionTime": "2018-03-14T08:05:35Z"
+		},
+		{
+			"checksumSHA1": "Qloi2PTvZv+D9FDHXM/banCoaFY=",
+			"path": "github.com/stretchr/testify/mock",
+			"revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
+			"revisionTime": "2018-03-14T08:05:35Z"
+		},
+		{
+			"checksumSHA1": "4jT4+49wktdhvFqDjDPURsFK47o=",
+			"path": "gopkg.in/jarcoal/httpmock.v1",
+			"revision": "eb84b840d3d6889d2458ceed28e3c6f0d109f6c8",
+			"revisionTime": "2018-04-24T17:51:38Z"
+		}
+	],
+	"rootPath": "github.com/mogita/go-fanfou"
 }

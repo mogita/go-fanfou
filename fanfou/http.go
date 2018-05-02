@@ -14,12 +14,6 @@ import (
 	"strings"
 )
 
-const (
-	requestTokenURL   = "http://fanfou.com/oauth/request_token"
-	authorizeTokenURL = "http://fanfou.com/oauth/authorize"
-	accessTokenURL    = "http://fanfou.com/oauth/access_token"
-)
-
 type httpClientWrapper struct {
 	http *http.Client
 }
@@ -41,7 +35,7 @@ func (client *httpClientWrapper) makeRequest(method, path string, params *ReqPar
 		resp, err = client.http.PostForm(path, paramsToURLValues(params))
 	case "photo":
 		// invoked by photos upload
-		req, nfurRrr := newfileUploadRequest(apiPhotosUpload, map[string]string{"status": params.Status}, "photo", params.Photo)
+		req, nfurRrr := newfileUploadRequest(endpoints["PhotosUpload"], map[string]string{"status": params.Status}, "photo", params.Photo)
 		if nfurRrr != nil {
 			return nil, fmt.Errorf("Could not initialize the photos upload request: %#v", nfurRrr)
 		}
@@ -49,7 +43,7 @@ func (client *httpClientWrapper) makeRequest(method, path string, params *ReqPar
 		resp, err = client.http.Do(req)
 	case "image":
 		// invoked by account update profile image
-		req, nfurRrr := newfileUploadRequest(apiAccountUpdateProfileImage, map[string]string{"status": params.Status}, "image", params.Image)
+		req, nfurRrr := newfileUploadRequest(endpoints["AccountUpdateProfileImage"], map[string]string{"status": params.Status}, "image", params.Image)
 		if nfurRrr != nil {
 			return nil, fmt.Errorf("Could not initialize the image upload request: %#v", nfurRrr)
 		}
