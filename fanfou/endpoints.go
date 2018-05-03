@@ -6,83 +6,263 @@ import (
 	"net/http"
 )
 
-var endpoints = map[string]string{
-	"SearchPublicTimeline": apiBase + "/search/public_timeline.json",
-	"SearchUsers":          apiBase + "/search/users.json",
-	"SearchUserTimeline":   apiBase + "/search/user_timeline.json",
+type endpointItem struct {
+	URL    string
+	Method string
+}
 
-	"BlocksIDs":      apiBase + "/blocks/ids.json",
-	"BlocksBlocking": apiBase + "/blocks/blocking.json",
-	"BlocksCreate":   apiBase + "/blocks/create.json",
-	"BlocksExists":   apiBase + "/blocks/exists.json",
-	"BlocksDestroy":  apiBase + "/blocks/destroy.json",
+var endpoints = map[string]endpointItem{
+	"SearchPublicTimeline": endpointItem{
+		URL:    apiBase + "/search/public_timeline.json",
+		Method: http.MethodGet,
+	},
+	"SearchUsers": endpointItem{
+		URL:    apiBase + "/search/users.json",
+		Method: http.MethodGet,
+	},
+	"SearchUserTimeline": endpointItem{
+		URL:    apiBase + "/search/user_timeline.json",
+		Method: http.MethodGet,
+	},
 
-	"UsersTagged":               apiBase + "/users/tagged.json",
-	"UsersShow":                 apiBase + "/users/show.json",
-	"UsersTagList":              apiBase + "/users/tag_list.json",
-	"UsersFollowers":            apiBase + "/users/followers.json",
-	"UsersRecommendation":       apiBase + "/2/users/recommendation.json",
-	"UsersCancelRecommendation": apiBase + "/2/users/cancel_recommendation.json",
-	"UsersFriends":              apiBase + "/users/friends.json",
+	"BlocksIDs": endpointItem{
+		URL:    apiBase + "/blocks/ids.json",
+		Method: http.MethodGet,
+	},
+	"BlocksBlocking": endpointItem{
+		URL:    apiBase + "/blocks/blocking.json",
+		Method: http.MethodGet,
+	},
+	"BlocksCreate": endpointItem{
+		URL:    apiBase + "/blocks/create.json",
+		Method: http.MethodPost,
+	},
+	"BlocksExists": endpointItem{
+		URL:    apiBase + "/blocks/exists.json",
+		Method: http.MethodGet,
+	},
+	"BlocksDestroy": endpointItem{
+		URL:    apiBase + "/blocks/destroy.json",
+		Method: http.MethodPost,
+	},
 
-	"AccountVerifyCredentials":  apiBase + "/account/verify_credentials.json",
-	"AccountUpdateProfileImage": apiBase + "/account/update_profile_image.json",
-	"AccountRateLimitStatus":    apiBase + "/account/rate_limit_status.json",
-	"AccountUpdateProfile":      apiBase + "/account/update_profile.json",
-	"AccountNotification":       apiBase + "/account/notification.json",
-	"AccountUpdateNotifyNum":    apiBase + "/account/update_notify_num.json",
-	"AccountNotifyNum":          apiBase + "/account/notify_num.json",
+	"UsersTagged": endpointItem{
+		URL:    apiBase + "/users/tagged.json",
+		Method: http.MethodGet,
+	},
+	"UsersShow": endpointItem{
+		URL:    apiBase + "/users/show.json",
+		Method: http.MethodGet,
+	},
+	"UsersTagList": endpointItem{
+		URL:    apiBase + "/users/tag_list.json",
+		Method: http.MethodGet,
+	},
+	"UsersFollowers": endpointItem{
+		URL:    apiBase + "/users/followers.json",
+		Method: http.MethodGet,
+	},
+	"UsersRecommendation": endpointItem{
+		URL:    apiBase + "/2/users/recommendation.json",
+		Method: http.MethodGet,
+	},
+	"UsersCancelRecommendation": endpointItem{
+		URL:    apiBase + "/2/users/cancel_recommendation.json",
+		Method: http.MethodPost,
+	},
+	"UsersFriends": endpointItem{
+		URL:    apiBase + "/users/friends.json",
+		Method: http.MethodGet,
+	},
 
-	"SavedSearchesCreate":  apiBase + "/saved_searches/create.json",
-	"SavedSearchesDestroy": apiBase + "/saved_searches/destroy.json",
-	"SavedSearchesShow":    apiBase + "/saved_searches/show.json",
-	"SavedSearchesList":    apiBase + "/saved_searches/list.json",
+	"AccountVerifyCredentials": endpointItem{
+		URL:    apiBase + "/account/verify_credentials.json",
+		Method: http.MethodGet,
+	},
+	"AccountUpdateProfileImage": endpointItem{
+		URL:    apiBase + "/account/update_profile_image.json",
+		Method: http.MethodPost,
+	},
+	"AccountRateLimitStatus": endpointItem{
+		URL:    apiBase + "/account/rate_limit_status.json",
+		Method: http.MethodGet,
+	},
+	"AccountUpdateProfile": endpointItem{
+		URL:    apiBase + "/account/update_profile.json",
+		Method: http.MethodPost,
+	},
+	"AccountNotification": endpointItem{
+		URL:    apiBase + "/account/notification.json",
+		Method: http.MethodGet,
+	},
+	"AccountUpdateNotifyNum": endpointItem{
+		URL:    apiBase + "/account/update_notify_num.json",
+		Method: http.MethodPost,
+	},
+	"AccountNotifyNum": endpointItem{
+		URL:    apiBase + "/account/notify_num.json",
+		Method: http.MethodGet,
+	},
 
-	"PhotosUserTimeline": apiBase + "/photos/user_timeline.json",
-	"PhotosUpload":       apiBase + "/photos/upload.json",
+	"SavedSearchesCreate": endpointItem{
+		URL:    apiBase + "/saved_searches/create.json",
+		Method: http.MethodPost,
+	},
+	"SavedSearchesDestroy": endpointItem{
+		URL:    apiBase + "/saved_searches/destroy.json",
+		Method: http.MethodPost,
+	},
+	"SavedSearchesShow": endpointItem{
+		URL:    apiBase + "/saved_searches/show.json",
+		Method: http.MethodGet,
+	},
+	"SavedSearchesList": endpointItem{
+		URL:    apiBase + "/saved_searches/list.json",
+		Method: http.MethodGet,
+	},
 
-	"TrendsList": apiBase + "/trends/list.json",
+	"PhotosUserTimeline": endpointItem{
+		URL:    apiBase + "/photos/user_timeline.json",
+		Method: http.MethodGet,
+	},
+	"PhotosUpload": endpointItem{
+		URL:    apiBase + "/photos/upload.json",
+		Method: http.MethodPost,
+	},
 
-	"FollowersIDs": apiBase + "/followers/ids.json",
+	"TrendsList": endpointItem{
+		URL:    apiBase + "/trends/list.json",
+		Method: http.MethodGet,
+	},
 
-	"FavoritesDestroy": apiBase + "/favorites/destroy.json",
-	"Favorites":        apiBase + "/favorites.json",
-	"FavoritesCreate":  apiBase + "/favorites/create.json",
+	"FollowersIDs": endpointItem{
+		URL:    apiBase + "/followers/ids.json",
+		Method: http.MethodGet,
+	},
 
-	"FriendshipsCreate":   apiBase + "/friendships/create.json",
-	"FriendshipsDestroy":  apiBase + "/friendships/destroy.json",
-	"FriendshipsRequests": apiBase + "/friendships/requests.json",
-	"FriendshipsDeny":     apiBase + "/friendships/deny.json",
-	"FriendshipsExists":   apiBase + "/friendships/exists.json",
-	"FriendshipsAccept":   apiBase + "/friendships/accept.json",
-	"FriendshipsShow":     apiBase + "/friendships/show.json",
+	"FavoritesDestroy": endpointItem{
+		URL:    apiBase + "/favorites/destroy.json",
+		Method: http.MethodPost,
+	},
+	"Favorites": endpointItem{
+		URL:    apiBase + "/favorites.json",
+		Method: http.MethodGet,
+	},
+	"FavoritesCreate": endpointItem{
+		URL:    apiBase + "/favorites/create.json",
+		Method: http.MethodPost,
+	},
 
-	"FriendsIDs": apiBase + "/friends/ids.json",
+	"FriendshipsCreate": endpointItem{
+		URL:    apiBase + "/friendships/create.json",
+		Method: http.MethodPost,
+	},
+	"FriendshipsDestroy": endpointItem{
+		URL:    apiBase + "/friendships/destroy.json",
+		Method: http.MethodPost,
+	},
+	"FriendshipsRequests": endpointItem{
+		URL:    apiBase + "/friendships/requests.json",
+		Method: http.MethodGet,
+	},
+	"FriendshipsDeny": endpointItem{
+		URL:    apiBase + "/friendships/deny.json",
+		Method: http.MethodPost,
+	},
+	"FriendshipsExists": endpointItem{
+		URL:    apiBase + "/friendships/exists.json",
+		Method: http.MethodGet,
+	},
+	"FriendshipsAccept": endpointItem{
+		URL:    apiBase + "/friendships/accept.json",
+		Method: http.MethodPost,
+	},
+	"FriendshipsShow": endpointItem{
+		URL:    apiBase + "/friendships/show.json",
+		Method: http.MethodGet,
+	},
 
-	"StatusesDestroy":         apiBase + "/statuses/destroy.json",
-	"StatusesHomeTimeline":    apiBase + "/statuses/home_timeline.json",
-	"StatusesPublicTimeline":  apiBase + "/statuses/public_timeline.json",
-	"StatusesReplies":         apiBase + "/statuses/replies.json",
-	"StatusesFollowers":       apiBase + "/statuses/followers.json",
-	"StatusesUpdate":          apiBase + "/statuses/update.json",
-	"StatusesUserTimeline":    apiBase + "/statuses/user_timeline.json",
-	"StatusesFriends":         apiBase + "/statuses/friends.json",
-	"StatusesContextTimeline": apiBase + "/statuses/context_timeline.json",
-	"StatusesMentions":        apiBase + "/statuses/mentions.json",
-	"StatusesShow":            apiBase + "/statuses/show.json",
+	"FriendsIDs": endpointItem{
+		URL:    apiBase + "/friends/ids.json",
+		Method: http.MethodGet,
+	},
 
-	"DirectMessagesDestroy":          apiBase + "/direct_messages/destroy.json",
-	"DirectMessagesConversation":     apiBase + "/direct_messages/conversation.json",
-	"DirectMessagesNew":              apiBase + "/direct_messages/new.json",
-	"DirectMessagesConversationList": apiBase + "/direct_messages/conversation_list.json",
-	"DirectMessagesInbox":            apiBase + "/direct_messages/inbox.json",
-	"DirectMessagesSent":             apiBase + "/direct_messages/sent.json",
+	"StatusesDestroy": endpointItem{
+		URL:    apiBase + "/statuses/destroy.json",
+		Method: http.MethodPost,
+	},
+	"StatusesHomeTimeline": endpointItem{
+		URL:    apiBase + "/statuses/home_timeline.json",
+		Method: http.MethodGet,
+	},
+	"StatusesPublicTimeline": endpointItem{
+		URL:    apiBase + "/statuses/public_timeline.json",
+		Method: http.MethodGet,
+	},
+	"StatusesReplies": endpointItem{
+		URL:    apiBase + "/statuses/replies.json",
+		Method: http.MethodGet,
+	},
+	"StatusesFollowers": endpointItem{
+		URL:    apiBase + "/statuses/followers.json",
+		Method: http.MethodGet,
+	},
+	"StatusesUpdate": endpointItem{
+		URL:    apiBase + "/statuses/update.json",
+		Method: http.MethodPost,
+	},
+	"StatusesUserTimeline": endpointItem{
+		URL:    apiBase + "/statuses/user_timeline.json",
+		Method: http.MethodGet,
+	},
+	"StatusesFriends": endpointItem{
+		URL:    apiBase + "/statuses/friends.json",
+		Method: http.MethodGet,
+	},
+	"StatusesContextTimeline": endpointItem{
+		URL:    apiBase + "/statuses/context_timeline.json",
+		Method: http.MethodGet,
+	},
+	"StatusesMentions": endpointItem{
+		URL:    apiBase + "/statuses/mentions.json",
+		Method: http.MethodGet,
+	},
+	"StatusesShow": endpointItem{
+		URL:    apiBase + "/statuses/show.json",
+		Method: http.MethodGet,
+	},
+
+	"DirectMessagesDestroy": endpointItem{
+		URL:    apiBase + "/direct_messages/destroy.json",
+		Method: http.MethodPost,
+	},
+	"DirectMessagesConversation": endpointItem{
+		URL:    apiBase + "/direct_messages/conversation.json",
+		Method: http.MethodGet,
+	},
+	"DirectMessagesNew": endpointItem{
+		URL:    apiBase + "/direct_messages/new.json",
+		Method: http.MethodPost,
+	},
+	"DirectMessagesConversationList": endpointItem{
+		URL:    apiBase + "/direct_messages/conversation_list.json",
+		Method: http.MethodGet,
+	},
+	"DirectMessagesInbox": endpointItem{
+		URL:    apiBase + "/direct_messages/inbox.json",
+		Method: http.MethodGet,
+	},
+	"DirectMessagesSent": endpointItem{
+		URL:    apiBase + "/direct_messages/sent.json",
+		Method: http.MethodGet,
+	},
 }
 
 // search
 
 func (client *httpClientWrapper) SearchPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["SearchPublicTimeline"], params)
+	ep := endpoints["SearchPublicTimeline"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request SearchPublicTimeline: %+v", err)
@@ -94,7 +274,8 @@ func (client *httpClientWrapper) SearchPublicTimeline(params *ReqParams) ([]*res
 }
 
 func (client *httpClientWrapper) SearchUsers(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["SearchUsers"], params)
+	ep := endpoints["SearchUsers"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request SearchUsers: %+v", err)
@@ -106,7 +287,8 @@ func (client *httpClientWrapper) SearchUsers(params *ReqParams) ([]*responseUser
 }
 
 func (client *httpClientWrapper) SearchUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["SearchUserTimeline"], params)
+	ep := endpoints["SearchUserTimeline"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request SearchUserTimeline: %+v", err)
@@ -120,7 +302,8 @@ func (client *httpClientWrapper) SearchUserTimeline(params *ReqParams) ([]*respo
 // blocks
 
 func (client *httpClientWrapper) BlocksIDs(params *ReqParams) ([]responseUserID, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["BlocksIDs"], params)
+	ep := endpoints["BlocksIDs"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request BlocksIDs: %+v", err)
@@ -132,7 +315,8 @@ func (client *httpClientWrapper) BlocksIDs(params *ReqParams) ([]responseUserID,
 }
 
 func (client *httpClientWrapper) BlocksBlocking(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["BlocksBlocking"], params)
+	ep := endpoints["BlocksBlocking"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request BlocksBlocking: %+v", err)
@@ -144,7 +328,8 @@ func (client *httpClientWrapper) BlocksBlocking(params *ReqParams) ([]*responseU
 }
 
 func (client *httpClientWrapper) BlocksCreate(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["BlocksCreate"], params)
+	ep := endpoints["BlocksCreate"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request BlocksCreate: %+v", err)
@@ -156,7 +341,8 @@ func (client *httpClientWrapper) BlocksCreate(params *ReqParams) (*responseUser,
 }
 
 func (client *httpClientWrapper) BlocksExists(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["BlocksExists"], params)
+	ep := endpoints["BlocksExists"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request BlocksExists: %+v", err)
@@ -168,7 +354,8 @@ func (client *httpClientWrapper) BlocksExists(params *ReqParams) (*responseUser,
 }
 
 func (client *httpClientWrapper) BlocksDestroy(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["BlocksDestroy"], params)
+	ep := endpoints["BlocksDestroy"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request BlocksDestroy: %+v", err)
@@ -182,7 +369,8 @@ func (client *httpClientWrapper) BlocksDestroy(params *ReqParams) (*responseUser
 // users
 
 func (client *httpClientWrapper) UsersTagged(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["UsersTagged"], params)
+	ep := endpoints["UsersTagged"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersTagged: %+v", err)
@@ -194,7 +382,8 @@ func (client *httpClientWrapper) UsersTagged(params *ReqParams) ([]*responseUser
 }
 
 func (client *httpClientWrapper) UsersShow(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["UsersShow"], params)
+	ep := endpoints["UsersShow"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersShow: %+v", err)
@@ -206,7 +395,8 @@ func (client *httpClientWrapper) UsersShow(params *ReqParams) (*responseUser, []
 }
 
 func (client *httpClientWrapper) UsersTagList(params *ReqParams) ([]responseTag, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["UsersTagList"], params)
+	ep := endpoints["UsersTagList"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersTagList: %+v", err)
@@ -218,7 +408,8 @@ func (client *httpClientWrapper) UsersTagList(params *ReqParams) ([]responseTag,
 }
 
 func (client *httpClientWrapper) UsersFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["UsersFollowers"], params)
+	ep := endpoints["UsersFollowers"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersFollowers: %+v", err)
@@ -230,7 +421,8 @@ func (client *httpClientWrapper) UsersFollowers(params *ReqParams) ([]*responseU
 }
 
 func (client *httpClientWrapper) UsersRecommendation(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["UsersRecommendation"], params)
+	ep := endpoints["UsersRecommendation"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersRecommendation: %+v", err)
@@ -242,7 +434,8 @@ func (client *httpClientWrapper) UsersRecommendation(params *ReqParams) ([]*resp
 }
 
 func (client *httpClientWrapper) UsersCancelRecommendation(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["UsersCancelRecommendation"], params)
+	ep := endpoints["UsersCancelRecommendation"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersCancelRecommendation: %+v", err)
@@ -254,7 +447,8 @@ func (client *httpClientWrapper) UsersCancelRecommendation(params *ReqParams) (*
 }
 
 func (client *httpClientWrapper) UsersFriends(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["UsersFriends"], params)
+	ep := endpoints["UsersFriends"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersFriends: %+v", err)
@@ -268,7 +462,8 @@ func (client *httpClientWrapper) UsersFriends(params *ReqParams) ([]*responseUse
 // account
 
 func (client *httpClientWrapper) AccountVerifyCredentials(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["AccountVerifyCredentials"], params)
+	ep := endpoints["AccountVerifyCredentials"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountVerifyCredentials: %+v", err)
@@ -280,7 +475,8 @@ func (client *httpClientWrapper) AccountVerifyCredentials(params *ReqParams) (*r
 }
 
 func (client *httpClientWrapper) AccountUpdateProfileImage(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest("image", "", params)
+	ep := endpoints["AccountUpdateProfileImage"]
+	data, err := client.makeRequest(ep.Method, "image", params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountUpdateProfileImage: %+v", err)
@@ -292,7 +488,8 @@ func (client *httpClientWrapper) AccountUpdateProfileImage(params *ReqParams) (*
 }
 
 func (client *httpClientWrapper) AccountRateLimitStatus(params *ReqParams) (*responseRateLimitStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["AccountRateLimitStatus"], params)
+	ep := endpoints["AccountRateLimitStatus"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountRateLimitStatus: %+v", err)
@@ -304,7 +501,8 @@ func (client *httpClientWrapper) AccountRateLimitStatus(params *ReqParams) (*res
 }
 
 func (client *httpClientWrapper) AccountUpdateProfile(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["AccountUpdateProfile"], params)
+	ep := endpoints["AccountUpdateProfile"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountUpdateProfile: %+v", err)
@@ -316,7 +514,8 @@ func (client *httpClientWrapper) AccountUpdateProfile(params *ReqParams) (*respo
 }
 
 func (client *httpClientWrapper) AccountNotification(params *ReqParams) (*responseAccountNotification, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["AccountNotification"], params)
+	ep := endpoints["AccountNotification"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountNotification: %+v", err)
@@ -328,7 +527,8 @@ func (client *httpClientWrapper) AccountNotification(params *ReqParams) (*respon
 }
 
 func (client *httpClientWrapper) AccountUpdateNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["AccountUpdateNotifyNum"], params)
+	ep := endpoints["AccountUpdateNotifyNum"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountUpdateNotifyNum: %+v", err)
@@ -340,7 +540,8 @@ func (client *httpClientWrapper) AccountUpdateNotifyNum(params *ReqParams) (*res
 }
 
 func (client *httpClientWrapper) AccountNotifyNum(params *ReqParams) (*responseNotifyNum, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["AccountNotifyNum"], params)
+	ep := endpoints["AccountNotifyNum"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountNotifyNum: %+v", err)
@@ -354,7 +555,8 @@ func (client *httpClientWrapper) AccountNotifyNum(params *ReqParams) (*responseN
 // saved searches
 
 func (client *httpClientWrapper) SavedSearchesCreate(params *ReqParams) (*responseSavedSearch, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["SavedSearchesCreate"], params)
+	ep := endpoints["SavedSearchesCreate"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request SavedSearchesCreate: %+v", err)
@@ -366,7 +568,8 @@ func (client *httpClientWrapper) SavedSearchesCreate(params *ReqParams) (*respon
 }
 
 func (client *httpClientWrapper) SavedSearchesDestroy(params *ReqParams) (*responseSavedSearch, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["SavedSearchesDestroy"], params)
+	ep := endpoints["SavedSearchesDestroy"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request SavedSearchesDestroy: %+v", err)
@@ -378,7 +581,8 @@ func (client *httpClientWrapper) SavedSearchesDestroy(params *ReqParams) (*respo
 }
 
 func (client *httpClientWrapper) SavedSearchesShow(params *ReqParams) (*responseSavedSearch, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["SavedSearchesShow"], params)
+	ep := endpoints["SavedSearchesShow"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request SavedSearchesShow: %+v", err)
@@ -390,7 +594,8 @@ func (client *httpClientWrapper) SavedSearchesShow(params *ReqParams) (*response
 }
 
 func (client *httpClientWrapper) SavedSearchesList(params *ReqParams) ([]*responseSavedSearch, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["SavedSearchesList"], params)
+	ep := endpoints["SavedSearchesList"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request SavedSearchesList: %+v", err)
@@ -404,7 +609,8 @@ func (client *httpClientWrapper) SavedSearchesList(params *ReqParams) ([]*respon
 // photos
 
 func (client *httpClientWrapper) PhotosUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["PhotosUserTimeline"], params)
+	ep := endpoints["PhotosUserTimeline"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request PhotosUserTimeline: %+v", err)
@@ -416,7 +622,8 @@ func (client *httpClientWrapper) PhotosUserTimeline(params *ReqParams) ([]*respo
 }
 
 func (client *httpClientWrapper) PhotosUpload(params *ReqParams) (*responseStatus, []byte, error) {
-	data, err := client.makeRequest("photo", "", params)
+	ep := endpoints["PhotosUpload"]
+	data, err := client.makeRequest(ep.Method, "photo", params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request PhotosUpload: %+v", err)
@@ -430,7 +637,8 @@ func (client *httpClientWrapper) PhotosUpload(params *ReqParams) (*responseStatu
 // trends
 
 func (client *httpClientWrapper) TrendsList(params *ReqParams) (*responseTrends, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["TrendsList"], params)
+	ep := endpoints["TrendsList"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request TrendsList: %+v", err)
@@ -444,7 +652,8 @@ func (client *httpClientWrapper) TrendsList(params *ReqParams) (*responseTrends,
 // followers
 
 func (client *httpClientWrapper) FollowersIDs(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["FollowersIDs"], params)
+	ep := endpoints["FollowersIDs"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FollowersIDs: %+v", err)
@@ -458,7 +667,8 @@ func (client *httpClientWrapper) FollowersIDs(params *ReqParams) ([]*responseUse
 // favorites
 
 func (client *httpClientWrapper) FavoritesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["FavoritesDestroy"], params)
+	ep := endpoints["FavoritesDestroy"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FavoritesDestroy: %+v", err)
@@ -470,7 +680,8 @@ func (client *httpClientWrapper) FavoritesDestroy(params *ReqParams) (*responseS
 }
 
 func (client *httpClientWrapper) Favorites(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["Favorites"], params)
+	ep := endpoints["Favorites"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request Favorites: %+v", err)
@@ -482,7 +693,8 @@ func (client *httpClientWrapper) Favorites(params *ReqParams) ([]*responseStatus
 }
 
 func (client *httpClientWrapper) FavoritesCreate(params *ReqParams) (*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["FavoritesCreate"], params)
+	ep := endpoints["FavoritesCreate"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FavoritesCreate: %+v", err)
@@ -496,7 +708,8 @@ func (client *httpClientWrapper) FavoritesCreate(params *ReqParams) (*responseSt
 // friendships
 
 func (client *httpClientWrapper) FriendshipsCreate(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["FriendshipsCreate"], params)
+	ep := endpoints["FriendshipsCreate"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendshipsCreate: %+v", err)
@@ -508,7 +721,8 @@ func (client *httpClientWrapper) FriendshipsCreate(params *ReqParams) (*response
 }
 
 func (client *httpClientWrapper) FriendshipsDestroy(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["FriendshipsDestroy"], params)
+	ep := endpoints["FriendshipsDestroy"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendshipsDestroy: %+v", err)
@@ -520,7 +734,8 @@ func (client *httpClientWrapper) FriendshipsDestroy(params *ReqParams) (*respons
 }
 
 func (client *httpClientWrapper) FriendshipsRequests(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["FriendshipsRequests"], params)
+	ep := endpoints["FriendshipsRequests"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendshipsRequests: %+v", err)
@@ -532,7 +747,8 @@ func (client *httpClientWrapper) FriendshipsRequests(params *ReqParams) ([]*resp
 }
 
 func (client *httpClientWrapper) FriendshipsDeny(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["FriendshipsDeny"], params)
+	ep := endpoints["FriendshipsDeny"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendshipsDeny: %+v", err)
@@ -544,7 +760,8 @@ func (client *httpClientWrapper) FriendshipsDeny(params *ReqParams) (*responseUs
 }
 
 func (client *httpClientWrapper) FriendshipsExists(params *ReqParams) (bool, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["FriendshipsExists"], params)
+	ep := endpoints["FriendshipsExists"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return false, nil, fmt.Errorf("Failed to request FriendshipsExists: %+v", err)
@@ -556,7 +773,8 @@ func (client *httpClientWrapper) FriendshipsExists(params *ReqParams) (bool, []b
 }
 
 func (client *httpClientWrapper) FriendshipsAccept(params *ReqParams) (*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["FriendshipsAccept"], params)
+	ep := endpoints["FriendshipsAccept"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendshipsAccept: %+v", err)
@@ -568,7 +786,8 @@ func (client *httpClientWrapper) FriendshipsAccept(params *ReqParams) (*response
 }
 
 func (client *httpClientWrapper) FriendshipsShow(params *ReqParams) (*responseFriendship, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["FriendshipsShow"], params)
+	ep := endpoints["FriendshipsShow"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendshipsShow: %+v", err)
@@ -582,7 +801,8 @@ func (client *httpClientWrapper) FriendshipsShow(params *ReqParams) (*responseFr
 // friends
 
 func (client *httpClientWrapper) FriendsIDs(params *ReqParams) ([]responseUserID, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["FriendsIDs"], params)
+	ep := endpoints["FriendsIDs"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendsIDs: %+v", err)
@@ -596,7 +816,8 @@ func (client *httpClientWrapper) FriendsIDs(params *ReqParams) ([]responseUserID
 // statuses
 
 func (client *httpClientWrapper) StatusesDestroy(params *ReqParams) (*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["StatusesDestroy"], params)
+	ep := endpoints["StatusesDestroy"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesDestroy: %+v", err)
@@ -608,7 +829,8 @@ func (client *httpClientWrapper) StatusesDestroy(params *ReqParams) (*responseSt
 }
 
 func (client *httpClientWrapper) StatusesHomeTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesHomeTimeline"], params)
+	ep := endpoints["StatusesHomeTimeline"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesHomeTimeline: %+v", err)
@@ -620,7 +842,8 @@ func (client *httpClientWrapper) StatusesHomeTimeline(params *ReqParams) ([]*res
 }
 
 func (client *httpClientWrapper) StatusesPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesPublicTimeline"], params)
+	ep := endpoints["StatusesPublicTimeline"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesPublicTimeline: %+v", err)
@@ -632,7 +855,8 @@ func (client *httpClientWrapper) StatusesPublicTimeline(params *ReqParams) ([]*r
 }
 
 func (client *httpClientWrapper) StatusesReplies(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesReplies"], params)
+	ep := endpoints["StatusesReplies"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesReplies: %+v", err)
@@ -644,7 +868,8 @@ func (client *httpClientWrapper) StatusesReplies(params *ReqParams) ([]*response
 }
 
 func (client *httpClientWrapper) StatusesFollowers(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesFollowers"], params)
+	ep := endpoints["StatusesFollowers"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesFollowers: %+v", err)
@@ -656,7 +881,8 @@ func (client *httpClientWrapper) StatusesFollowers(params *ReqParams) ([]*respon
 }
 
 func (client *httpClientWrapper) StatusesUpdate(params *ReqParams) (*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["StatusesUpdate"], params)
+	ep := endpoints["StatusesUpdate"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesUpdate: %+v", err)
@@ -668,7 +894,8 @@ func (client *httpClientWrapper) StatusesUpdate(params *ReqParams) (*responseSta
 }
 
 func (client *httpClientWrapper) StatusesUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesUserTimeline"], params)
+	ep := endpoints["StatusesUserTimeline"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesUserTimeline: %+v", err)
@@ -680,7 +907,8 @@ func (client *httpClientWrapper) StatusesUserTimeline(params *ReqParams) ([]*res
 }
 
 func (client *httpClientWrapper) StatusesFriends(params *ReqParams) ([]*responseUser, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesFriends"], params)
+	ep := endpoints["StatusesFriends"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesFriends: %+v", err)
@@ -692,7 +920,8 @@ func (client *httpClientWrapper) StatusesFriends(params *ReqParams) ([]*response
 }
 
 func (client *httpClientWrapper) StatusesContextTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesContextTimeline"], params)
+	ep := endpoints["StatusesContextTimeline"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesContextTimeline: %+v", err)
@@ -704,7 +933,8 @@ func (client *httpClientWrapper) StatusesContextTimeline(params *ReqParams) ([]*
 }
 
 func (client *httpClientWrapper) StatusesMentions(params *ReqParams) ([]*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesMentions"], params)
+	ep := endpoints["StatusesMentions"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesMentions: %+v", err)
@@ -716,7 +946,8 @@ func (client *httpClientWrapper) StatusesMentions(params *ReqParams) ([]*respons
 }
 
 func (client *httpClientWrapper) StatusesShow(params *ReqParams) (*responseStatus, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["StatusesShow"], params)
+	ep := endpoints["StatusesShow"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request StatusesShow: %+v", err)
@@ -730,7 +961,8 @@ func (client *httpClientWrapper) StatusesShow(params *ReqParams) (*responseStatu
 // direct messages
 
 func (client *httpClientWrapper) DirectMessagesDestroy(params *ReqParams) (*responseDirectMessage, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["DirectMessagesDestroy"], params)
+	ep := endpoints["DirectMessagesDestroy"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request DirectMessagesDestroy: %+v", err)
@@ -742,7 +974,8 @@ func (client *httpClientWrapper) DirectMessagesDestroy(params *ReqParams) (*resp
 }
 
 func (client *httpClientWrapper) DirectMessagesConversation(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["DirectMessagesConversation"], params)
+	ep := endpoints["DirectMessagesConversation"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request DirectMessagesConversation: %+v", err)
@@ -754,7 +987,8 @@ func (client *httpClientWrapper) DirectMessagesConversation(params *ReqParams) (
 }
 
 func (client *httpClientWrapper) DirectMessagesNew(params *ReqParams) (*responseDirectMessage, []byte, error) {
-	data, err := client.makeRequest(http.MethodPost, endpoints["DirectMessagesNew"], params)
+	ep := endpoints["DirectMessagesNew"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request DirectMessagesNew: %+v", err)
@@ -766,7 +1000,8 @@ func (client *httpClientWrapper) DirectMessagesNew(params *ReqParams) (*response
 }
 
 func (client *httpClientWrapper) DirectMessagesConversationList(params *ReqParams) ([]*responseDirectMessageConversationItem, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["DirectMessagesConversationList"], params)
+	ep := endpoints["DirectMessagesConversationList"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request DirectMessagesConversationList: %+v", err)
@@ -778,7 +1013,8 @@ func (client *httpClientWrapper) DirectMessagesConversationList(params *ReqParam
 }
 
 func (client *httpClientWrapper) DirectMessagesInbox(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["DirectMessagesInbox"], params)
+	ep := endpoints["DirectMessagesInbox"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request DirectMessagesInbox: %+v", err)
@@ -790,7 +1026,8 @@ func (client *httpClientWrapper) DirectMessagesInbox(params *ReqParams) ([]*resp
 }
 
 func (client *httpClientWrapper) DirectMessagesSent(params *ReqParams) ([]*responseDirectMessage, []byte, error) {
-	data, err := client.makeRequest(http.MethodGet, endpoints["DirectMessagesSent"], params)
+	ep := endpoints["DirectMessagesSent"]
+	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request DirectMessagesSent: %+v", err)
