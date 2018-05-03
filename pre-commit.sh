@@ -1,13 +1,13 @@
 #!/bin/bash
 # ln -s $PWD/pre-commit.sh .git/hooks/pre-commit
-go test *.go
+go test ./fanfou
 RESULT=$?
 if [[ $RESULT != 0 ]]; then
     echo "REJECTING COMMIT (test failed with status: $RESULT)"
     exit 1;
 fi
 
-go fmt *.go
+go fmt ./...
 for e in $(ls examples); do 
     go build examples/$e/*.go
     RESULT=$?
