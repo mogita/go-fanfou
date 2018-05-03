@@ -40,6 +40,13 @@ var endpoints = map[string]string{
 	"SavedSearchesShow":    apiBase + "/saved_searches/show.json",
 	"SavedSearchesList":    apiBase + "/saved_searches/list.json",
 
+	"PhotosUserTimeline": apiBase + "/photos/user_timeline.json",
+	"PhotosUpload":       apiBase + "/photos/upload.json",
+
+	"TrendsList": apiBase + "/trends/list.json",
+
+	"FollowersIDs": apiBase + "/followers/ids.json",
+
 	"FavoritesDestroy": apiBase + "/favorites/destroy.json",
 	"Favorites":        apiBase + "/favorites.json",
 	"FavoritesCreate":  apiBase + "/favorites/create.json",
@@ -51,6 +58,8 @@ var endpoints = map[string]string{
 	"FriendshipsExists":   apiBase + "/friendships/exists.json",
 	"FriendshipsAccept":   apiBase + "/friendships/accept.json",
 	"FriendshipsShow":     apiBase + "/friendships/show.json",
+
+	"FriendsIDs": apiBase + "/friends/ids.json",
 
 	"StatusesDestroy":         apiBase + "/statuses/destroy.json",
 	"StatusesHomeTimeline":    apiBase + "/statuses/home_timeline.json",
@@ -110,16 +119,16 @@ func (client *httpClientWrapper) SearchUserTimeline(params *ReqParams) ([]*respo
 
 // blocks
 
-func (client *httpClientWrapper) BlocksIDs(params *ReqParams) (*responseBlockIDs, []byte, error) {
+func (client *httpClientWrapper) BlocksIDs(params *ReqParams) ([]responseUserID, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["BlocksIDs"], params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request BlocksIDs: %+v", err)
 	}
 
-	ret := responseBlockIDs{}
+	ret := []responseUserID{}
 	err = json.Unmarshal(data, &ret)
-	return &ret, data, err
+	return ret, data, err
 }
 
 func (client *httpClientWrapper) BlocksBlocking(params *ReqParams) ([]*responseUser, []byte, error) {
@@ -196,14 +205,14 @@ func (client *httpClientWrapper) UsersShow(params *ReqParams) (*responseUser, []
 	return &ret, data, err
 }
 
-func (client *httpClientWrapper) UsersTagList(params *ReqParams) (responseTags, []byte, error) {
+func (client *httpClientWrapper) UsersTagList(params *ReqParams) ([]responseTag, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["UsersTagList"], params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request UsersTagList: %+v", err)
 	}
 
-	ret := responseTags{}
+	ret := []responseTag{}
 	err = json.Unmarshal(data, &ret)
 	return ret, data, err
 }
@@ -392,10 +401,7 @@ func (client *httpClientWrapper) SavedSearchesList(params *ReqParams) ([]*respon
 	return ret, data, err
 }
 
-const (
-	apiPhotosUserTimeline = apiBase + "/photos/user_timeline.json"
-	apiPhotosUpload       = apiBase + "/photos/upload.json"
-)
+// photos
 
 func (client *httpClientWrapper) PhotosUserTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["PhotosUserTimeline"], params)
@@ -421,9 +427,7 @@ func (client *httpClientWrapper) PhotosUpload(params *ReqParams) (*responseStatu
 	return &ret, data, err
 }
 
-const (
-	apiTrendsList = apiBase + "/trends/list.json"
-)
+// trends
 
 func (client *httpClientWrapper) TrendsList(params *ReqParams) (*responseTrends, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["TrendsList"], params)
@@ -437,9 +441,7 @@ func (client *httpClientWrapper) TrendsList(params *ReqParams) (*responseTrends,
 	return &ret, data, err
 }
 
-const (
-	apiFollowersIDs = apiBase + "/followers/ids.json"
-)
+// followers
 
 func (client *httpClientWrapper) FollowersIDs(params *ReqParams) ([]*responseUser, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["FollowersIDs"], params)
@@ -541,16 +543,16 @@ func (client *httpClientWrapper) FriendshipsDeny(params *ReqParams) (*responseUs
 	return &ret, data, err
 }
 
-func (client *httpClientWrapper) FriendshipsExists(params *ReqParams) (*bool, []byte, error) {
+func (client *httpClientWrapper) FriendshipsExists(params *ReqParams) (bool, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["FriendshipsExists"], params)
 
 	if err != nil {
-		return nil, nil, fmt.Errorf("Failed to request FriendshipsExists: %+v", err)
+		return false, nil, fmt.Errorf("Failed to request FriendshipsExists: %+v", err)
 	}
 
 	var ret bool
 	err = json.Unmarshal(data, &ret)
-	return &ret, data, err
+	return ret, data, err
 }
 
 func (client *httpClientWrapper) FriendshipsAccept(params *ReqParams) (*responseUser, []byte, error) {
@@ -577,18 +579,16 @@ func (client *httpClientWrapper) FriendshipsShow(params *ReqParams) (*responseFr
 	return &ret, data, err
 }
 
-const (
-	apiFriendsIDs = apiBase + "/friends/ids.json"
-)
+// friends
 
-func (client *httpClientWrapper) FriendsIDs(params *ReqParams) (responseFriendsIDs, []byte, error) {
+func (client *httpClientWrapper) FriendsIDs(params *ReqParams) ([]responseUserID, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["FriendsIDs"], params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request FriendsIDs: %+v", err)
 	}
 
-	ret := responseFriendsIDs{}
+	ret := []responseUserID{}
 	err = json.Unmarshal(data, &ret)
 	return ret, data, err
 }

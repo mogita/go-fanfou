@@ -88,10 +88,6 @@ type responseRepostStatus struct {
 	User                responseUser `json:"user"`
 }
 
-type responseBlockIDs []responseUserID
-
-type responseTags []responseTag
-
 type responseRateLimitStatus struct {
 	ResetTime          string `json:"reset_time"`
 	RemainingHits      int    `json:"remaining_hits"`
@@ -146,8 +142,6 @@ type responseFriendship struct {
 		} `json:"target"`
 	} `json:"relationship"`
 }
-
-type responseFriendsIDs []responseUserID
 
 type responseDirectMessage struct {
 	ID                  string `json:"id"`
