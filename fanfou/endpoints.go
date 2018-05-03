@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-// search
-
 var endpoints = map[string]string{
 	"SearchPublicTimeline": apiBase + "/search/public_timeline.json",
 	"SearchUsers":          apiBase + "/search/users.json",
@@ -80,6 +78,8 @@ var endpoints = map[string]string{
 	"DirectMessagesInbox":            apiBase + "/direct_messages/inbox.json",
 	"DirectMessagesSent":             apiBase + "/direct_messages/sent.json",
 }
+
+// search
 
 func (client *httpClientWrapper) SearchPublicTimeline(params *ReqParams) ([]*responseStatus, []byte, error) {
 	data, err := client.makeRequest(http.MethodGet, endpoints["SearchPublicTimeline"], params)
