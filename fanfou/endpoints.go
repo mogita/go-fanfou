@@ -475,8 +475,7 @@ func (client *httpClientWrapper) AccountVerifyCredentials(params *ReqParams) (*r
 }
 
 func (client *httpClientWrapper) AccountUpdateProfileImage(params *ReqParams) (*responseUser, []byte, error) {
-	ep := endpoints["AccountUpdateProfileImage"]
-	data, err := client.makeRequest(ep.Method, "image", params)
+	data, err := client.makeRequest("image", "", params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request AccountUpdateProfileImage: %+v", err)
@@ -622,8 +621,7 @@ func (client *httpClientWrapper) PhotosUserTimeline(params *ReqParams) ([]*respo
 }
 
 func (client *httpClientWrapper) PhotosUpload(params *ReqParams) (*responseStatus, []byte, error) {
-	ep := endpoints["PhotosUpload"]
-	data, err := client.makeRequest(ep.Method, "photo", params)
+	data, err := client.makeRequest("photo", "", params)
 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Failed to request PhotosUpload: %+v", err)
@@ -651,7 +649,7 @@ func (client *httpClientWrapper) TrendsList(params *ReqParams) (*responseTrends,
 
 // followers
 
-func (client *httpClientWrapper) FollowersIDs(params *ReqParams) ([]*responseUser, []byte, error) {
+func (client *httpClientWrapper) FollowersIDs(params *ReqParams) ([]responseUserID, []byte, error) {
 	ep := endpoints["FollowersIDs"]
 	data, err := client.makeRequest(ep.Method, ep.URL, params)
 
@@ -659,7 +657,7 @@ func (client *httpClientWrapper) FollowersIDs(params *ReqParams) ([]*responseUse
 		return nil, nil, fmt.Errorf("Failed to request FollowersIDs: %+v", err)
 	}
 
-	ret := []*responseUser{}
+	ret := []responseUserID{}
 	err = json.Unmarshal(data, &ret)
 	return ret, data, err
 }

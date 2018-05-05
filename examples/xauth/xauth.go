@@ -19,7 +19,7 @@ const (
 func main() {
 	client, _ := fanfou.NewClientWithXAuth(consumerKey, consumerSecret, username, password)
 
-	res, _, err := client.AccountVerifyCredentials(&fanfou.ReqParams{})
+	res, _, err := client.SearchPublicTimeline(&fanfou.ReqParams{Q: "有猫"})
 
 	if err != nil {
 		log.Fatal(err)
