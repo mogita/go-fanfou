@@ -56,6 +56,12 @@ const (
 	mockDirectMessage = `{"id":"wgFPBXHGdwQ","text":"test_direct_message","sender_id":"test","recipient_id":"lisztli","created_at":"Thu Nov 17 03:45:20 +0000 2011","sender_screen_name":"测试昵称","recipient_screen_name":"LisztLi","sender":{"id":"test","name":"测试昵称","screen_name":"测试昵称","location":"北京 海淀区","gender":"男","birthday":"2105-03-11","description":"测试帐号","profile_image_url":"http://avatar3.fanfou.com/s0/00/5n/sk.jpg?1320913295","profile_image_url_large":"http://avatar3.fanfou.com/l0/00/5n/sk.jpg?1320913295","url":"http://fanfou.com/test","protected":true,"followers_count":6,"friends_count":12,"favourites_count":25,"statuses_count":134,"following":false,"notifications":false,"created_at":"Sat Jun 09 23:56:33 +0000 2007","utc_offset":28800,"profile_background_color":"#ffffe5","profile_text_color":"#004040","profile_link_color":"#ff0000","profile_sidebar_fill_color":"#ffefbf","profile_sidebar_border_color":"#ffac80","profile_background_image_url":"http://avatar.fanfou.com/b0/00/5n/sk_1321293707.jpg","profile_background_tile":true},"recipient":{"id":"lisztli","name":"LisztLi","screen_name":"LisztLi","location":"北京 海淀区","gender":"男","birthday":"1986-02-07","description":"","profile_image_url":"http://avatar3.fanfou.com/s0/00/3z/3k.jpg?1308030845","profile_image_url_large":"http://avatar3.fanfou.com/l0/00/3z/3k.jpg?1308030845","url":"","protected":false,"followers_count":162,"friends_count":143,"favourites_count":12,"statuses_count":2668,"following":false,"notifications":false,"created_at":"Wed Sep 05 01:11:07 +0000 2007","utc_offset":28800,"profile_background_color":"#acdae5","profile_text_color":"#222222","profile_link_color":"#0066cc","profile_sidebar_fill_color":"#e2f2da","profile_sidebar_border_color":"#b2d1a3","profile_background_image_url":"http://avatar.fanfou.com/b0/00/3z/3k_1308411449.jpg","profile_background_tile":true},"in_reply_to":{"id":"2077","text":"reply_direct_message","sender_id":"lisztli","recipient_id":"test","created_at":"Thu Nov 16 03:45:20 +0000 2011","recipient_screen_name":"测试昵称","sender_screen_name":"LisztLi","recipient":{"id":"test","name":"测试昵称","screen_name":"测试昵称","location":"北京 海淀区","gender":"男","birthday":"2105-03-11","description":"测试帐号","profile_image_url":"http://avatar3.fanfou.com/s0/00/5n/sk.jpg?1320913295","profile_image_url_large":"http://avatar3.fanfou.com/l0/00/5n/sk.jpg?1320913295","url":"http://fanfou.com/test","protected":true,"followers_count":6,"friends_count":12,"favourites_count":25,"statuses_count":134,"following":false,"notifications":false,"created_at":"Sat Jun 09 23:56:33 +0000 2007","utc_offset":28800,"profile_background_color":"#ffffe5","profile_text_color":"#004040","profile_link_color":"#ff0000","profile_sidebar_fill_color":"#ffefbf","profile_sidebar_border_color":"#ffac80","profile_background_image_url":"http://avatar.fanfou.com/b0/00/5n/sk_1321293707.jpg","profile_background_tile":true},"sender":{"id":"lisztli","name":"LisztLi","screen_name":"LisztLi","location":"北京 海淀区","gender":"男","birthday":"1986-02-07","description":"","profile_image_url":"http://avatar3.fanfou.com/s0/00/3z/3k.jpg?1308030845","profile_image_url_large":"http://avatar3.fanfou.com/l0/00/3z/3k.jpg?1308030845","url":"","protected":false,"followers_count":162,"friends_count":143,"favourites_count":12,"statuses_count":2668,"following":false,"notifications":false,"created_at":"Wed Sep 05 01:11:07 +0000 2007","utc_offset":28800,"profile_background_color":"#acdae5","profile_text_color":"#222222","profile_link_color":"#0066cc","profile_sidebar_fill_color":"#e2f2da","profile_sidebar_border_color":"#b2d1a3","profile_background_image_url":"http://avatar.fanfou.com/b0/00/3z/3k_1308411449.jpg","profile_background_tile":true}}}`
 
 	mockDirectMessageConversationItem = `{"dm":{"id":"-SVsfHE_1RU","text":"asdf","sender_id":"zengke","recipient_id":"moon","created_at":"Wed Nov 02 07:49:55 +0000 2011","sender_screen_name":"曾科","recipient_screen_name":"穆荣均","sender":{"id":"zengke","name":"曾科","screen_name":"曾科","location":"","gender":"","birthday":"","description":"mujixx","profile_image_url":"http://avatar1.fanfou.com/s0/00/bm/pt.jpg?1320216698","profile_image_url_large":"http://avatar1.fanfou.com/l0/00/bm/pt.jpg?1320216698","url":"","protected":true,"followers_count":0,"friends_count":0,"favourites_count":0,"statuses_count":0,"following":true,"notifications":true,"created_at":"Mon Oct 06 11:03:08 +0000 2008","utc_offset":28800},"recipient":{"id":"moon","name":"穆荣均","screen_name":"穆荣均","location":"北京","gender":"男","birthday":"","description":"..","profile_image_url":"http://avatar.fanfou.com/s0/00/3e/r4.jpg?1319098444","profile_image_url_large":"http://avatar.fanfou.com/l0/00/3e/r4.jpg?1319098444","url":"","protected":false,"followers_count":0,"friends_count":0,"favourites_count":0,"statuses_count":0,"following":false,"notifications":false,"created_at":"Sat May 12 15:58:58 +0000 2007","utc_offset":28800}},"otherid":"zengke","msg_num":11,"new_conv":true}`
+
+	mockClientError = `{"request":"/account/show.json","error":"参数错误"}`
+
+	mockServerError = ``
+
+	mockChaosError = ``
 )
 
 var mockEndpoints = map[string]mockEndpointItem{
@@ -70,6 +76,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -91,6 +98,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -112,6 +120,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -134,6 +143,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -155,6 +165,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -176,6 +187,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -197,6 +209,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -218,6 +231,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -240,6 +254,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -261,6 +276,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -282,6 +298,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -303,6 +320,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -324,6 +342,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -345,6 +364,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -366,6 +386,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -388,6 +409,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -409,6 +431,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -430,6 +453,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -451,6 +475,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -472,6 +497,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -493,6 +519,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -514,6 +541,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -536,6 +564,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -557,6 +586,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -578,6 +608,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -599,6 +630,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -621,6 +653,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -642,6 +675,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -664,6 +698,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -686,6 +721,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -708,6 +744,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -729,6 +766,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -750,6 +788,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -772,6 +811,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -793,6 +833,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -814,6 +855,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -835,6 +877,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -857,6 +900,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -878,6 +922,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -899,6 +944,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -921,6 +967,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -943,6 +990,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -964,6 +1012,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -985,6 +1034,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1006,6 +1056,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1027,6 +1078,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1048,6 +1100,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1069,6 +1122,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1090,6 +1144,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1111,6 +1166,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1132,6 +1188,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1153,6 +1210,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1175,6 +1233,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1196,6 +1255,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1217,6 +1277,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1238,6 +1299,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1259,6 +1321,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
@@ -1280,6 +1343,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result400: mockResult{
 			Code:        400,
 			ContentType: contentTypeJSON,
+			Body:        mockClientError,
 		},
 		Result500: mockResult{
 			Code:        500,
