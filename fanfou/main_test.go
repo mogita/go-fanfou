@@ -86,6 +86,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"SearchUsers": mockEndpointItem{
@@ -109,6 +110,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"SearchUserTimeline": mockEndpointItem{
@@ -132,6 +134,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -156,6 +159,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"BlocksBlocking": mockEndpointItem{
@@ -179,6 +183,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"BlocksCreate": mockEndpointItem{
@@ -202,6 +207,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"BlocksExists": mockEndpointItem{
@@ -225,6 +231,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"BlocksDestroy": mockEndpointItem{
@@ -248,6 +255,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -272,6 +280,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"UsersShow": mockEndpointItem{
@@ -295,6 +304,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"UsersTagList": mockEndpointItem{
@@ -318,6 +328,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"UsersFollowers": mockEndpointItem{
@@ -341,6 +352,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"UsersRecommendation": mockEndpointItem{
@@ -364,6 +376,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"UsersCancelRecommendation": mockEndpointItem{
@@ -387,6 +400,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"UsersFriends": mockEndpointItem{
@@ -410,6 +424,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -434,6 +449,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"AccountUpdateProfileImage": mockEndpointItem{
@@ -457,6 +473,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"AccountRateLimitStatus": mockEndpointItem{
@@ -480,6 +497,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"AccountUpdateProfile": mockEndpointItem{
@@ -503,6 +521,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"AccountNotification": mockEndpointItem{
@@ -526,6 +545,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"AccountUpdateNotifyNum": mockEndpointItem{
@@ -549,6 +569,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"AccountNotifyNum": mockEndpointItem{
@@ -572,6 +593,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -596,6 +618,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"SavedSearchesDestroy": mockEndpointItem{
@@ -619,6 +642,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"SavedSearchesShow": mockEndpointItem{
@@ -642,6 +666,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"SavedSearchesList": mockEndpointItem{
@@ -665,6 +690,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -689,6 +715,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"PhotosUpload": mockEndpointItem{
@@ -712,6 +739,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -736,6 +764,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -760,6 +789,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -784,6 +814,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"Favorites": mockEndpointItem{
@@ -807,6 +838,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"FavoritesCreate": mockEndpointItem{
@@ -830,6 +862,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -854,6 +887,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"FriendshipsDestroy": mockEndpointItem{
@@ -877,6 +911,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"FriendshipsRequests": mockEndpointItem{
@@ -900,6 +935,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"FriendshipsDeny": mockEndpointItem{
@@ -923,6 +959,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"FriendshipsExists": mockEndpointItem{
@@ -947,6 +984,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"FriendshipsAccept": mockEndpointItem{
@@ -970,6 +1008,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"FriendshipsShow": mockEndpointItem{
@@ -993,6 +1032,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -1017,6 +1057,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -1041,6 +1082,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesHomeTimeline": mockEndpointItem{
@@ -1064,6 +1106,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesPublicTimeline": mockEndpointItem{
@@ -1087,6 +1130,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesReplies": mockEndpointItem{
@@ -1110,6 +1154,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesFollowers": mockEndpointItem{
@@ -1133,6 +1178,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesUpdate": mockEndpointItem{
@@ -1156,6 +1202,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesUserTimeline": mockEndpointItem{
@@ -1179,6 +1226,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesFriends": mockEndpointItem{
@@ -1202,6 +1250,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesContextTimeline": mockEndpointItem{
@@ -1225,6 +1274,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesMentions": mockEndpointItem{
@@ -1248,6 +1298,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"StatusesShow": mockEndpointItem{
@@ -1271,6 +1322,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 
@@ -1295,6 +1347,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"DirectMessagesConversation": mockEndpointItem{
@@ -1318,6 +1371,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"DirectMessagesNew": mockEndpointItem{
@@ -1341,6 +1395,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"DirectMessagesConversationList": mockEndpointItem{
@@ -1364,6 +1419,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"DirectMessagesInbox": mockEndpointItem{
@@ -1387,6 +1443,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 	"DirectMessagesSent": mockEndpointItem{
@@ -1410,6 +1467,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		ResultChaos: mockResult{
 			Code:        200,
 			ContentType: contentTypeHTML,
+			Body:        mockChaosError,
 		},
 	},
 }
