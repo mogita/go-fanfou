@@ -3,7 +3,7 @@
 A Fanfou API Client SDK library for [Go](http://golang.org/)
 
 [![Build Status](https://travis-ci.org/mogita/go-fanfou.svg?branch=master)](https://travis-ci.org/mogita/go-fanfou)
-[![Coverage Status](https://coveralls.io/repos/github/mogita/go-fanfou/badge.svg?branch=master)](https://coveralls.io/github/mogita/go-fanfou?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/mogita/go-fanfou/badge.svg?branch=master&service=github)](https://coveralls.io/github/mogita/go-fanfou?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mogita/go-fanfou)](https://goreportcard.com/report/github.com/mogita/go-fanfou)
 [![GoDoc](https://godoc.org/github.com/mogita/go-fanfou?status.svg)](https://godoc.org/github.com/mogita/go-fanfou/fanfou)
 
