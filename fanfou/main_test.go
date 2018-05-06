@@ -59,9 +59,9 @@ const (
 
 	mockClientError = `{"request":"/account/show.json","error":"参数错误"}`
 
-	mockServerError = ``
+	mockServerError = `<html><head><title>500 - Internal Server Error</title></head><body>Internal Server Error</body></html>`
 
-	mockChaosError = ``
+	mockChaosError = `some random peeking and poking`
 )
 
 var mockEndpoints = map[string]mockEndpointItem{
@@ -81,6 +81,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -103,6 +104,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -125,6 +127,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -148,6 +151,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -170,6 +174,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -192,6 +197,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -214,6 +220,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -236,6 +243,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -259,6 +267,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -281,6 +290,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -303,6 +313,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -325,6 +336,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -347,6 +359,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -369,6 +382,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -391,6 +405,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -414,6 +429,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -436,6 +452,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -458,6 +475,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -480,6 +498,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -502,6 +521,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -524,6 +544,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -546,6 +567,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -569,6 +591,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -591,6 +614,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -613,6 +637,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -635,6 +660,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -658,6 +684,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -680,6 +707,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -703,6 +731,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -726,6 +755,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -749,6 +779,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -771,6 +802,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -793,6 +825,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -816,6 +849,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -838,6 +872,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -860,6 +895,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -882,6 +918,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -905,6 +942,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -927,6 +965,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -949,6 +988,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -972,6 +1012,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -995,6 +1036,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1017,6 +1059,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1039,6 +1082,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1061,6 +1105,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1083,6 +1128,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1105,6 +1151,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1127,6 +1174,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1149,6 +1197,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1171,6 +1220,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1193,6 +1243,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1215,6 +1266,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1238,6 +1290,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1260,6 +1313,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1282,6 +1336,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1304,6 +1359,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1326,6 +1382,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,
@@ -1348,6 +1405,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		Result500: mockResult{
 			Code:        500,
 			ContentType: contentTypeHTML,
+			Body:        mockServerError,
 		},
 		ResultChaos: mockResult{
 			Code:        200,

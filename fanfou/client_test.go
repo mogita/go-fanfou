@@ -106,6 +106,46 @@ func TestClients(t *testing.T) {
 				}
 			},
 		},
+		{
+			desc: "test server-error responses (500)",
+			testFunc: func() {
+				var err error
+				// clear mocks
+				httpmock.Reset()
+
+				client := NewClientWithOAuth(mockConsumerKey, mockConsumerSecret)
+				accessToken := oauth.AccessToken{
+					Token:  mockAccessToken,
+					Secret: mockAccessSecret,
+				}
+				client.http, err = client.OAuthConsumer.MakeHttpClient(&accessToken)
+
+				assert.Nil(t, err)
+
+				// register new mocks
+				for key, mep := range mockEndpoints {
+					httpmock.RegisterResponder(mep.Method, mep.URL, func(req *http.Request) (*http.Response, error) {
+						return httpmock.NewStringResponse(mep.Result500.Code, mep.Result500.Body), nil
+					})
+
+					v := reflect.ValueOf(client).MethodByName(key).Call([]reflect.Value{reflect.ValueOf(&ReqParams{Photo: "./def.go", Image: "./def.go"})})
+
+					switch key {
+					case "FriendshipsExists":
+						assert.False(t, reflect.Value(v[0]).Bool())
+					default:
+						assert.True(t, reflect.Value(v[0]).IsNil())
+					}
+
+					assert.True(t, reflect.Value(v[1]).IsNil())
+					assert.NotNil(t, v[2])
+
+					if reflect.Value(v[2]).IsNil() {
+						fmt.Printf("[%s] error: %+v\n", key, v[2])
+					}
+				}
+			},
+		},
 	}
 
 	for _, testCase := range testCases {
