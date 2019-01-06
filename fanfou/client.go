@@ -1,4 +1,4 @@
-//Package fanfou is an API client SDK for fanfou.com
+// Package fanfou is an API client SDK for fanfou.com
 package fanfou
 
 import (

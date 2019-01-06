@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	httpmock "gopkg.in/jarcoal/httpmock.v1"
+	"gopkg.in/jarcoal/httpmock.v1"
 )
 
 const (
@@ -65,7 +65,7 @@ const (
 )
 
 var mockEndpoints = map[string]mockEndpointItem{
-	"SearchPublicTimeline": mockEndpointItem{
+	"SearchPublicTimeline": {
 		URL:    endpoints["SearchPublicTimeline"].URL,
 		Method: endpoints["SearchPublicTimeline"].Method,
 		Result200: mockResult{
@@ -89,7 +89,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"SearchUsers": mockEndpointItem{
+	"SearchUsers": {
 		URL:    endpoints["SearchUsers"].URL,
 		Method: endpoints["SearchUsers"].Method,
 		Result200: mockResult{
@@ -113,7 +113,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"SearchUserTimeline": mockEndpointItem{
+	"SearchUserTimeline": {
 		URL:    endpoints["SearchUserTimeline"].URL,
 		Method: endpoints["SearchUserTimeline"].Method,
 		Result200: mockResult{
@@ -138,7 +138,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"BlocksIDs": mockEndpointItem{
+	"BlocksIDs": {
 		URL:    endpoints["BlocksIDs"].URL,
 		Method: endpoints["BlocksIDs"].Method,
 		Result200: mockResult{
@@ -162,7 +162,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"BlocksBlocking": mockEndpointItem{
+	"BlocksBlocking": {
 		URL:    endpoints["BlocksBlocking"].URL,
 		Method: endpoints["BlocksBlocking"].Method,
 		Result200: mockResult{
@@ -186,7 +186,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"BlocksCreate": mockEndpointItem{
+	"BlocksCreate": {
 		URL:    endpoints["BlocksCreate"].URL,
 		Method: endpoints["BlocksCreate"].Method,
 		Result200: mockResult{
@@ -210,7 +210,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"BlocksExists": mockEndpointItem{
+	"BlocksExists": {
 		URL:    endpoints["BlocksExists"].URL,
 		Method: endpoints["BlocksExists"].Method,
 		Result200: mockResult{
@@ -234,7 +234,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"BlocksDestroy": mockEndpointItem{
+	"BlocksDestroy": {
 		URL:    endpoints["BlocksDestroy"].URL,
 		Method: endpoints["BlocksDestroy"].Method,
 		Result200: mockResult{
@@ -259,7 +259,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"UsersTagged": mockEndpointItem{
+	"UsersTagged": {
 		URL:    endpoints["UsersTagged"].URL,
 		Method: endpoints["UsersTagged"].Method,
 		Result200: mockResult{
@@ -283,7 +283,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"UsersShow": mockEndpointItem{
+	"UsersShow": {
 		URL:    endpoints["UsersShow"].URL,
 		Method: endpoints["UsersShow"].Method,
 		Result200: mockResult{
@@ -307,7 +307,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"UsersTagList": mockEndpointItem{
+	"UsersTagList": {
 		URL:    endpoints["UsersTagList"].URL,
 		Method: endpoints["UsersTagList"].Method,
 		Result200: mockResult{
@@ -331,7 +331,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"UsersFollowers": mockEndpointItem{
+	"UsersFollowers": {
 		URL:    endpoints["UsersFollowers"].URL,
 		Method: endpoints["UsersFollowers"].Method,
 		Result200: mockResult{
@@ -355,7 +355,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"UsersRecommendation": mockEndpointItem{
+	"UsersRecommendation": {
 		URL:    endpoints["UsersRecommendation"].URL,
 		Method: endpoints["UsersRecommendation"].Method,
 		Result200: mockResult{
@@ -379,7 +379,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"UsersCancelRecommendation": mockEndpointItem{
+	"UsersCancelRecommendation": {
 		URL:    endpoints["UsersCancelRecommendation"].URL,
 		Method: endpoints["UsersCancelRecommendation"].Method,
 		Result200: mockResult{
@@ -403,7 +403,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"UsersFriends": mockEndpointItem{
+	"UsersFriends": {
 		URL:    endpoints["UsersFriends"].URL,
 		Method: endpoints["UsersFriends"].Method,
 		Result200: mockResult{
@@ -428,7 +428,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"AccountVerifyCredentials": mockEndpointItem{
+	"AccountVerifyCredentials": {
 		URL:    endpoints["AccountVerifyCredentials"].URL,
 		Method: endpoints["AccountVerifyCredentials"].Method,
 		Result200: mockResult{
@@ -452,7 +452,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"AccountUpdateProfileImage": mockEndpointItem{
+	"AccountUpdateProfileImage": {
 		URL:    endpoints["AccountUpdateProfileImage"].URL,
 		Method: endpoints["AccountUpdateProfileImage"].Method,
 		Result200: mockResult{
@@ -476,7 +476,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"AccountRateLimitStatus": mockEndpointItem{
+	"AccountRateLimitStatus": {
 		URL:    endpoints["AccountRateLimitStatus"].URL,
 		Method: endpoints["AccountRateLimitStatus"].Method,
 		Result200: mockResult{
@@ -500,7 +500,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"AccountUpdateProfile": mockEndpointItem{
+	"AccountUpdateProfile": {
 		URL:    endpoints["AccountUpdateProfile"].URL,
 		Method: endpoints["AccountUpdateProfile"].Method,
 		Result200: mockResult{
@@ -524,7 +524,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"AccountNotification": mockEndpointItem{
+	"AccountNotification": {
 		URL:    endpoints["AccountNotification"].URL,
 		Method: endpoints["AccountNotification"].Method,
 		Result200: mockResult{
@@ -548,7 +548,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"AccountUpdateNotifyNum": mockEndpointItem{
+	"AccountUpdateNotifyNum": {
 		URL:    endpoints["AccountUpdateNotifyNum"].URL,
 		Method: endpoints["AccountUpdateNotifyNum"].Method,
 		Result200: mockResult{
@@ -572,7 +572,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"AccountNotifyNum": mockEndpointItem{
+	"AccountNotifyNum": {
 		URL:    endpoints["AccountNotifyNum"].URL,
 		Method: endpoints["AccountNotifyNum"].Method,
 		Result200: mockResult{
@@ -597,7 +597,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"SavedSearchesCreate": mockEndpointItem{
+	"SavedSearchesCreate": {
 		URL:    endpoints["SavedSearchesCreate"].URL,
 		Method: endpoints["SavedSearchesCreate"].Method,
 		Result200: mockResult{
@@ -621,7 +621,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"SavedSearchesDestroy": mockEndpointItem{
+	"SavedSearchesDestroy": {
 		URL:    endpoints["SavedSearchesDestroy"].URL,
 		Method: endpoints["SavedSearchesDestroy"].Method,
 		Result200: mockResult{
@@ -645,7 +645,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"SavedSearchesShow": mockEndpointItem{
+	"SavedSearchesShow": {
 		URL:    endpoints["SavedSearchesShow"].URL,
 		Method: endpoints["SavedSearchesShow"].Method,
 		Result200: mockResult{
@@ -669,7 +669,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"SavedSearchesList": mockEndpointItem{
+	"SavedSearchesList": {
 		URL:    endpoints["SavedSearchesList"].URL,
 		Method: endpoints["SavedSearchesList"].Method,
 		Result200: mockResult{
@@ -694,7 +694,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"PhotosUserTimeline": mockEndpointItem{
+	"PhotosUserTimeline": {
 		URL:    endpoints["PhotosUserTimeline"].URL,
 		Method: endpoints["PhotosUserTimeline"].Method,
 		Result200: mockResult{
@@ -718,7 +718,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"PhotosUpload": mockEndpointItem{
+	"PhotosUpload": {
 		URL:    endpoints["PhotosUpload"].URL,
 		Method: endpoints["PhotosUpload"].Method,
 		Result200: mockResult{
@@ -743,7 +743,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"TrendsList": mockEndpointItem{
+	"TrendsList": {
 		URL:    endpoints["TrendsList"].URL,
 		Method: endpoints["TrendsList"].Method,
 		Result200: mockResult{
@@ -768,7 +768,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"FollowersIDs": mockEndpointItem{
+	"FollowersIDs": {
 		URL:    endpoints["FollowersIDs"].URL,
 		Method: endpoints["FollowersIDs"].Method,
 		Result200: mockResult{
@@ -793,7 +793,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"FavoritesDestroy": mockEndpointItem{
+	"FavoritesDestroy": {
 		URL:    endpoints["FavoritesDestroy"].URL,
 		Method: endpoints["FavoritesDestroy"].Method,
 		Result200: mockResult{
@@ -817,7 +817,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"Favorites": mockEndpointItem{
+	"Favorites": {
 		URL:    endpoints["Favorites"].URL,
 		Method: endpoints["Favorites"].Method,
 		Result200: mockResult{
@@ -841,7 +841,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"FavoritesCreate": mockEndpointItem{
+	"FavoritesCreate": {
 		URL:    endpoints["FavoritesCreate"].URL,
 		Method: endpoints["FavoritesCreate"].Method,
 		Result200: mockResult{
@@ -866,7 +866,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"FriendshipsCreate": mockEndpointItem{
+	"FriendshipsCreate": {
 		URL:    endpoints["FriendshipsCreate"].URL,
 		Method: endpoints["FriendshipsCreate"].Method,
 		Result200: mockResult{
@@ -890,7 +890,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"FriendshipsDestroy": mockEndpointItem{
+	"FriendshipsDestroy": {
 		URL:    endpoints["FriendshipsDestroy"].URL,
 		Method: endpoints["FriendshipsDestroy"].Method,
 		Result200: mockResult{
@@ -914,7 +914,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"FriendshipsRequests": mockEndpointItem{
+	"FriendshipsRequests": {
 		URL:    endpoints["FriendshipsRequests"].URL,
 		Method: endpoints["FriendshipsRequests"].Method,
 		Result200: mockResult{
@@ -938,7 +938,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"FriendshipsDeny": mockEndpointItem{
+	"FriendshipsDeny": {
 		URL:    endpoints["FriendshipsDeny"].URL,
 		Method: endpoints["FriendshipsDeny"].Method,
 		Result200: mockResult{
@@ -962,7 +962,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"FriendshipsExists": mockEndpointItem{
+	"FriendshipsExists": {
 		URL:    endpoints["FriendshipsExists"].URL,
 		Method: endpoints["FriendshipsExists"].Method,
 		Result200: mockResult{
@@ -987,7 +987,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"FriendshipsAccept": mockEndpointItem{
+	"FriendshipsAccept": {
 		URL:    endpoints["FriendshipsAccept"].URL,
 		Method: endpoints["FriendshipsAccept"].Method,
 		Result200: mockResult{
@@ -1011,7 +1011,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"FriendshipsShow": mockEndpointItem{
+	"FriendshipsShow": {
 		URL:    endpoints["FriendshipsShow"].URL,
 		Method: endpoints["FriendshipsShow"].Method,
 		Result200: mockResult{
@@ -1036,7 +1036,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"FriendsIDs": mockEndpointItem{
+	"FriendsIDs": {
 		URL:    endpoints["FriendsIDs"].URL,
 		Method: endpoints["FriendsIDs"].Method,
 		Result200: mockResult{
@@ -1061,7 +1061,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"StatusesDestroy": mockEndpointItem{
+	"StatusesDestroy": {
 		URL:    endpoints["StatusesDestroy"].URL,
 		Method: endpoints["StatusesDestroy"].Method,
 		Result200: mockResult{
@@ -1085,7 +1085,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesHomeTimeline": mockEndpointItem{
+	"StatusesHomeTimeline": {
 		URL:    endpoints["StatusesHomeTimeline"].URL,
 		Method: endpoints["StatusesHomeTimeline"].Method,
 		Result200: mockResult{
@@ -1109,7 +1109,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesPublicTimeline": mockEndpointItem{
+	"StatusesPublicTimeline": {
 		URL:    endpoints["StatusesPublicTimeline"].URL,
 		Method: endpoints["StatusesPublicTimeline"].Method,
 		Result200: mockResult{
@@ -1133,7 +1133,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesReplies": mockEndpointItem{
+	"StatusesReplies": {
 		URL:    endpoints["StatusesReplies"].URL,
 		Method: endpoints["StatusesReplies"].Method,
 		Result200: mockResult{
@@ -1157,7 +1157,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesFollowers": mockEndpointItem{
+	"StatusesFollowers": {
 		URL:    endpoints["StatusesFollowers"].URL,
 		Method: endpoints["StatusesFollowers"].Method,
 		Result200: mockResult{
@@ -1181,7 +1181,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesUpdate": mockEndpointItem{
+	"StatusesUpdate": {
 		URL:    endpoints["StatusesUpdate"].URL,
 		Method: endpoints["StatusesUpdate"].Method,
 		Result200: mockResult{
@@ -1205,7 +1205,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesUserTimeline": mockEndpointItem{
+	"StatusesUserTimeline": {
 		URL:    endpoints["StatusesUserTimeline"].URL,
 		Method: endpoints["StatusesUserTimeline"].Method,
 		Result200: mockResult{
@@ -1229,7 +1229,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesFriends": mockEndpointItem{
+	"StatusesFriends": {
 		URL:    endpoints["StatusesFriends"].URL,
 		Method: endpoints["StatusesFriends"].Method,
 		Result200: mockResult{
@@ -1253,7 +1253,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesContextTimeline": mockEndpointItem{
+	"StatusesContextTimeline": {
 		URL:    endpoints["StatusesContextTimeline"].URL,
 		Method: endpoints["StatusesContextTimeline"].Method,
 		Result200: mockResult{
@@ -1277,7 +1277,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesMentions": mockEndpointItem{
+	"StatusesMentions": {
 		URL:    endpoints["StatusesMentions"].URL,
 		Method: endpoints["StatusesMentions"].Method,
 		Result200: mockResult{
@@ -1301,7 +1301,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"StatusesShow": mockEndpointItem{
+	"StatusesShow": {
 		URL:    endpoints["StatusesShow"].URL,
 		Method: endpoints["StatusesShow"].Method,
 		Result200: mockResult{
@@ -1326,7 +1326,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 		},
 	},
 
-	"DirectMessagesDestroy": mockEndpointItem{
+	"DirectMessagesDestroy": {
 		URL:    endpoints["DirectMessagesDestroy"].URL,
 		Method: endpoints["DirectMessagesDestroy"].Method,
 		Result200: mockResult{
@@ -1350,7 +1350,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"DirectMessagesConversation": mockEndpointItem{
+	"DirectMessagesConversation": {
 		URL:    endpoints["DirectMessagesConversation"].URL,
 		Method: endpoints["DirectMessagesConversation"].Method,
 		Result200: mockResult{
@@ -1374,7 +1374,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"DirectMessagesNew": mockEndpointItem{
+	"DirectMessagesNew": {
 		URL:    endpoints["DirectMessagesNew"].URL,
 		Method: endpoints["DirectMessagesNew"].Method,
 		Result200: mockResult{
@@ -1398,7 +1398,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"DirectMessagesConversationList": mockEndpointItem{
+	"DirectMessagesConversationList": {
 		URL:    endpoints["DirectMessagesConversationList"].URL,
 		Method: endpoints["DirectMessagesConversationList"].Method,
 		Result200: mockResult{
@@ -1422,7 +1422,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"DirectMessagesInbox": mockEndpointItem{
+	"DirectMessagesInbox": {
 		URL:    endpoints["DirectMessagesInbox"].URL,
 		Method: endpoints["DirectMessagesInbox"].Method,
 		Result200: mockResult{
@@ -1446,7 +1446,7 @@ var mockEndpoints = map[string]mockEndpointItem{
 			Body:        mockChaosError,
 		},
 	},
-	"DirectMessagesSent": mockEndpointItem{
+	"DirectMessagesSent": {
 		URL:    endpoints["DirectMessagesSent"].URL,
 		Method: endpoints["DirectMessagesSent"].Method,
 		Result200: mockResult{

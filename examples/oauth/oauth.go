@@ -35,7 +35,10 @@ func main() {
 		tokens[rToken.Token] = rToken
 
 		html := fmt.Sprintf("<a href=\"%s\">%s</a>", authURL, "Click to authorize")
-		resp.Write([]byte(html))
+		_, err = resp.Write([]byte(html))
+		if err != nil {
+			fmt.Printf("%+v", err)
+		}
 	})
 
 	http.HandleFunc("/callback", func(resp http.ResponseWriter, req *http.Request) {
@@ -57,7 +60,10 @@ func main() {
 			log.Println(fmt.Errorf("could not marshal json: %+v", err))
 		}
 
-		resp.Write(jsonBytes)
+		_, err = resp.Write(jsonBytes)
+		if err != nil {
+			fmt.Printf("%+v", err)
+		}
 	})
 
 	if err := http.ListenAndServe(":8080", nil); err != nil {

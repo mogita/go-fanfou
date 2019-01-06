@@ -22,7 +22,7 @@ func (client *httpClientWrapper) makeRequest(method, path string, params *ReqPar
 	var resp *http.Response
 
 	if client.http == nil {
-		return nil, errors.New("Invalid OAuth client")
+		return nil, errors.New("invalid OAuth client")
 	}
 
 	switch method {
@@ -37,7 +37,7 @@ func (client *httpClientWrapper) makeRequest(method, path string, params *ReqPar
 		// invoked by photos upload
 		req, nfurRrr := newfileUploadRequest(endpoints["PhotosUpload"].URL, map[string]string{"status": params.Status}, "photo", params.Photo)
 		if nfurRrr != nil {
-			return nil, fmt.Errorf("Could not initialize the photos upload request: %#v", nfurRrr)
+			return nil, fmt.Errorf("could not initialize the photos upload request: %#v", nfurRrr)
 		}
 
 		resp, err = client.http.Do(req)
@@ -45,24 +45,29 @@ func (client *httpClientWrapper) makeRequest(method, path string, params *ReqPar
 		// invoked by account update profile image
 		req, nfurRrr := newfileUploadRequest(endpoints["AccountUpdateProfileImage"].URL, map[string]string{"status": params.Status}, "image", params.Image)
 		if nfurRrr != nil {
-			return nil, fmt.Errorf("Could not initialize the image upload request: %#v", nfurRrr)
+			return nil, fmt.Errorf("could not initialize the image upload request: %#v", nfurRrr)
 		}
 
 		resp, err = client.http.Do(req)
 	default:
-		return nil, fmt.Errorf("Unsupported request method: %#v", method)
+		return nil, fmt.Errorf("unsupported request method: %#v", method)
 	}
 
 	if err != nil {
-		return nil, fmt.Errorf("Could not make request: %#v", err)
+		return nil, fmt.Errorf("could not make request: %#v", err)
 	}
 
-	defer resp.Body.Close()
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("error closing response body %+v", err)
+		}
+	}()
 
 	// read response body data
 	respBodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("Could not read response body: %#v", err)
+		return nil, fmt.Errorf("could not read response body: %#v", err)
 	}
 
 	if resp.StatusCode >= http.StatusOK && resp.StatusCode < http.StatusBadRequest {
@@ -73,20 +78,20 @@ func (client *httpClientWrapper) makeRequest(method, path string, params *ReqPar
 	// process and return bad responses
 	respErr := responseError{}
 	if err = json.Unmarshal(respBodyBytes, &respErr); err != nil {
-		return nil, fmt.Errorf("Malformed error response body: %+v. Original error: [%d] %#v", err, resp.StatusCode, string(respBodyBytes))
+		return nil, fmt.Errorf("malformed error response body: %+v. Original error: [%d] %#v", err, resp.StatusCode, string(respBodyBytes))
 	}
 
 	switch resp.StatusCode {
 	case http.StatusBadRequest:
-		return nil, fmt.Errorf("Bad Request: %s. %s", respErr.Request, respErr.Error)
+		return nil, fmt.Errorf("bad Request: %s. %s", respErr.Request, respErr.Error)
 	case http.StatusUnauthorized:
-		return nil, fmt.Errorf("Unauthorized: %s. %s", respErr.Request, respErr.Error)
+		return nil, fmt.Errorf("unauthorized: %s. %s", respErr.Request, respErr.Error)
 	case http.StatusForbidden:
-		return nil, fmt.Errorf("Forbidden: %s. %s", respErr.Request, respErr.Error)
+		return nil, fmt.Errorf("forbidden: %s. %s", respErr.Request, respErr.Error)
 	case http.StatusNotFound:
-		return nil, fmt.Errorf("Not Found: %s. %s", respErr.Request, respErr.Error)
+		return nil, fmt.Errorf("not Found: %s. %s", respErr.Request, respErr.Error)
 	default:
-		return nil, fmt.Errorf("Other errors: %s. %s", respErr.Request, respErr.Error)
+		return nil, fmt.Errorf("other errors: %s. %s", respErr.Request, respErr.Error)
 	}
 }
 
@@ -125,7 +130,10 @@ func newfileUploadRequest(uri string, params map[string]string, paramName, path 
 		return nil, err
 	}
 
-	file.Close()
+	err = file.Close()
+	if err != nil {
+		return nil, err
+	}
 
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
@@ -134,7 +142,10 @@ func newfileUploadRequest(uri string, params map[string]string, paramName, path 
 		return nil, err
 	}
 
-	part.Write(fileContents)
+	_, err = part.Write(fileContents)
+	if err != nil {
+		return nil, err
+	}
 
 	for key, val := range params {
 		_ = writer.WriteField(key, val)

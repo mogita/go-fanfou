@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/mrjones/oauth"
-	httpmock "gopkg.in/jarcoal/httpmock.v1"
+	"gopkg.in/jarcoal/httpmock.v1"
 
 	"github.com/stretchr/testify/assert"
 )
