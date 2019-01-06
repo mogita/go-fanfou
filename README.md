@@ -39,7 +39,7 @@ go run examples/upload_photo/upload_photo.go
 
 ## Built With
 
-* [oauth](https://github.com/mrjones/oauth) - OAuth 1.0 implementation in go (golang). http://www.mrjon.es
+* [oauth](https://godoc.org/github.com/mrjones/oauth) - OAuth 1.0 implementation in go (golang)
 
 ## Contributing
 
