@@ -15,7 +15,7 @@ func TestTrendsService_List(t *testing.T) {
 		testMethod(t, r, "GET")
 		_, err := fmt.Fprint(w, `{"as_of":"Thu Nov 10 09:57:23 +0000 2011", "trends":[{"name":"萤火一号","query":"萤火一号|火星|变轨","url":"http://fanfou.com/q/萤火一号%7C火星%7C变轨"}]}`)
 		if err != nil {
-			t.Errorf("trends list mock server error: %+v", err)
+			t.Errorf("trends.list mock server error: %+v", err)
 		}
 	})
 
