@@ -2,13 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/mogita/go-fanfou/examples"
 	"github.com/mogita/go-fanfou/fanfou"
 )
 
-// modify the credentials in def.go to your own keys etc.
 const (
 	consumerKey    = examples.ConsumerKey
 	consumerSecret = examples.ConsumerSecret
@@ -17,13 +15,23 @@ const (
 )
 
 func main() {
-	client, _ := fanfou.NewClientWithXAuth(consumerKey, consumerSecret, username, password)
+	c := fanfou.NewClient(consumerKey, consumerSecret)
 
-	res, _, err := client.SearchPublicTimeline(&fanfou.ReqParams{Q: "有猫"})
-
+	err := c.AuthorizeClientWithXAuth(username, password)
 	if err != nil {
-		log.Fatal(err)
+		panic(fmt.Sprintf("authorize client error: %+v", err))
 	}
 
-	fmt.Printf("%#v\n\n", res)
+	trends, err := c.Trends.List()
+	if err != nil {
+		fmt.Printf("as_of: %+v\n", err)
+	}
+
+	fmt.Printf("trends as_of: %s\n", trends.AsOf)
+
+	for index, trend := range trends.Trends {
+		fmt.Printf("trend %d query: %s\n", index, trend.Query)
+		fmt.Printf("trend %d name: %s\n", index, trend.Name)
+		fmt.Printf("trend %d url: %s\n", index, trend.URL)
+	}
 }
