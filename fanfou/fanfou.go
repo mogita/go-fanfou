@@ -21,6 +21,9 @@ var (
 	// BaseURL represents Fanfou API base URL
 	BaseURL = "http://api.fanfou.com/"
 
+	// AuthBaseURL represents Fanfou API authorization base URL
+	AuthBaseURL = "http://fanfou.com/"
+
 	// Request token URI
 	requestTokenURI = "oauth/request_token"
 
@@ -59,8 +62,8 @@ type Client struct {
 	// Likes         *LikesService
 	// Tags          *TagsService
 	// Locations     *LocationsService
-	// Geographies   *GeographiesService
-	Trends *TrendsService
+	Statuses *StatusesService
+	Trends   *TrendsService
 
 	// Temporary Response
 	Response *Response
@@ -70,7 +73,6 @@ type Client struct {
 // provided, http.DefaultClient will be used.
 func NewClient(consumerKey, consumerSecret string) *Client {
 	baseURL, _ := url.Parse(BaseURL)
-	baseURLString := baseURL.String()
 
 	c := &Client{
 		BaseURL:        baseURL,
@@ -81,9 +83,9 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 			consumerKey,
 			consumerSecret,
 			oauth.ServiceProvider{
-				RequestTokenUrl:   baseURLString + requestTokenURI,
-				AuthorizeTokenUrl: baseURLString + authorizeTokenURI,
-				AccessTokenUrl:    baseURLString + accessTokenURI,
+				RequestTokenUrl:   AuthBaseURL + requestTokenURI,
+				AuthorizeTokenUrl: AuthBaseURL + authorizeTokenURI,
+				AccessTokenUrl:    AuthBaseURL + accessTokenURI,
 			},
 		),
 	}
@@ -97,7 +99,7 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 	// c.Likes = &LikesService{client: c}
 	// c.Tags = &TagsService{client: c}
 	// c.Locations = &LocationsService{client: c}
-	// c.Geographies = &GeographiesService{client: c}
+	c.Statuses = &StatusesService{client: c}
 	c.Trends = &TrendsService{client: c}
 
 	return c
