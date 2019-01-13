@@ -19,6 +19,7 @@ type Status struct {
 	Rawid               int64  `json:"rawid,omitempty"`
 	Text                string `json:"text,omitempty"`
 	Source              string `json:"source,omitempty"`
+	Location            string `json:"location,omitempty"`
 	Truncated           bool   `json:"truncated,omitempty"`
 	InReplyToStatusID   string `json:"in_reply_to_status_id,omitempty"`
 	InReplyToUserID     string `json:"in_reply_to_user_id,omitempty"`
@@ -64,7 +65,7 @@ type Status struct {
 }
 
 type StatusesOptParams struct {
-	InReplyToStasusID string
+	InReplyToStatusID string
 	InReplyToUserID   string
 	RepostStatusID    string
 	Source            string
@@ -83,8 +84,8 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 	}
 
 	if opt != nil {
-		if opt.InReplyToStasusID != "" {
-			params.Add("in_reply_to_status_id", opt.InReplyToStasusID)
+		if opt.InReplyToStatusID != "" {
+			params.Add("in_reply_to_status_id", opt.InReplyToStatusID)
 		}
 		if opt.InReplyToUserID != "" {
 			params.Add("in_reply_to_user_id", opt.InReplyToUserID)
@@ -105,7 +106,6 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 			params.Add("location", opt.Location)
 		}
 		u += "?" + params.Encode()
-		fmt.Printf("%+v\n", u)
 	}
 
 	req, err := s.client.NewRequest("POST", u, params.Encode())

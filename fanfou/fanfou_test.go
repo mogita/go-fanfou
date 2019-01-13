@@ -46,9 +46,13 @@ func setup() {
 		}
 	})
 
+	// mock base url
+	mockBaseURL, _ := url.Parse(server.URL)
+	BaseURL = mockBaseURL.String() + "/"
+	AuthBaseURL = BaseURL
+
 	// Fanfou client configured to use test server
 	client = NewClient("test", "test")
-	client.BaseURL, _ = url.Parse(server.URL)
 	err := client.AuthorizeClientWithXAuth("", "")
 	if err != nil {
 		panic(err)
