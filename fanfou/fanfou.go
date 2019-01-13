@@ -11,7 +11,7 @@ import (
 	"github.com/mrjones/oauth"
 )
 
-const (
+var (
 	// LibraryVersion represents this library version
 	LibraryVersion = "0.1"
 
@@ -21,14 +21,14 @@ const (
 	// BaseURL represents Fanfou API base URL
 	BaseURL = "http://api.fanfou.com/"
 
-	// Request token URL
-	requestTokenURL = "http://fanfou.com/oauth/request_token"
+	// Request token URI
+	requestTokenURI = "oauth/request_token"
 
-	// Authorize token URL
-	authorizeTokenURL = "http://fanfou.com/oauth/authorize"
+	// Authorize token URI
+	authorizeTokenURI = "oauth/authorize"
 
-	// Access token URL
-	accessTokenURL = "http://fanfou.com/oauth/access_token"
+	// Access token URI
+	accessTokenURI = "oauth/access_token"
 )
 
 // A Client manages communication with the Fanfou API.
@@ -70,6 +70,7 @@ type Client struct {
 // provided, http.DefaultClient will be used.
 func NewClient(consumerKey, consumerSecret string) *Client {
 	baseURL, _ := url.Parse(BaseURL)
+	baseURLString := baseURL.String()
 
 	c := &Client{
 		BaseURL:        baseURL,
@@ -80,9 +81,9 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 			consumerKey,
 			consumerSecret,
 			oauth.ServiceProvider{
-				RequestTokenUrl:   requestTokenURL,
-				AuthorizeTokenUrl: authorizeTokenURL,
-				AccessTokenUrl:    accessTokenURL,
+				RequestTokenUrl:   baseURLString + requestTokenURI,
+				AuthorizeTokenUrl: baseURLString + authorizeTokenURI,
+				AccessTokenUrl:    baseURLString + accessTokenURI,
 			},
 		),
 	}
@@ -199,7 +200,7 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 	r := &Response{Response: resp}
 	if v != nil {
 		r.Data = v
-		err = json.NewDecoder(resp.Body).Decode(v)
+		err = json.NewDecoder(resp.Body).Decode(r.Data)
 		c.Response = r
 	}
 
