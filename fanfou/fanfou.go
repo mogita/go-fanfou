@@ -62,22 +62,8 @@ type Client struct {
 	// Geographies   *GeographiesService
 	Trends *TrendsService
 
-	Temporary Response
-	Response  *Response
-}
-
-// Response specifies Fanfou's response structure.
-type Response struct {
-	Response     *http.Response // HTTP response
-	Data         interface{}    `json:"data,omitempty"`          // business data
-	Meta         interface{}    `json:"meta,omitempty"`          // meta info
-	ErrorMessage *ErrorMessage  `json:"error_message,omitempty"` // carries error information if any
-}
-
-type ErrorMessage struct {
-	Code    int    `json:"code,omitempty"`
-	Request string `json:"request,omitempty"`
-	Error   string `json:"error,omitempty"`
+	// Temporary Response
+	Response *Response
 }
 
 // NewClient returns a new Fanfou API client. if a nil httpClient is
@@ -218,6 +204,20 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 	}
 
 	return resp, err
+}
+
+// Response specifies Fanfou's response structure.
+type Response struct {
+	Response     *http.Response // HTTP response
+	Data         interface{}    `json:"data,omitempty"`          // business data
+	Meta         interface{}    `json:"meta,omitempty"`          // meta info
+	ErrorMessage *ErrorMessage  `json:"error_message,omitempty"` // carries error information if any
+}
+
+type ErrorMessage struct {
+	Code    int    `json:"code,omitempty"`
+	Request string `json:"request,omitempty"`
+	Error   string `json:"error,omitempty"`
 }
 
 // ErrorResponse represents a Response which contains an error
