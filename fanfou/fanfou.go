@@ -199,11 +199,11 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 		return resp, err
 	}
 
-	r := &Response{Response: resp}
+	response := new(Response)
 	if v != nil {
-		r.Data = v
-		err = json.NewDecoder(resp.Body).Decode(r.Data)
-		c.Response = r
+		response.Data = v
+		err = json.NewDecoder(resp.Body).Decode(response.Data)
+		c.Response = response
 	}
 
 	return resp, err
@@ -211,14 +211,15 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 
 // Response specifies Fanfou's response structure.
 type Response struct {
-	Response     *http.Response // HTTP response
-	Data         interface{}    `json:"data,omitempty"`          // business data
-	Meta         interface{}    `json:"meta,omitempty"`          // meta info
-	ErrorMessage *ErrorMessage  `json:"error_message,omitempty"` // carries error information if any
+	Response *http.Response // HTTP response
+	Data     interface{}
+	Meta     *ResponseMeta
 }
 
-type ErrorMessage struct {
-	Code    int    `json:"code,omitempty"`
+// ResponseMeta represents information about the response. If all goes well,
+// only a Code key with value 200 will present. However, sometimes things
+// go wrong, and in that case ErrorType and ErrorMessage are present.
+type ResponseMeta struct {
 	Request string `json:"request,omitempty"`
 	Error   string `json:"error,omitempty"`
 }
@@ -227,9 +228,25 @@ type ErrorMessage struct {
 type ErrorResponse Response
 
 func (r *ErrorResponse) Error() string {
-	return fmt.Sprintf("%v %v: %d %v",
+	return fmt.Sprintf("%v %v: %d %s",
 		r.Response.Request.Method, r.Response.Request.URL,
-		r.Response.StatusCode, r.ErrorMessage.Error)
+		r.Response.StatusCode, r.Meta.Error)
+}
+
+func (r *ErrorResponse) GetStatusCode() string {
+	return fmt.Sprintf("%d", r.Response.StatusCode)
+}
+
+func (r *ErrorResponse) GetRequestMethod() string {
+	return fmt.Sprintf("%s", r.Response.Request.Method)
+}
+
+func (r *ErrorResponse) GetRequestURL() string {
+	return fmt.Sprintf("%s", r.Response.Request.URL)
+}
+
+func (r *ErrorResponse) GetFanfouError() string {
+	return fmt.Sprintf("%s", r.Meta.Error)
 }
 
 // CheckResponse checks the API response for error, and returns it
@@ -240,20 +257,21 @@ func CheckResponse(res *http.Response) error {
 		return nil
 	}
 
-	resp := new(ErrorResponse)
-	resp.Response = res
+	r := new(ErrorResponse)
+	r.Response = res
 
-	if res.StatusCode == http.StatusInternalServerError || res.StatusCode == http.StatusNotFound {
-		return resp
+	if res.StatusCode >= http.StatusInternalServerError || res.StatusCode == http.StatusNotFound {
+		return r
 	}
 
 	data, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		resp.ErrorMessage.Error = err.Error()
-	}
-	if err := json.Unmarshal(data, resp); err != nil {
-		resp.ErrorMessage.Error = err.Error()
+		r.Meta.Error = err.Error()
 	}
 
-	return resp
+	if err := json.Unmarshal(data, &r.Meta); err != nil {
+		r.Meta.Error = err.Error()
+	}
+
+	return r
 }
