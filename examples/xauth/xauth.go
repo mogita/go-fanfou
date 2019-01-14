@@ -19,19 +19,25 @@ func main() {
 
 	err := c.AuthorizeClientWithXAuth(username, password)
 	if err != nil {
-		panic(fmt.Sprintf("authorize client error: %+v", err))
+		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
+			fmt.Printf("authorize client error: %+v", fanfouErr.GetFanfouError())
+			return
+		}
+
+		fmt.Println(err)
+		return
 	}
 
-	trends, err := c.Trends.List()
+	resp, err := c.Statuses.Update("mic check 4", nil)
 	if err != nil {
-		fmt.Printf("as_of: %+v\n", err)
+		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
+			fmt.Printf("%s\n", fanfouErr.GetFanfouError())
+			return
+		}
+
+		fmt.Println(err)
+		return
 	}
 
-	fmt.Printf("trends as_of: %s\n", trends.AsOf)
-
-	for index, trend := range trends.Trends {
-		fmt.Printf("trend %d query: %s\n", index, trend.Query)
-		fmt.Printf("trend %d name: %s\n", index, trend.Name)
-		fmt.Printf("trend %d url: %s\n", index, trend.URL)
-	}
+	fmt.Println(resp)
 }
