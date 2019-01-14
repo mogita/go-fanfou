@@ -3,12 +3,13 @@ package fanfou
 import (
 	"bytes"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 
-	"github.com/mrjones/oauth"
+	"github.com/mogita/oauth"
 )
 
 var (
@@ -121,6 +122,18 @@ func (c *Client) AuthorizeClient(rToken *oauth.RequestToken) error {
 	accessToken, err := c.oauthConsumer.AuthorizeToken(rToken, "")
 
 	if err != nil {
+		if oauthErr, ok := err.(oauth.HTTPExecuteError); ok {
+			// fanfou auth error body is in XML
+			errResp := new(ErrorResponse)
+			errResp.Response = oauthErr.Response
+			errXML := xml.Unmarshal(oauthErr.ResponseBodyBytes, &errResp.Meta)
+			if errXML != nil {
+				return errXML
+			}
+
+			return errResp
+		}
+
 		return err
 	}
 
@@ -142,6 +155,18 @@ func (c *Client) AuthorizeClientWithXAuth(username, password string) error {
 	accessToken, err := c.oauthConsumer.AuthorizeToken(&reqToken, "")
 
 	if err != nil {
+		if oauthErr, ok := err.(oauth.HTTPExecuteError); ok {
+			// fanfou auth error body is in XML
+			errResp := new(ErrorResponse)
+			errResp.Response = oauthErr.Response
+			errXML := xml.Unmarshal(oauthErr.ResponseBodyBytes, &errResp.Meta)
+			if errXML != nil {
+				return errXML
+			}
+
+			return errResp
+		}
+
 		return err
 	}
 
@@ -220,8 +245,8 @@ type Response struct {
 // only a Code key with value 200 will present. However, sometimes things
 // go wrong, and in that case ErrorType and ErrorMessage are present.
 type ResponseMeta struct {
-	Request string `json:"request,omitempty"`
-	Error   string `json:"error,omitempty"`
+	Request string `json:"request,omitempty" xml:"request"`
+	Error   string `json:"error,omitempty" xml:"error"`
 }
 
 // ErrorResponse represents a Response which contains an error
@@ -266,6 +291,7 @@ func CheckResponse(res *http.Response) error {
 
 	data, err := ioutil.ReadAll(res.Body)
 	if err != nil {
+		fmt.Println(err)
 		r.Meta.Error = err.Error()
 	}
 
