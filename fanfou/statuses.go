@@ -13,6 +13,7 @@ type StatusesService struct {
 	client *Client
 }
 
+// Status specifies Fanfou's statuses data structure
 type Status struct {
 	CreatedAt           string `json:"created_at,omitempty"`
 	ID                  string `json:"id,omitempty"`
@@ -64,6 +65,7 @@ type Status struct {
 	} `json:"photo,omitempty"`
 }
 
+// StatusesOptParams specifies the optional params for statuses API
 type StatusesOptParams struct {
 	InReplyToStatusID string
 	InReplyToUserID   string
@@ -74,7 +76,7 @@ type StatusesOptParams struct {
 	Location          string
 }
 
-// Post a new status
+// Update shall post a new status
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.update
 func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status, error) {
