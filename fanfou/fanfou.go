@@ -106,8 +106,8 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 	return c
 }
 
-// GetRequestTokenAndUrl returns the request token and the login url for authorizing this token
-func (c *Client) GetRequestTokenAndUrl(callbackURL string) (*oauth.RequestToken, string, error) {
+// GetRequestTokenAndURL returns the request token and the login url for authorizing this token
+func (c *Client) GetRequestTokenAndURL(callbackURL string) (*oauth.RequestToken, string, error) {
 	rToken, loginURL, err := c.oauthConsumer.GetRequestTokenAndUrl(callbackURL)
 	if err != nil {
 		return nil, "", err
@@ -146,6 +146,11 @@ func (c *Client) AuthorizeClient(rToken *oauth.RequestToken) error {
 	return nil
 }
 
+// AuthorizeClientWithXAuth completes the OAuth authorization to the client
+// with XAuth so it can communicate with Fanfou API
+//
+// This method is a simplified OAuth process, taking username and password
+// to authorize the client, without the need to redirect to the web UI
 func (c *Client) AuthorizeClientWithXAuth(username, password string) error {
 	c.oauthConsumer.AdditionalParams["x_auth_username"] = username
 	c.oauthConsumer.AdditionalParams["x_auth_password"] = password
