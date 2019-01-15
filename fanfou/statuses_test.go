@@ -410,3 +410,97 @@ func TestStatusesService_ContextTimeline(t *testing.T) {
 		t.Errorf("statuses.context_timeline returned %+v, want %+v", statuses, want)
 	}
 }
+
+func TestStatusesService_Followers(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/statuses/followers.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `[{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"},{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}]`)
+		if err != nil {
+			t.Errorf("statuses.followers mock server error: %+v", err)
+		}
+	})
+
+	users, err := client.Statuses.Followers(&StatusesOptParams{
+		ID:     "test_id",
+		Page:   1,
+		Count:  1,
+		Mode:   "test5",
+		Format: "test6",
+	})
+	if err != nil {
+		t.Errorf("statuses.followers returned error: %v", err)
+	}
+
+	want := []User{
+		{
+			ID:              "test_id",
+			Name:            "test1",
+			ScreenName:      "test2",
+			Location:        "test3",
+			Gender:          "test4",
+			ProfileImageURL: "test7",
+		},
+		{
+			ID:              "test_id",
+			Name:            "test1",
+			ScreenName:      "test2",
+			Location:        "test3",
+			Gender:          "test4",
+			ProfileImageURL: "test7",
+		},
+	}
+
+	if !reflect.DeepEqual(users, want) {
+		t.Errorf("statuses.followers returned %+v, want %+v", users, want)
+	}
+}
+
+func TestStatusesService_Friends(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/statuses/friends.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `[{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"},{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}]`)
+		if err != nil {
+			t.Errorf("statuses.friends mock server error: %+v", err)
+		}
+	})
+
+	users, err := client.Statuses.Friends(&StatusesOptParams{
+		ID:     "test_id",
+		Page:   1,
+		Count:  1,
+		Mode:   "test5",
+		Format: "test6",
+	})
+	if err != nil {
+		t.Errorf("statuses.friends returned error: %v", err)
+	}
+
+	want := []User{
+		{
+			ID:              "test_id",
+			Name:            "test1",
+			ScreenName:      "test2",
+			Location:        "test3",
+			Gender:          "test4",
+			ProfileImageURL: "test7",
+		},
+		{
+			ID:              "test_id",
+			Name:            "test1",
+			ScreenName:      "test2",
+			Location:        "test3",
+			Gender:          "test4",
+			ProfileImageURL: "test7",
+		},
+	}
+
+	if !reflect.DeepEqual(users, want) {
+		t.Errorf("statuses.friends returned %+v, want %+v", users, want)
+	}
+}
