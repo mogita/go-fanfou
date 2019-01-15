@@ -286,7 +286,7 @@ func (s *UsersService) Recommendation(opt *UsersOptParams) ([]User, error) {
 // CancelRecommendation shall dismiss user recommended by Fanfou by ID
 // ID represents the user ID
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.cancel_recommendation
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.cancel-recommendation
 func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*User, error) {
 	u := fmt.Sprintf("2/users/cancel_recommendation.json")
 	params := url.Values{

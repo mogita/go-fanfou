@@ -169,7 +169,7 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, erro
 // or of the current user if no ID specified
 // ID represents the user ID
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.home_timeline
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.home-timeline
 func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error) {
 	u := fmt.Sprintf("statuses/home_timeline.json")
 	params := url.Values{}
@@ -216,7 +216,7 @@ func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error)
 
 // PublicTimeline shall get latest public statuses
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.public_timeline
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.public-timeline
 func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]Status, error) {
 	u := fmt.Sprintf("statuses/public_timeline.json")
 	params := url.Values{}
@@ -262,7 +262,7 @@ func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]Status, erro
 // user if no ID specified
 // ID represents the user ID
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.user_timeline
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.user-timeline
 func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]Status, error) {
 	u := fmt.Sprintf("statuses/user_timeline.json")
 	params := url.Values{}
@@ -310,7 +310,7 @@ func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]Status, error)
 // ContextTimeline shall get contextual statuses of a given status ID
 // ID represents the status ID
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.context_timeline
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.context-timeline
 func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]Status, error) {
 	u := fmt.Sprintf("statuses/context_timeline.json")
 	params := url.Values{
