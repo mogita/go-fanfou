@@ -202,3 +202,41 @@ func (s *UsersService) Followers(opt *UsersOptParams) ([]User, error) {
 
 	return *newUsers, nil
 }
+
+// Recommendation shall get users recommended by Fanfou
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.recommendation
+func (s *UsersService) Recommendation(opt *UsersOptParams) ([]User, error) {
+	u := fmt.Sprintf("2/users/recommendation.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUsers := new([]User)
+	_, err = s.client.Do(req, newUsers)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newUsers, nil
+}
