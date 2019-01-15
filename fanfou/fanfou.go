@@ -122,18 +122,25 @@ func (c *Client) AuthorizeClient(rToken *oauth.RequestToken) error {
 	accessToken, err := c.oauthConsumer.AuthorizeToken(rToken, "")
 
 	if err != nil {
+		errResp := new(ErrorResponse)
+		errResp.Meta = &ResponseMeta{
+			Error:   "unknown authorization error",
+			Request: "",
+		}
+
 		if oauthErr, ok := err.(oauth.HTTPExecuteError); ok {
 			// fanfou auth error body is in XML
-			errResp := new(ErrorResponse)
 			errResp.Response = oauthErr.Response
 			errXML := xml.Unmarshal(oauthErr.ResponseBodyBytes, &errResp.Meta)
 			if errXML != nil {
-				return errXML
+				errResp.Meta.Error = errXML.Error()
+				return errResp
 			}
 
 			return errResp
 		}
 
+		errResp.Meta.Error = err.Error()
 		return err
 	}
 
@@ -160,18 +167,25 @@ func (c *Client) AuthorizeClientWithXAuth(username, password string) error {
 	accessToken, err := c.oauthConsumer.AuthorizeToken(&reqToken, "")
 
 	if err != nil {
+		errResp := new(ErrorResponse)
+		errResp.Meta = &ResponseMeta{
+			Error:   "unknown authorization error",
+			Request: "",
+		}
+
 		if oauthErr, ok := err.(oauth.HTTPExecuteError); ok {
 			// fanfou auth error body is in XML
-			errResp := new(ErrorResponse)
 			errResp.Response = oauthErr.Response
 			errXML := xml.Unmarshal(oauthErr.ResponseBodyBytes, &errResp.Meta)
 			if errXML != nil {
-				return errXML
+				errResp.Meta.Error = errXML.Error()
+				return errResp
 			}
 
 			return errResp
 		}
 
+		errResp.Meta.Error = err.Error()
 		return err
 	}
 
@@ -257,24 +271,30 @@ type ResponseMeta struct {
 // ErrorResponse represents a Response which contains an error
 type ErrorResponse Response
 
+// Error implements the error interface
 func (r *ErrorResponse) Error() string {
 	return fmt.Sprintf("%v %v: %d %s",
 		r.Response.Request.Method, r.Response.Request.URL,
 		r.Response.StatusCode, r.Meta.Error)
 }
 
+// GetStatusCode gets the status code of the error response
 func (r *ErrorResponse) GetStatusCode() string {
 	return fmt.Sprintf("%d", r.Response.StatusCode)
 }
 
+// GetRequestMethod gets the request method of the error response
 func (r *ErrorResponse) GetRequestMethod() string {
 	return fmt.Sprintf("%s", r.Response.Request.Method)
 }
 
+// GetRequestURL gets the request url of the error response
 func (r *ErrorResponse) GetRequestURL() string {
 	return fmt.Sprintf("%s", r.Response.Request.URL)
 }
 
+// GetFanfouError gets the error message returned by Fanfou API
+// if presented in the response
 func (r *ErrorResponse) GetFanfouError() string {
 	return fmt.Sprintf("%s", r.Meta.Error)
 }
@@ -289,14 +309,19 @@ func CheckResponse(res *http.Response) error {
 
 	r := new(ErrorResponse)
 	r.Response = res
+	// default error message
+	r.Meta = &ResponseMeta{
+		Error:   "unknown error",
+		Request: res.Request.URL.String(),
+	}
 
-	if res.StatusCode >= http.StatusInternalServerError || res.StatusCode == http.StatusNotFound {
+	if res.StatusCode >= http.StatusInternalServerError {
+		r.Meta.Error = http.StatusText(res.StatusCode)
 		return r
 	}
 
 	data, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
 		r.Meta.Error = err.Error()
 	}
 
