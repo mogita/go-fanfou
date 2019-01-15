@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 // StatusesService handles communication with the statuses related
@@ -16,21 +17,21 @@ type StatusesService struct {
 
 // Status specifies Fanfou's statuses data structure
 type Status struct {
-	CreatedAt           string `json:"created_at,omitempty"`
-	ID                  string `json:"id,omitempty"`
-	Rawid               int64  `json:"rawid,omitempty"`
-	Text                string `json:"text,omitempty"`
-	Source              string `json:"source,omitempty"`
-	Location            string `json:"location,omitempty"`
-	Truncated           bool   `json:"truncated,omitempty"`
-	InReplyToStatusID   string `json:"in_reply_to_status_id,omitempty"`
-	InReplyToUserID     string `json:"in_reply_to_user_id,omitempty"`
-	InReplyToScreenName string `json:"in_reply_to_screen_name,omitempty"`
-	RepostStatusID      string `json:"repost_status_id,omitempty"`
-	RepostStatus        string `json:"repost_status,omitempty"`
-	RepostUserID        string `json:"repost_user_id,omitempty"`
-	RepostScreenName    string `json:"repost_screen_name,omitempty"`
-	Favorited           bool   `json:"favorited,omitempty"`
+	CreatedAt           string  `json:"created_at,omitempty"`
+	ID                  string  `json:"id,omitempty"`
+	Rawid               int64   `json:"rawid,omitempty"`
+	Text                string  `json:"text,omitempty"`
+	Source              string  `json:"source,omitempty"`
+	Location            string  `json:"location,omitempty"`
+	Truncated           bool    `json:"truncated,omitempty"`
+	InReplyToStatusID   string  `json:"in_reply_to_status_id,omitempty"`
+	InReplyToUserID     string  `json:"in_reply_to_user_id,omitempty"`
+	InReplyToScreenName string  `json:"in_reply_to_screen_name,omitempty"`
+	RepostStatusID      string  `json:"repost_status_id,omitempty"`
+	RepostStatus        *Status `json:"repost_status,omitempty"`
+	RepostUserID        string  `json:"repost_user_id,omitempty"`
+	RepostScreenName    string  `json:"repost_screen_name,omitempty"`
+	Favorited           bool    `json:"favorited,omitempty"`
 	User                struct {
 		ID                        string `json:"id,omitempty"`
 		Name                      string `json:"name,omitempty"`
@@ -68,6 +69,11 @@ type Status struct {
 
 // StatusesOptParams specifies the optional params for statuses API
 type StatusesOptParams struct {
+	ID                string
+	SinceID           string
+	MaxID             string
+	Page              int64
+	Count             int64
 	InReplyToStatusID string
 	InReplyToUserID   string
 	RepostStatusID    string
@@ -156,6 +162,54 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, erro
 	}
 
 	return newStatus, nil
+}
+
+// HomeTimeline shall get statuses of the specified user and his/her followed users
+// or of the current user if no ID specified
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
+func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error) {
+	u := fmt.Sprintf("statuses/home_timeline.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params.Add("id", opt.ID)
+		}
+		if opt.SinceID != "" {
+			params.Add("since_id", opt.SinceID)
+		}
+		if opt.MaxID != "" {
+			params.Add("max_id", opt.MaxID)
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatuses := new([]Status)
+	_, err = s.client.Do(req, newStatuses)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newStatuses, nil
 }
 
 // Destroy shall delete a status by ID
