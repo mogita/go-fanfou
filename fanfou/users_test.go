@@ -87,3 +87,32 @@ func TestUsersService_Show(t *testing.T) {
 		t.Errorf("users.show returned %+v, want %+v", user, want)
 	}
 }
+
+func TestUsersService_TagList(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/users/tag_list.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `["tag1","tag2"]`)
+		if err != nil {
+			t.Errorf("users.tag_list mock server error: %+v", err)
+		}
+	})
+
+	tags, err := client.Users.TagList(&UsersOptParams{
+		ID: "test_id",
+	})
+	if err != nil {
+		t.Errorf("users.tag_list returned error: %v", err)
+	}
+
+	want := []Tag{
+		"tag1",
+		"tag2",
+	}
+
+	if !reflect.DeepEqual(tags, want) {
+		t.Errorf("users.tag_list returned %+v, want %+v", tags, want)
+	}
+}
