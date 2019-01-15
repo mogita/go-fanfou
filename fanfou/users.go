@@ -161,3 +161,44 @@ func (s *UsersService) TagList(opt *UsersOptParams) ([]Tag, error) {
 
 	return *newTags, nil
 }
+
+// Followers shall get recently logged in followers
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.followers
+func (s *UsersService) Followers(opt *UsersOptParams) ([]User, error) {
+	u := fmt.Sprintf("users/followers.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params.Add("id", opt.ID)
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUsers := new([]User)
+	_, err = s.client.Do(req, newUsers)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newUsers, nil
+}
