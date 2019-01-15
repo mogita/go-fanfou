@@ -56,13 +56,7 @@ type Client struct {
 	ConsumerSecret string
 
 	// Services used for talking to different parts of the API.
-	// Users         *UsersService
-	// Relationships *RelationshipsService
-	// Media         *MediaService
-	// Comments      *CommentsService
-	// Likes         *LikesService
-	// Tags          *TagsService
-	// Locations     *LocationsService
+	Users    *UsersService
 	Statuses *StatusesService
 	Trends   *TrendsService
 
@@ -93,13 +87,7 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 
 	c.oauthConsumer.Debug(false)
 
-	// c.Users = &UsersService{client: c}
-	// c.Relationships = &RelationshipsService{client: c}
-	// c.Media = &MediaService{client: c}
-	// c.Comments = &CommentsService{client: c}
-	// c.Likes = &LikesService{client: c}
-	// c.Tags = &TagsService{client: c}
-	// c.Locations = &LocationsService{client: c}
+	c.Users = &UsersService{client: c}
 	c.Statuses = &StatusesService{client: c}
 	c.Trends = &TrendsService{client: c}
 
