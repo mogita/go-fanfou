@@ -167,7 +167,7 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, erro
 // HomeTimeline shall get statuses of the specified user and his/her followed users
 // or of the current user if no ID specified
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.home_timeline
 func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error) {
 	u := fmt.Sprintf("statuses/home_timeline.json")
 	params := url.Values{}
@@ -176,6 +176,50 @@ func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error)
 		if opt.ID != "" {
 			params.Add("id", opt.ID)
 		}
+		if opt.SinceID != "" {
+			params.Add("since_id", opt.SinceID)
+		}
+		if opt.MaxID != "" {
+			params.Add("max_id", opt.MaxID)
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatuses := new([]Status)
+	_, err = s.client.Do(req, newStatuses)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newStatuses, nil
+}
+
+// PublicTimeline shall get all latest public statuses
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.public_timeline
+func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]Status, error) {
+	u := fmt.Sprintf("statuses/public_timeline.json")
+	params := url.Values{}
+
+	if opt != nil {
 		if opt.SinceID != "" {
 			params.Add("since_id", opt.SinceID)
 		}
