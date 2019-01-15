@@ -462,3 +462,89 @@ func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*Status, e
 
 	return newStatus, nil
 }
+
+// Followers shall get followers of the specified user, or of the current user
+// if not specified
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.followers
+func (s *StatusesService) Followers(opt *StatusesOptParams) ([]User, error) {
+	u := fmt.Sprintf("statuses/followers.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params.Add("id", opt.ID)
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUsers := new([]User)
+	_, err = s.client.Do(req, newUsers)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newUsers, nil
+}
+
+// Friends shall get friends of the specified user, or of the current user
+// if not specified
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.friends
+func (s *StatusesService) Friends(opt *StatusesOptParams) ([]User, error) {
+	u := fmt.Sprintf("statuses/friends.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params.Add("id", opt.ID)
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUsers := new([]User)
+	_, err = s.client.Do(req, newUsers)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newUsers, nil
+}
