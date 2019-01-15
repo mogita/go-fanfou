@@ -28,7 +28,7 @@ func main() {
 		return
 	}
 
-	resp, err := c.Statuses.Show("bwnM95zf_hE", &fanfou.StatusesOptParams{Format: "html"})
+	resp, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{ID: "montanathief", Count: 2, Format: "html"})
 	if err != nil {
 		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
 			fmt.Printf("%s\n", fanfouErr.GetFanfouError())
