@@ -108,7 +108,6 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 		if opt.Location != "" {
 			params.Add("location", opt.Location)
 		}
-		u += "?" + params.Encode()
 	}
 
 	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
@@ -125,6 +124,9 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 	return newStatus, nil
 }
 
+// Show shall get a status by ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
 func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, error) {
 	u := fmt.Sprintf("statuses/show.json")
 	params := url.Values{}
@@ -143,6 +145,38 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, erro
 	u += "?" + params.Encode()
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatus := new(Status)
+	_, err = s.client.Do(req, newStatus)
+	if err != nil {
+		return nil, err
+	}
+
+	return newStatus, nil
+}
+
+// Destroy shall delete a status by ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.destroy
+func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*Status, error) {
+	u := fmt.Sprintf("statuses/destroy.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, err
 	}
