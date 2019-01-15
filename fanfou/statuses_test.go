@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestCommentsService_Add(t *testing.T) {
+func TestStatusesService_Update(t *testing.T) {
 	setup()
 	defer teardown()
 
@@ -51,5 +51,39 @@ func TestCommentsService_Add(t *testing.T) {
 
 	if !reflect.DeepEqual(status, want) {
 		t.Errorf("statuses.update returned %+v, want %+v", status, want)
+	}
+}
+
+func TestStatusesService_Show(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/statuses/show.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "in_reply_to_status_id": "test1", "in_reply_to_user_id": "test2", "repost_status_id": "test3", "source": "test4", "location": "test7"}`)
+		if err != nil {
+			t.Errorf("statuses.show mock server error: %+v", err)
+		}
+	})
+
+	status, err := client.Statuses.Show("test_id", &StatusesOptParams{
+		Mode:   "test5",
+		Format: "test6",
+	})
+	if err != nil {
+		t.Errorf("statuses.show returned error: %v", err)
+	}
+
+	want := &Status{
+		ID:                "test_id",
+		InReplyToStatusID: "test1",
+		InReplyToUserID:   "test2",
+		RepostStatusID:    "test3",
+		Source:            "test4",
+		Location:          "test7",
+	}
+
+	if !reflect.DeepEqual(status, want) {
+		t.Errorf("statuses.show returned %+v, want %+v", status, want)
 	}
 }

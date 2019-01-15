@@ -28,7 +28,7 @@ func main() {
 		return
 	}
 
-	resp, err := c.Statuses.Update("mic check 4", nil)
+	resp, err := c.Statuses.Show("bwnM95zf_hE", &fanfou.StatusesOptParams{Format: "html"})
 	if err != nil {
 		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
 			fmt.Printf("%s\n", fanfouErr.GetFanfouError())
@@ -39,5 +39,5 @@ func main() {
 		return
 	}
 
-	fmt.Println(resp)
+	fmt.Printf("%+v\n", resp)
 }

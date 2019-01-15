@@ -2,6 +2,7 @@ package fanfou
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 )
 
@@ -110,7 +111,38 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 		u += "?" + params.Encode()
 	}
 
-	req, err := s.client.NewRequest("POST", u, params.Encode())
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
+	if err != nil {
+		return nil, err
+	}
+
+	newStatus := new(Status)
+	_, err = s.client.Do(req, newStatus)
+	if err != nil {
+		return nil, err
+	}
+
+	return newStatus, nil
+}
+
+func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, error) {
+	u := fmt.Sprintf("statuses/show.json")
+	params := url.Values{}
+	params.Add("id", ID)
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
 		return nil, err
 	}

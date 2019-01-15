@@ -2,6 +2,7 @@ package fanfou
 
 import (
 	"fmt"
+	"net/http"
 )
 
 // TrendsService handles communication with the trends related
@@ -30,7 +31,7 @@ type TrendsItem struct {
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/trends.list
 func (s *TrendsService) List() (*Trends, error) {
 	u := fmt.Sprintf("trends/list.json")
-	req, err := s.client.NewRequest("GET", u, "")
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
 		return nil, err
 	}
