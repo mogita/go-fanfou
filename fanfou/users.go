@@ -46,6 +46,9 @@ type User struct {
 	Status                    *Status `json:"status,omitempty"`
 }
 
+// Tag specifies Fanfou's tags data structure
+type Tag string
+
 // UsersOptParams specifies the optional params for statuses API
 type UsersOptParams struct {
 	ID     string
@@ -57,7 +60,7 @@ type UsersOptParams struct {
 
 // Tagged shall get users by tag
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.tagged
 func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]User, error) {
 	u := fmt.Sprintf("users/tagged.json")
 	params := url.Values{}
@@ -97,7 +100,7 @@ func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]User, error) {
 // Show shall get a user by ID, or the current user if not specified
 // ID represents user ID
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.show
 func (s *UsersService) Show(opt *UsersOptParams) (*User, error) {
 	u := fmt.Sprintf("users/show.json")
 	params := url.Values{}
@@ -128,4 +131,33 @@ func (s *UsersService) Show(opt *UsersOptParams) (*User, error) {
 	}
 
 	return newUser, nil
+}
+
+// TagList shall get tags of a specified user or of the current user if not specified
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.tag-list
+func (s *UsersService) TagList(opt *UsersOptParams) ([]Tag, error) {
+	u := fmt.Sprintf("users/tag_list.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params.Add("id", opt.ID)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newTags := new([]Tag)
+	_, err = s.client.Do(req, newTags)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newTags, nil
 }
