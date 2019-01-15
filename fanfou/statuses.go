@@ -386,6 +386,50 @@ func (s *StatusesService) Replies(opt *StatusesOptParams) ([]Status, error) {
 	return *newStatuses, nil
 }
 
+// Mentions shall get latest statuses mentioning the current user
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.mentions
+func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]Status, error) {
+	u := fmt.Sprintf("statuses/mentions.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.SinceID != "" {
+			params.Add("since_id", opt.SinceID)
+		}
+		if opt.MaxID != "" {
+			params.Add("max_id", opt.MaxID)
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatuses := new([]Status)
+	_, err = s.client.Do(req, newStatuses)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newStatuses, nil
+}
+
 // Destroy shall delete a status by ID
 // ID represents the status ID
 //
