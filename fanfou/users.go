@@ -48,14 +48,14 @@ type User struct {
 
 // UsersOptParams specifies the optional params for statuses API
 type UsersOptParams struct {
+	ID     string
 	Page   int64
 	Count  int64
 	Mode   string
 	Format string
 }
 
-// Tagged shall get a status by ID
-// ID represents the status ID
+// Tagged shall get users by tag
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
 func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]User, error) {
@@ -92,4 +92,40 @@ func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]User, error) {
 	}
 
 	return *newUsers, nil
+}
+
+// Show shall get a user by ID, or the current user if not specified
+// ID represents user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
+func (s *UsersService) Show(opt *UsersOptParams) (*User, error) {
+	u := fmt.Sprintf("users/show.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params.Add("id", opt.ID)
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUser := new(User)
+	_, err = s.client.Do(req, newUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return newUser, nil
 }
