@@ -131,6 +131,7 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 }
 
 // Show shall get a status by ID
+// ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
 func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, error) {
@@ -166,6 +167,7 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, erro
 
 // HomeTimeline shall get statuses of the specified user and his/her followed users
 // or of the current user if no ID specified
+// ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.home_timeline
 func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error) {
@@ -258,8 +260,9 @@ func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]Status, erro
 
 // UserTimeline shall get statuses of the specified user or of the current
 // user if no ID specified
+// ID represents the user ID
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.public_timeline
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.user_timeline
 func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]Status, error) {
 	u := fmt.Sprintf("statuses/user_timeline.json")
 	params := url.Values{}
@@ -280,6 +283,41 @@ func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]Status, error)
 		if opt.Count != 0 {
 			params.Add("count", strconv.FormatInt(opt.Count, 10))
 		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatuses := new([]Status)
+	_, err = s.client.Do(req, newStatuses)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newStatuses, nil
+}
+
+// ContextTimeline shall get contextual statuses of a given status ID
+// ID represents the status ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.context_timeline
+func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]Status, error) {
+	u := fmt.Sprintf("statuses/context_timeline.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	if opt != nil {
 		if opt.Mode != "" {
 			params.Add("mode", opt.Mode)
 		}
@@ -349,6 +387,7 @@ func (s *StatusesService) Replies(opt *StatusesOptParams) ([]Status, error) {
 }
 
 // Destroy shall delete a status by ID
+// ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.destroy
 func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*Status, error) {
