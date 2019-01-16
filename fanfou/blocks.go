@@ -82,3 +82,36 @@ func (s *BlocksService) Blocking(opt *BlocksOptParams) ([]User, error) {
 
 	return *newUsers, nil
 }
+
+// Exists shall check whether the specified user is blocked by the
+// current user
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.exists
+func (s *BlocksService) Exists(ID string, opt *BlocksOptParams) (*User, error) {
+	u := fmt.Sprintf("blocks/exists.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUser := new(User)
+	_, err = s.client.Do(req, newUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return newUser, nil
+}
