@@ -101,3 +101,52 @@ func TestSearchService_UserTimeline(t *testing.T) {
 		t.Errorf("search.user_timeline returned %+v, want %+v", statuses, want)
 	}
 }
+
+func TestSearchService_Users(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/search/users.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `{"total_number":42,"users":[{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"},{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}]}`)
+		if err != nil {
+			t.Errorf("search.users mock server error: %+v", err)
+		}
+	})
+
+	users, err := client.Search.Users("test_query", &SearchOptParams{
+		Page:   1,
+		Count:  1,
+		Mode:   "test5",
+		Format: "test6",
+	})
+	if err != nil {
+		t.Errorf("search.users returned error: %v", err)
+	}
+
+	want := &SearchUsersResult{
+		TotalNumber: 42,
+		Users: []User{
+			{
+				ID:              "test_id",
+				Name:            "test1",
+				ScreenName:      "test2",
+				Location:        "test3",
+				Gender:          "test4",
+				ProfileImageURL: "test7",
+			},
+			{
+				ID:              "test_id",
+				Name:            "test1",
+				ScreenName:      "test2",
+				Location:        "test3",
+				Gender:          "test4",
+				ProfileImageURL: "test7",
+			},
+		},
+	}
+
+	if !reflect.DeepEqual(users, want) {
+		t.Errorf("search.users returned %+v, want %+v", users, want)
+	}
+}
