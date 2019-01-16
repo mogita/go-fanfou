@@ -27,6 +27,11 @@ type NotificationResult struct {
 	FriendRequests int64 `json:"friend_requests,omitempty"`
 }
 
+type NotifyNumResult struct {
+	Result    string `json:"result,omitempty"`
+	NotifyNum int64  `json:"notify_num,omitempty"`
+}
+
 // AccountOptParams specifies the optional params for account API
 type AccountOptParams struct {
 	URL         string
@@ -153,4 +158,24 @@ func (s *AccountService) Notification() (*NotificationResult, error) {
 	}
 
 	return newNotification, nil
+}
+
+// NotifyNum shall get new notification number of the current app
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.notify-num
+func (s *AccountService) NotifyNum() (*NotifyNumResult, error) {
+	u := fmt.Sprintf("account/notify_num.json")
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newNotifyNum := new(NotifyNumResult)
+	_, err = s.client.Do(req, newNotifyNum)
+	if err != nil {
+		return nil, err
+	}
+
+	return newNotifyNum, nil
 }

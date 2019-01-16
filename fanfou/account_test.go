@@ -136,3 +136,30 @@ func TestAccountService_Notification(t *testing.T) {
 		t.Errorf("account.notification returned %+v, want %+v", result, want)
 	}
 }
+
+func TestAccountService_NotifyNum(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/account/notify_num.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `{"result": "ok", "notify_num": 5}`)
+		if err != nil {
+			t.Errorf("account.notify_num mock server error: %+v", err)
+		}
+	})
+
+	result, err := client.Account.NotifyNum()
+	if err != nil {
+		t.Errorf("account.notify_num returned error: %v", err)
+	}
+
+	want := &NotifyNumResult{
+		Result:    "ok",
+		NotifyNum: 5,
+	}
+
+	if !reflect.DeepEqual(result, want) {
+		t.Errorf("account.notify_num returned %+v, want %+v", result, want)
+	}
+}
