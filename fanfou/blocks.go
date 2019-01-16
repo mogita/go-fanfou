@@ -115,3 +115,70 @@ func (s *BlocksService) Exists(ID string, opt *BlocksOptParams) (*User, error) {
 
 	return newUser, nil
 }
+
+// Create shall block a specified user
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.create
+func (s *BlocksService) Create(ID string, opt *BlocksOptParams) (*User, error) {
+	u := fmt.Sprintf("blocks/create.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUser := new(User)
+	_, err = s.client.Do(req, newUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return newUser, nil
+}
+
+// Destroy shall unblock a specified user
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.destroy
+func (s *BlocksService) Destroy(ID string, opt *BlocksOptParams) (*User, error) {
+	u := fmt.Sprintf("blocks/destroy.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUser := new(User)
+	_, err = s.client.Do(req, newUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return newUser, nil
+}
