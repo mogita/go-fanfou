@@ -26,8 +26,7 @@ type SearchOptParams struct {
 	Format  string
 }
 
-// PublicTimeline shall get statuses of the specified user and his/her followed users
-// or of the current user if no ID specified
+// PublicTimeline shall search for statuses of the whole platform
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.public-timeline
 func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status, error) {
@@ -37,6 +36,54 @@ func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status
 	}
 
 	if opt != nil {
+		if opt.SinceID != "" {
+			params.Add("since_id", opt.SinceID)
+		}
+		if opt.MaxID != "" {
+			params.Add("max_id", opt.MaxID)
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatuses := new([]Status)
+	_, err = s.client.Do(req, newStatuses)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newStatuses, nil
+}
+
+// UserTimeline shall search for statuses of the specified user, or of the current user
+// if no ID specified
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.user-timeline
+func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]Status, error) {
+	u := fmt.Sprintf("search/user_timeline.json")
+	params := url.Values{
+		"q": []string{q},
+	}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params.Add("id", opt.ID)
+		}
 		if opt.SinceID != "" {
 			params.Add("since_id", opt.SinceID)
 		}
