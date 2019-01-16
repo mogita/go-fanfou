@@ -14,6 +14,13 @@ type AccountService struct {
 	client *Client
 }
 
+type RateLimitStatusResult struct {
+	ResetTime          string `json:"reset_time,omitempty"`
+	RemainingHits      int64  `json:"remaining_hits,omitempty"`
+	HourlyLimit        int64  `json:"hourly_limit,omitempty"`
+	ResetTimeInSeconds int64  `json:"reset_time_in_seconds,omitempty"`
+}
+
 // AccountOptParams specifies the optional params for account API
 type AccountOptParams struct {
 	ID      string
@@ -55,4 +62,24 @@ func (s *AccountService) VerifyCredentials(opt *AccountOptParams) (*User, error)
 	}
 
 	return newUser, nil
+}
+
+// RateLimitStatus shall get the API rate limit information of the current user
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.rate-limit-status
+func (s *AccountService) RateLimitStatus() (*RateLimitStatusResult, error) {
+	u := fmt.Sprintf("account/rate_limit_status.json")
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newRateLimitStatus := new(RateLimitStatusResult)
+	_, err = s.client.Do(req, newRateLimitStatus)
+	if err != nil {
+		return nil, err
+	}
+
+	return newRateLimitStatus, nil
 }
