@@ -112,3 +112,70 @@ func TestBlocksService_Exists(t *testing.T) {
 		t.Errorf("blocks.exists returned %+v, want %+v", user, want)
 	}
 }
+
+func TestBlocksService_Create(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/blocks/create.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}`)
+		if err != nil {
+			t.Errorf("blocks.create mock server error: %+v", err)
+		}
+	})
+
+	user, err := client.Blocks.Create("test_id", &BlocksOptParams{
+		Mode:   "test5",
+		Format: "test6",
+	})
+	if err != nil {
+		t.Errorf("blocks.create returned error: %v", err)
+	}
+
+	want := &User{
+		ID:              "test_id",
+		Name:            "test1",
+		ScreenName:      "test2",
+		Location:        "test3",
+		Gender:          "test4",
+		ProfileImageURL: "test7",
+	}
+
+	if !reflect.DeepEqual(user, want) {
+		t.Errorf("blocks.create returned %+v, want %+v", user, want)
+	}
+}
+
+func TestBlocksService_Destroy(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/blocks/destroy.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}`)
+		if err != nil {
+			t.Errorf("blocks.destroy mock server error: %+v", err)
+		}
+	})
+
+	user, err := client.Blocks.Destroy("test_id", &BlocksOptParams{
+		Mode: "test5",
+	})
+	if err != nil {
+		t.Errorf("blocks.destroy returned error: %v", err)
+	}
+
+	want := &User{
+		ID:              "test_id",
+		Name:            "test1",
+		ScreenName:      "test2",
+		Location:        "test3",
+		Gender:          "test4",
+		ProfileImageURL: "test7",
+	}
+
+	if !reflect.DeepEqual(user, want) {
+		t.Errorf("blocks.destroy returned %+v, want %+v", user, want)
+	}
+}
