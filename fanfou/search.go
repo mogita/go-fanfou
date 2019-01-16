@@ -15,6 +15,11 @@ type SearchService struct {
 	client *Client
 }
 
+type SearchUsersResult struct {
+	TotalNumber int64  `json:"total_number,omitempty"`
+	Users       []User `json:"users,omitempty"`
+}
+
 // SearchOptParams specifies the optional params for search API
 type SearchOptParams struct {
 	ID      string
@@ -115,4 +120,44 @@ func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]Status, 
 	}
 
 	return *newStatuses, nil
+}
+
+// Users shall search for users of the whole platform
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.users
+func (s *SearchService) Users(q string, opt *SearchOptParams) (*SearchUsersResult, error) {
+	u := fmt.Sprintf("search/users.json")
+	params := url.Values{
+		"q": []string{q},
+	}
+
+	if opt != nil {
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newSearchUsersResult := new(SearchUsersResult)
+	_, err = s.client.Do(req, newSearchUsersResult)
+	if err != nil {
+		return nil, err
+	}
+
+	return newSearchUsersResult, nil
 }
