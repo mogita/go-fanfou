@@ -23,13 +23,13 @@ type RateLimitStatusResult struct {
 
 // AccountOptParams specifies the optional params for account API
 type AccountOptParams struct {
-	ID      string
-	SinceID string
-	MaxID   string
-	Page    int64
-	Count   int64
-	Mode    string
-	Format  string
+	URL         string
+	Location    string
+	Description string
+	Name        string
+	Email       string
+	Mode        string
+	Format      string
 }
 
 // VerifyCredentials shall verify the current user's username and password
@@ -82,4 +82,48 @@ func (s *AccountService) RateLimitStatus() (*RateLimitStatusResult, error) {
 	}
 
 	return newRateLimitStatus, nil
+}
+
+// UpdateProfile shall update the current user's profile
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.update-profile
+func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*User, error) {
+	u := fmt.Sprintf("account/update_profile.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.URL != "" {
+			params.Add("url", opt.URL)
+		}
+		if opt.Location != "" {
+			params.Add("location", opt.Location)
+		}
+		if opt.Description != "" {
+			params.Add("description", opt.Description)
+		}
+		if opt.Name != "" {
+			params.Add("name", opt.Name)
+		}
+		if opt.Email != "" {
+			params.Add("email", opt.Email)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUser := new(User)
+	_, err = s.client.Do(req, newUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return newUser, nil
 }
