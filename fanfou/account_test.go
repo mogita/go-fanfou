@@ -108,3 +108,31 @@ func TestAccountService_UpdateProfile(t *testing.T) {
 		t.Errorf("account.update_profile returned %+v, want %+v", user, want)
 	}
 }
+
+func TestAccountService_Notification(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/account/notification.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `{"mentions": 1, "direct_messages": 0, "friend_requests": 5}`)
+		if err != nil {
+			t.Errorf("account.notification mock server error: %+v", err)
+		}
+	})
+
+	result, err := client.Account.Notification()
+	if err != nil {
+		t.Errorf("account.notification returned error: %v", err)
+	}
+
+	want := &NotificationResult{
+		Mentions:       1,
+		DirectMessages: 0,
+		FriendRequests: 5,
+	}
+
+	if !reflect.DeepEqual(result, want) {
+		t.Errorf("account.notification returned %+v, want %+v", result, want)
+	}
+}
