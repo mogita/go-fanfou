@@ -1,0 +1,71 @@
+package fanfou
+
+import (
+	"fmt"
+	"net/http"
+	"net/url"
+	"strconv"
+)
+
+// SearchService handles communication with the search related
+// methods of the Fanfou API.
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/API-Endpoints#search
+type SearchService struct {
+	client *Client
+}
+
+// SearchOptParams specifies the optional params for search API
+type SearchOptParams struct {
+	ID      string
+	SinceID string
+	MaxID   string
+	Page    int64
+	Count   int64
+	Mode    string
+	Format  string
+}
+
+// PublicTimeline shall get statuses of the specified user and his/her followed users
+// or of the current user if no ID specified
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.public-timeline
+func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status, error) {
+	u := fmt.Sprintf("search/public_timeline.json")
+	params := url.Values{
+		"q": []string{q},
+	}
+
+	if opt != nil {
+		if opt.SinceID != "" {
+			params.Add("since_id", opt.SinceID)
+		}
+		if opt.MaxID != "" {
+			params.Add("max_id", opt.MaxID)
+		}
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatuses := new([]Status)
+	_, err = s.client.Do(req, newStatuses)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newStatuses, nil
+}

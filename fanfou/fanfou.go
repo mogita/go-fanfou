@@ -58,6 +58,7 @@ type Client struct {
 	// Services used for talking to different parts of the API.
 	Users    *UsersService
 	Statuses *StatusesService
+	Search   *SearchService
 	Trends   *TrendsService
 
 	// Temporary Response
@@ -89,6 +90,7 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 
 	c.Users = &UsersService{client: c}
 	c.Statuses = &StatusesService{client: c}
+	c.Search = &SearchService{client: c}
 	c.Trends = &TrendsService{client: c}
 
 	return c
