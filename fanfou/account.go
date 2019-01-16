@@ -21,6 +21,12 @@ type RateLimitStatusResult struct {
 	ResetTimeInSeconds int64  `json:"reset_time_in_seconds,omitempty"`
 }
 
+type NotificationResult struct {
+	Mentions       int64 `json:"mentions,omitempty"`
+	DirectMessages int64 `json:"direct_messages,omitempty"`
+	FriendRequests int64 `json:"friend_requests,omitempty"`
+}
+
 // AccountOptParams specifies the optional params for account API
 type AccountOptParams struct {
 	URL         string
@@ -126,4 +132,25 @@ func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*User, error) {
 	}
 
 	return newUser, nil
+}
+
+// Notification shall get the unread counts for mentions, direct
+// messages and friend requests of the current user
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.notification
+func (s *AccountService) Notification() (*NotificationResult, error) {
+	u := fmt.Sprintf("account/notification.json")
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newNotification := new(NotificationResult)
+	_, err = s.client.Do(req, newNotification)
+	if err != nil {
+		return nil, err
+	}
+
+	return newNotification, nil
 }
