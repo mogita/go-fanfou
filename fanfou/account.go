@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 // AccountService handles communication with the account related
@@ -41,6 +42,7 @@ type AccountOptParams struct {
 	Email       string
 	Mode        string
 	Format      string
+	NotifyNum   int64
 }
 
 // VerifyCredentials shall verify the current user's username and password
@@ -167,6 +169,35 @@ func (s *AccountService) NotifyNum() (*NotifyNumResult, error) {
 	u := fmt.Sprintf("account/notify_num.json")
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newNotifyNum := new(NotifyNumResult)
+	_, err = s.client.Do(req, newNotifyNum)
+	if err != nil {
+		return nil, err
+	}
+
+	return newNotifyNum, nil
+}
+
+// UpdateNotifyNum shall update the notification number of the current app
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.update-notify-num
+func (s *AccountService) UpdateNotifyNum(opt *AccountOptParams) (*NotifyNumResult, error) {
+	u := fmt.Sprintf("account/update_notify_num.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.NotifyNum != 0 {
+			params.Add("notify_num", strconv.FormatInt(opt.NotifyNum, 10))
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
 		return nil, err
 	}
