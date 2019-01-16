@@ -69,3 +69,42 @@ func TestAccountService_RateLimitStatus(t *testing.T) {
 		t.Errorf("account.rate_limit_status returned %+v, want %+v", result, want)
 	}
 }
+
+func TestAccountService_UpdateProfile(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/account/update_profile.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}`)
+		if err != nil {
+			t.Errorf("account.update_profile mock server error: %+v", err)
+		}
+	})
+
+	user, err := client.Account.UpdateProfile(&AccountOptParams{
+		Mode:        "test5",
+		Format:      "test6",
+		URL:         "test_url",
+		Location:    "test_location",
+		Description: "test_description",
+		Name:        "test_name",
+		Email:       "test_email",
+	})
+	if err != nil {
+		t.Errorf("account.update_profile returned error: %v", err)
+	}
+
+	want := &User{
+		ID:              "test_id",
+		Name:            "test1",
+		ScreenName:      "test2",
+		Location:        "test3",
+		Gender:          "test4",
+		ProfileImageURL: "test7",
+	}
+
+	if !reflect.DeepEqual(user, want) {
+		t.Errorf("account.update_profile returned %+v, want %+v", user, want)
+	}
+}
