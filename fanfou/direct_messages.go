@@ -29,6 +29,17 @@ type DirectMessageResult struct {
 	InReplyTo           *DirectMessageResult `json:"in_reply_to,omitempty"`
 }
 
+// DirectMessageConversationListResult specifies Fanfou's direct messages conversation list data structure
+type DirectMessageConversationListResult []DirectMessageConversationListItem
+
+// DirectMessageConversationListItem specifies Fanfou's direct messages conversation list item data structure
+type DirectMessageConversationListItem struct {
+	Dm      *DirectMessageResult `json:"dm"`
+	Otherid string               `json:"otherid"`
+	MsgNum  int64                `json:"msg_num"`
+	NewConv bool                 `json:"new_conv"`
+}
+
 // DirectMessagesOptParams specifies the optional params for direct messages API
 type DirectMessagesOptParams struct {
 	ID          string
@@ -145,4 +156,40 @@ func (s *DirectMessagesService) Destroy(ID string) (*DirectMessageResult, error)
 	}
 
 	return newDirectMessage, nil
+}
+
+// ConversationList shall get the conversation list of the direct messages of
+// the current user
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.conversation-list
+func (s *DirectMessagesService) ConversationList(opt *DirectMessagesOptParams) (*DirectMessageConversationListResult, error) {
+	u := fmt.Sprintf("direct_messages/conversation_list.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newDirectMessages := new(DirectMessageConversationListResult)
+	_, err = s.client.Do(req, newDirectMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	return newDirectMessages, nil
 }
