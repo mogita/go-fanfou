@@ -31,20 +31,21 @@ type DirectMessageResult struct {
 
 // DirectMessagesOptParams specifies the optional params for direct messages API
 type DirectMessagesOptParams struct {
-	ID      string
-	Page    int64
-	Count   int64
-	MaxID   string
-	SinceID string
-	Mode    string
-	Format  string
+	ID          string
+	InReplyToID string
+	Page        int64
+	Count       int64
+	MaxID       string
+	SinceID     string
+	Mode        string
+	Format      string
 }
 
 // Conversation shall get the conversation of direct messages between the specified
 // user and the current user
 // ID represents the user ID
 //
-// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.create
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.conversation
 func (s *DirectMessagesService) Conversation(ID string, opt *DirectMessagesOptParams) ([]DirectMessageResult, error) {
 	u := fmt.Sprintf("direct_messages/conversation.json")
 	params := url.Values{
@@ -83,4 +84,39 @@ func (s *DirectMessagesService) Conversation(ID string, opt *DirectMessagesOptPa
 	}
 
 	return *newDirectMessages, nil
+}
+
+// New shall send a new direct message to the specified user
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.new
+func (s *DirectMessagesService) New(user, text string, opt *DirectMessagesOptParams) (*DirectMessageResult, error) {
+	u := fmt.Sprintf("direct_messages/new.json")
+	params := url.Values{
+		"user": []string{user},
+		"text": []string{text},
+	}
+
+	if opt != nil {
+		if opt.InReplyToID != "" {
+			params.Add("in_reply_to_id", opt.InReplyToID)
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newDirectMessage := new(DirectMessageResult)
+	_, err = s.client.Do(req, newDirectMessage)
+	if err != nil {
+		return nil, err
+	}
+
+	return newDirectMessage, nil
 }
