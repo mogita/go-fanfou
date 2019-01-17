@@ -120,3 +120,29 @@ func (s *DirectMessagesService) New(user, text string, opt *DirectMessagesOptPar
 
 	return newDirectMessage, nil
 }
+
+// Destroy shall delete a specified direct message
+// ID represents the direct message ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.destroy
+func (s *DirectMessagesService) Destroy(ID string) (*DirectMessageResult, error) {
+	u := fmt.Sprintf("direct_messages/destroy.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newDirectMessage := new(DirectMessageResult)
+	_, err = s.client.Do(req, newDirectMessage)
+	if err != nil {
+		return nil, err
+	}
+
+	return newDirectMessage, nil
+}
