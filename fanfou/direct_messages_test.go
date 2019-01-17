@@ -207,3 +207,74 @@ func TestDirectMessagesService_Destroy(t *testing.T) {
 		t.Errorf("direct_messages.destroy returned %+v, want %+v", status, want)
 	}
 }
+
+func TestDirectMessagesService_ConversationList(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/direct_messages/conversation_list.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `[{"dm": {"id": "test_id", "text": "test_text", "sender_id": "test_sender_id", "recipient_id": "test_recipient_id", "created_at": "Thu Nov 17 03:45:20 +0000 2011", "sender_screen_name": "test_sender_screen_name", "recipient_screen_name": "test_recipient_screen_name", "sender": {"id": "test_id"}, "recipient": {"id": "test_id"}}, "otherid": "test_other_id", "msg_num": 11, "new_conv": true}, {"dm": {"id": "test_id", "text": "test_text", "sender_id": "test_sender_id", "recipient_id": "test_recipient_id", "created_at": "Thu Nov 17 03:45:20 +0000 2011", "sender_screen_name": "test_sender_screen_name", "recipient_screen_name": "test_recipient_screen_name", "sender": {"id": "test_id"}, "recipient": {"id": "test_id"}}, "otherid": "test_other_id", "msg_num": 11, "new_conv": true}]`)
+		if err != nil {
+			t.Errorf("direct_messages.conversation_list mock server error: %+v", err)
+		}
+	})
+
+	result, err := client.DirectMessages.ConversationList(&DirectMessagesOptParams{
+		Count: 1,
+		Page:  1,
+		Mode:  "test_mode",
+	})
+	if err != nil {
+		t.Errorf("direct_messages.conversation_list returned error: %v", err)
+	}
+
+	want := &DirectMessageConversationListResult{
+		{
+			Dm: &DirectMessageResult{
+				ID:                  "test_id",
+				Text:                "test_text",
+				SenderID:            "test_sender_id",
+				RecipientID:         "test_recipient_id",
+				CreatedAt:           "Thu Nov 17 03:45:20 +0000 2011",
+				SenderScreenName:    "test_sender_screen_name",
+				RecipientScreenName: "test_recipient_screen_name",
+				Sender: &UserResult{
+					ID: "test_id",
+				},
+				Recipient: &UserResult{
+					ID: "test_id",
+				},
+				InReplyTo: nil,
+			},
+			Otherid: "test_other_id",
+			MsgNum:  11,
+			NewConv: true,
+		},
+		{
+			Dm: &DirectMessageResult{
+				ID:                  "test_id",
+				Text:                "test_text",
+				SenderID:            "test_sender_id",
+				RecipientID:         "test_recipient_id",
+				CreatedAt:           "Thu Nov 17 03:45:20 +0000 2011",
+				SenderScreenName:    "test_sender_screen_name",
+				RecipientScreenName: "test_recipient_screen_name",
+				Sender: &UserResult{
+					ID: "test_id",
+				},
+				Recipient: &UserResult{
+					ID: "test_id",
+				},
+				InReplyTo: nil,
+			},
+			Otherid: "test_other_id",
+			MsgNum:  11,
+			NewConv: true,
+		},
+	}
+
+	if !reflect.DeepEqual(result, want) {
+		t.Errorf("direct_messages.conversation_list returned %+v, want %+v", result, want)
+	}
+}
