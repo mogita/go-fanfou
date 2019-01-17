@@ -151,3 +151,25 @@ func TestFriendshipsService_Deny(t *testing.T) {
 		t.Errorf("friendships.deny returned %+v, want %+v", user, want)
 	}
 }
+
+func TestFriendshipsService_Exists(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/friendships/exists.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `"true"`)
+		if err != nil {
+			t.Errorf("friendships.exists mock server error: %+v", err)
+		}
+	})
+
+	user, err := client.Friendships.Exists("test_id_a", "test_id_b")
+	if err != nil {
+		t.Errorf("friendships.exists returned error: %v", err)
+	}
+
+	if !reflect.DeepEqual(user, true) {
+		t.Errorf("friendships.exists returned %+v, want %+v", user, true)
+	}
+}

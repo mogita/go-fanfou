@@ -164,3 +164,36 @@ func (s *FriendshipsService) Deny(ID string, opt *FriendshipsOptParams) (*UserRe
 
 	return newUser, nil
 }
+
+// Exists shall check if user A follows user B
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.exists
+func (s *FriendshipsService) Exists(userA, userB string) (bool, error) {
+	u := fmt.Sprintf("friendships/exists.json")
+	params := url.Values{
+		"user_a": []string{userA},
+		"user_b": []string{userB},
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return false, err
+	}
+
+	// Caveat: Fanfou API returns "true" and "false" in string on this endpoint
+	result := new(string)
+	_, err = s.client.Do(req, result)
+	if err != nil {
+		return false, err
+	}
+
+	resultBool := false
+	if *result == "true" {
+		resultBool = true
+	}
+
+	return resultBool, nil
+}
