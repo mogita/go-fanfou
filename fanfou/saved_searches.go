@@ -65,3 +65,28 @@ func (s *SavedSearchesService) List() ([]SavedSearchResult, error) {
 
 	return *newSavedSearches, nil
 }
+
+// Create shall create a saved search
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/saved-searches.create
+func (s *SavedSearchesService) Create(query string) (*SavedSearchResult, error) {
+	u := fmt.Sprintf("saved_searches/create.json")
+	params := url.Values{
+		"query": []string{query},
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newSavedSearch := new(SavedSearchResult)
+	_, err = s.client.Do(req, newSavedSearch)
+	if err != nil {
+		return nil, err
+	}
+
+	return newSavedSearch, nil
+}
