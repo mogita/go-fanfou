@@ -90,3 +90,28 @@ func (s *SavedSearchesService) Create(query string) (*SavedSearchResult, error) 
 
 	return newSavedSearch, nil
 }
+
+// Destroy shall delete a saved search
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/saved-searches.destroy
+func (s *SavedSearchesService) Destroy(ID string) (*SavedSearchResult, error) {
+	u := fmt.Sprintf("saved_searches/destroy.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newSavedSearch := new(SavedSearchResult)
+	_, err = s.client.Do(req, newSavedSearch)
+	if err != nil {
+		return nil, err
+	}
+
+	return newSavedSearch, nil
+}
