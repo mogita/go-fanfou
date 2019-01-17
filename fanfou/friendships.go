@@ -165,6 +165,41 @@ func (s *FriendshipsService) Deny(ID string, opt *FriendshipsOptParams) (*UserRe
 	return newUser, nil
 }
 
+// Accept shall accept the friendship request from the specified user
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.accept
+func (s *FriendshipsService) Accept(ID string, opt *FriendshipsOptParams) (*UserResult, error) {
+	u := fmt.Sprintf("friendships/accept.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newUser := new(UserResult)
+	_, err = s.client.Do(req, newUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return newUser, nil
+}
+
 // Exists shall check if user A follows user B
 // ID represents the user ID
 //
