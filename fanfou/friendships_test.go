@@ -118,3 +118,36 @@ func TestFriendshipsService_Requests(t *testing.T) {
 		t.Errorf("friendships.requests returned %+v, want %+v", users, want)
 	}
 }
+
+func TestFriendshipsService_Deny(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/friendships/deny.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}`)
+		if err != nil {
+			t.Errorf("friendships.deny mock server error: %+v", err)
+		}
+	})
+
+	user, err := client.Friendships.Deny("test_id", &FriendshipsOptParams{
+		Mode: "test5",
+	})
+	if err != nil {
+		t.Errorf("friendships.deny returned error: %v", err)
+	}
+
+	want := &UserResult{
+		ID:              "test_id",
+		Name:            "test1",
+		ScreenName:      "test2",
+		Location:        "test3",
+		Gender:          "test4",
+		ProfileImageURL: "test7",
+	}
+
+	if !reflect.DeepEqual(user, want) {
+		t.Errorf("friendships.deny returned %+v, want %+v", user, want)
+	}
+}
