@@ -30,7 +30,7 @@ func TestSearchService_PublicTimeline(t *testing.T) {
 		t.Errorf("search.public_timeline returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",
@@ -78,7 +78,7 @@ func TestSearchService_UserTimeline(t *testing.T) {
 		t.Errorf("search.user_timeline returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",

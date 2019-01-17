@@ -15,23 +15,23 @@ type StatusesService struct {
 	client *Client
 }
 
-// Status specifies Fanfou's statuses data structure
-type Status struct {
-	CreatedAt           string  `json:"created_at,omitempty"`
-	ID                  string  `json:"id,omitempty"`
-	Rawid               int64   `json:"rawid,omitempty"`
-	Text                string  `json:"text,omitempty"`
-	Source              string  `json:"source,omitempty"`
-	Location            string  `json:"location,omitempty"`
-	Truncated           bool    `json:"truncated,omitempty"`
-	InReplyToStatusID   string  `json:"in_reply_to_status_id,omitempty"`
-	InReplyToUserID     string  `json:"in_reply_to_user_id,omitempty"`
-	InReplyToScreenName string  `json:"in_reply_to_screen_name,omitempty"`
-	RepostStatusID      string  `json:"repost_status_id,omitempty"`
-	RepostStatus        *Status `json:"repost_status,omitempty"`
-	RepostUserID        string  `json:"repost_user_id,omitempty"`
-	RepostScreenName    string  `json:"repost_screen_name,omitempty"`
-	Favorited           bool    `json:"favorited,omitempty"`
+// StatusResult specifies Fanfou's statuses data structure
+type StatusResult struct {
+	CreatedAt           string        `json:"created_at,omitempty"`
+	ID                  string        `json:"id,omitempty"`
+	Rawid               int64         `json:"rawid,omitempty"`
+	Text                string        `json:"text,omitempty"`
+	Source              string        `json:"source,omitempty"`
+	Location            string        `json:"location,omitempty"`
+	Truncated           bool          `json:"truncated,omitempty"`
+	InReplyToStatusID   string        `json:"in_reply_to_status_id,omitempty"`
+	InReplyToUserID     string        `json:"in_reply_to_user_id,omitempty"`
+	InReplyToScreenName string        `json:"in_reply_to_screen_name,omitempty"`
+	RepostStatusID      string        `json:"repost_status_id,omitempty"`
+	RepostStatus        *StatusResult `json:"repost_status,omitempty"`
+	RepostUserID        string        `json:"repost_user_id,omitempty"`
+	RepostScreenName    string        `json:"repost_screen_name,omitempty"`
+	Favorited           bool          `json:"favorited,omitempty"`
 	User                struct {
 		ID                        string `json:"id,omitempty"`
 		Name                      string `json:"name,omitempty"`
@@ -86,7 +86,7 @@ type StatusesOptParams struct {
 // Update shall post a new status
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.update
-func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status, error) {
+func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*StatusResult, error) {
 	u := fmt.Sprintf("statuses/update.json")
 	params := url.Values{
 		"status": []string{status},
@@ -121,7 +121,7 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 		return nil, err
 	}
 
-	newStatus := new(Status)
+	newStatus := new(StatusResult)
 	_, err = s.client.Do(req, newStatus)
 	if err != nil {
 		return nil, err
@@ -134,7 +134,7 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
-func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, error) {
+func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*StatusResult, error) {
 	u := fmt.Sprintf("statuses/show.json")
 	params := url.Values{}
 	params.Add("id", ID)
@@ -156,7 +156,7 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, erro
 		return nil, err
 	}
 
-	newStatus := new(Status)
+	newStatus := new(StatusResult)
 	_, err = s.client.Do(req, newStatus)
 	if err != nil {
 		return nil, err
@@ -170,7 +170,7 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*Status, erro
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.home-timeline
-func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error) {
+func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("statuses/home_timeline.json")
 	params := url.Values{}
 
@@ -205,7 +205,7 @@ func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error)
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
@@ -217,7 +217,7 @@ func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]Status, error)
 // PublicTimeline shall get latest public statuses
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.public-timeline
-func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]Status, error) {
+func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("statuses/public_timeline.json")
 	params := url.Values{}
 
@@ -249,7 +249,7 @@ func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]Status, erro
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
@@ -263,7 +263,7 @@ func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]Status, erro
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.user-timeline
-func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]Status, error) {
+func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("statuses/user_timeline.json")
 	params := url.Values{}
 
@@ -298,7 +298,7 @@ func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]Status, error)
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
@@ -311,7 +311,7 @@ func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]Status, error)
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.context-timeline
-func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]Status, error) {
+func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("statuses/context_timeline.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -333,7 +333,7 @@ func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
@@ -345,7 +345,7 @@ func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]
 // Replies shall get latest replies to the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.replies
-func (s *StatusesService) Replies(opt *StatusesOptParams) ([]Status, error) {
+func (s *StatusesService) Replies(opt *StatusesOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("statuses/replies.json")
 	params := url.Values{}
 
@@ -377,7 +377,7 @@ func (s *StatusesService) Replies(opt *StatusesOptParams) ([]Status, error) {
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
@@ -389,7 +389,7 @@ func (s *StatusesService) Replies(opt *StatusesOptParams) ([]Status, error) {
 // Mentions shall get latest statuses mentioning the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.mentions
-func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]Status, error) {
+func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("statuses/mentions.json")
 	params := url.Values{}
 
@@ -421,7 +421,7 @@ func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]Status, error) {
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
@@ -434,7 +434,7 @@ func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]Status, error) {
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.destroy
-func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*Status, error) {
+func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*StatusResult, error) {
 	u := fmt.Sprintf("statuses/destroy.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -454,7 +454,7 @@ func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*Status, e
 		return nil, err
 	}
 
-	newStatus := new(Status)
+	newStatus := new(StatusResult)
 	_, err = s.client.Do(req, newStatus)
 	if err != nil {
 		return nil, err

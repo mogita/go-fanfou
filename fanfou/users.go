@@ -17,33 +17,33 @@ type UsersService struct {
 
 // UserResult specifies Fanfou's users data structure
 type UserResult struct {
-	ID                        string  `json:"id,omitempty"`
-	Name                      string  `json:"name,omitempty"`
-	ScreenName                string  `json:"screen_name,omitempty"`
-	Location                  string  `json:"location,omitempty"`
-	Gender                    string  `json:"gender,omitempty"`
-	Birthday                  string  `json:"birthday,omitempty"`
-	Description               string  `json:"description,omitempty"`
-	ProfileImageURL           string  `json:"profile_image_url,omitempty"`
-	ProfileImageURLLarge      string  `json:"profile_image_url_large,omitempty"`
-	URL                       string  `json:"url,omitempty"`
-	Protected                 bool    `json:"protected,omitempty"`
-	FollowersCount            int64   `json:"followers_count,omitempty"`
-	FriendsCount              int64   `json:"friends_count,omitempty"`
-	FavouritesCount           int64   `json:"favourites_count,omitempty"`
-	StatusesCount             int64   `json:"statuses_count,omitempty"`
-	Following                 bool    `json:"following,omitempty"`
-	Notifications             bool    `json:"notifications,omitempty"`
-	CreatedAt                 string  `json:"created_at,omitempty"`
-	UtcOffset                 int64   `json:"utc_offset,omitempty"`
-	ProfileBackgroundColor    string  `json:"profile_background_color,omitempty"`
-	ProfileTextColor          string  `json:"profile_text_color,omitempty"`
-	ProfileLinkColor          string  `json:"profile_link_color,omitempty"`
-	ProfileSidebarFillColor   string  `json:"profile_sidebar_fill_color,omitempty"`
-	ProfileSidebarBorderColor string  `json:"profile_sidebar_border_color,omitempty"`
-	ProfileBackgroundImageURL string  `json:"profile_background_image_url,omitempty"`
-	ProfileBackgroundTile     bool    `json:"profile_background_tile,omitempty"`
-	Status                    *Status `json:"status,omitempty"`
+	ID                        string        `json:"id,omitempty"`
+	Name                      string        `json:"name,omitempty"`
+	ScreenName                string        `json:"screen_name,omitempty"`
+	Location                  string        `json:"location,omitempty"`
+	Gender                    string        `json:"gender,omitempty"`
+	Birthday                  string        `json:"birthday,omitempty"`
+	Description               string        `json:"description,omitempty"`
+	ProfileImageURL           string        `json:"profile_image_url,omitempty"`
+	ProfileImageURLLarge      string        `json:"profile_image_url_large,omitempty"`
+	URL                       string        `json:"url,omitempty"`
+	Protected                 bool          `json:"protected,omitempty"`
+	FollowersCount            int64         `json:"followers_count,omitempty"`
+	FriendsCount              int64         `json:"friends_count,omitempty"`
+	FavouritesCount           int64         `json:"favourites_count,omitempty"`
+	StatusesCount             int64         `json:"statuses_count,omitempty"`
+	Following                 bool          `json:"following,omitempty"`
+	Notifications             bool          `json:"notifications,omitempty"`
+	CreatedAt                 string        `json:"created_at,omitempty"`
+	UtcOffset                 int64         `json:"utc_offset,omitempty"`
+	ProfileBackgroundColor    string        `json:"profile_background_color,omitempty"`
+	ProfileTextColor          string        `json:"profile_text_color,omitempty"`
+	ProfileLinkColor          string        `json:"profile_link_color,omitempty"`
+	ProfileSidebarFillColor   string        `json:"profile_sidebar_fill_color,omitempty"`
+	ProfileSidebarBorderColor string        `json:"profile_sidebar_border_color,omitempty"`
+	ProfileBackgroundImageURL string        `json:"profile_background_image_url,omitempty"`
+	ProfileBackgroundTile     bool          `json:"profile_background_tile,omitempty"`
+	Status                    *StatusResult `json:"status,omitempty"`
 }
 
 // Tag specifies Fanfou's tags data structure

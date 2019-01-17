@@ -34,7 +34,7 @@ type SearchOptParams struct {
 // PublicTimeline shall search for statuses of the whole platform
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.public-timeline
-func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status, error) {
+func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("search/public_timeline.json")
 	params := url.Values{
 		"q": []string{q},
@@ -65,7 +65,7 @@ func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
@@ -79,7 +79,7 @@ func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.user-timeline
-func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]Status, error) {
+func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]StatusResult, error) {
 	u := fmt.Sprintf("search/user_timeline.json")
 	params := url.Values{
 		"q": []string{q},
@@ -113,7 +113,7 @@ func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]Status, 
 		return nil, err
 	}
 
-	newStatuses := new([]Status)
+	newStatuses := new([]StatusResult)
 	_, err = s.client.Do(req, newStatuses)
 	if err != nil {
 		return nil, err
