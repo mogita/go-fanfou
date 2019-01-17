@@ -193,3 +193,44 @@ func (s *DirectMessagesService) ConversationList(opt *DirectMessagesOptParams) (
 
 	return newDirectMessages, nil
 }
+
+// Inbox shall get the latest direct messages in the inbox
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.inbox
+func (s *DirectMessagesService) Inbox(opt *DirectMessagesOptParams) ([]DirectMessageResult, error) {
+	u := fmt.Sprintf("direct_messages/inbox.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.MaxID != "" {
+			params.Add("max_id", opt.MaxID)
+		}
+		if opt.SinceID != "" {
+			params.Add("since_id", opt.SinceID)
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newDirectMessages := new([]DirectMessageResult)
+	_, err = s.client.Do(req, newDirectMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newDirectMessages, nil
+}
