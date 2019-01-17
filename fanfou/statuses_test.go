@@ -434,7 +434,7 @@ func TestStatusesService_Followers(t *testing.T) {
 		t.Errorf("statuses.followers returned error: %v", err)
 	}
 
-	want := []User{
+	want := []UserResult{
 		{
 			ID:              "test_id",
 			Name:            "test1",
@@ -481,7 +481,7 @@ func TestStatusesService_Friends(t *testing.T) {
 		t.Errorf("statuses.friends returned error: %v", err)
 	}
 
-	want := []User{
+	want := []UserResult{
 		{
 			ID:              "test_id",
 			Name:            "test1",

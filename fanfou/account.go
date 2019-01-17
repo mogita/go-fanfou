@@ -48,7 +48,7 @@ type AccountOptParams struct {
 // VerifyCredentials shall verify the current user's username and password
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.verify-credentials
-func (s *AccountService) VerifyCredentials(opt *AccountOptParams) (*User, error) {
+func (s *AccountService) VerifyCredentials(opt *AccountOptParams) (*UserResult, error) {
 	u := fmt.Sprintf("account/verify_credentials.json")
 	params := url.Values{}
 
@@ -68,7 +68,7 @@ func (s *AccountService) VerifyCredentials(opt *AccountOptParams) (*User, error)
 		return nil, err
 	}
 
-	newUser := new(User)
+	newUser := new(UserResult)
 	_, err = s.client.Do(req, newUser)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (s *AccountService) RateLimitStatus() (*RateLimitStatusResult, error) {
 // UpdateProfile shall update the current user's profile
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.update-profile
-func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*User, error) {
+func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*UserResult, error) {
 	u := fmt.Sprintf("account/update_profile.json")
 	params := url.Values{}
 
@@ -132,7 +132,7 @@ func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*User, error) {
 		return nil, err
 	}
 
-	newUser := new(User)
+	newUser := new(UserResult)
 	_, err = s.client.Do(req, newUser)
 	if err != nil {
 		return nil, err

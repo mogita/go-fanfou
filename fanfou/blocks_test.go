@@ -56,7 +56,7 @@ func TestBlocksService_Blocking(t *testing.T) {
 		t.Errorf("blocks.blocking returned error: %v", err)
 	}
 
-	want := []User{
+	want := []UserResult{
 		{
 			ID:              "test_id",
 			Name:            "test1",
@@ -99,7 +99,7 @@ func TestBlocksService_Exists(t *testing.T) {
 		t.Errorf("blocks.exists returned error: %v", err)
 	}
 
-	want := &User{
+	want := &UserResult{
 		ID:              "test_id",
 		Name:            "test1",
 		ScreenName:      "test2",
@@ -133,7 +133,7 @@ func TestBlocksService_Create(t *testing.T) {
 		t.Errorf("blocks.create returned error: %v", err)
 	}
 
-	want := &User{
+	want := &UserResult{
 		ID:              "test_id",
 		Name:            "test1",
 		ScreenName:      "test2",
@@ -166,7 +166,7 @@ func TestBlocksService_Destroy(t *testing.T) {
 		t.Errorf("blocks.destroy returned error: %v", err)
 	}
 
-	want := &User{
+	want := &UserResult{
 		ID:              "test_id",
 		Name:            "test1",
 		ScreenName:      "test2",

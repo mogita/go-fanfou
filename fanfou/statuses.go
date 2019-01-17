@@ -468,7 +468,7 @@ func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*Status, e
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.followers
-func (s *StatusesService) Followers(opt *StatusesOptParams) ([]User, error) {
+func (s *StatusesService) Followers(opt *StatusesOptParams) ([]UserResult, error) {
 	u := fmt.Sprintf("statuses/followers.json")
 	params := url.Values{}
 
@@ -497,7 +497,7 @@ func (s *StatusesService) Followers(opt *StatusesOptParams) ([]User, error) {
 		return nil, err
 	}
 
-	newUsers := new([]User)
+	newUsers := new([]UserResult)
 	_, err = s.client.Do(req, newUsers)
 	if err != nil {
 		return nil, err
@@ -511,7 +511,7 @@ func (s *StatusesService) Followers(opt *StatusesOptParams) ([]User, error) {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.friends
-func (s *StatusesService) Friends(opt *StatusesOptParams) ([]User, error) {
+func (s *StatusesService) Friends(opt *StatusesOptParams) ([]UserResult, error) {
 	u := fmt.Sprintf("statuses/friends.json")
 	params := url.Values{}
 
@@ -540,7 +540,7 @@ func (s *StatusesService) Friends(opt *StatusesOptParams) ([]User, error) {
 		return nil, err
 	}
 
-	newUsers := new([]User)
+	newUsers := new([]UserResult)
 	_, err = s.client.Do(req, newUsers)
 	if err != nil {
 		return nil, err

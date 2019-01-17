@@ -13,8 +13,8 @@ type TrendsService struct {
 	client *Client
 }
 
-// Trends specifies Fanfou's trends data structure
-type Trends struct {
+// TrendsResult specifies Fanfou's trends data structure
+type TrendsResult struct {
 	AsOf   string        `json:"as_of,omitempty"`
 	Trends []*TrendsItem `json:"trends,omitempty"`
 }
@@ -29,14 +29,14 @@ type TrendsItem struct {
 // List shall get information about the most recent trends.
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/trends.list
-func (s *TrendsService) List() (*Trends, error) {
+func (s *TrendsService) List() (*TrendsResult, error) {
 	u := fmt.Sprintf("trends/list.json")
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
 		return nil, err
 	}
 
-	trends := new(Trends)
+	trends := new(TrendsResult)
 	_, err = s.client.Do(req, trends)
 	return trends, err
 }
