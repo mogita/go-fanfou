@@ -48,7 +48,7 @@ func (s *BlocksService) IDs() (*UserIDs, error) {
 	return newUserIDs, nil
 }
 
-// Users shall get the list of blocked user details
+// Blocking shall get the list of blocked user details
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.blocking
 func (s *BlocksService) Blocking(opt *BlocksOptParams) ([]UserResult, error) {
