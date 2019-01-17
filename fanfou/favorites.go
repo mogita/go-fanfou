@@ -66,3 +66,38 @@ func (s *FavoritesService) IDs(opt *FavoritesOptParams) ([]StatusResult, error) 
 
 	return *newStatuses, nil
 }
+
+// Create shall create a favorite
+// ID represents the user ID
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/favorites.create
+func (s *FavoritesService) Create(ID string, opt *FavoritesOptParams) (*StatusResult, error) {
+	u := fmt.Sprintf("favorites/create.json")
+	params := url.Values{
+		"id": []string{ID},
+	}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+		if opt.Format != "" {
+			params.Add("format", opt.Format)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newStatus := new(StatusResult)
+	_, err = s.client.Do(req, newStatus)
+	if err != nil {
+		return nil, err
+	}
+
+	return newStatus, nil
+}
