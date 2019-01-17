@@ -6,8 +6,10 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"net/url"
+	"os"
 
 	"github.com/mogita/oauth"
 )
@@ -227,6 +229,70 @@ func (c *Client) NewRequest(method, uri string, body string) (*http.Request, err
 	}
 
 	req.Header.Add("User-Agent", c.UserAgent)
+	return req, nil
+}
+
+// NewUploadRequest creates an API request dedicated to image uploads.
+// A relative URL can be provided in uri, in which case it is resolved
+// relative to the BaseURL of the Client.
+// Relative URLs should always be specified without a preceding slash.
+func (c *Client) NewUploadRequest(method, uri string, params map[string]string, fileParamName, filePath string) (*http.Request, error) {
+	rel, err := url.Parse(uri)
+	if err != nil {
+		return nil, err
+	}
+
+	u := c.BaseURL.ResolveReference(rel)
+
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	fileContents, err := ioutil.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := file.Stat()
+	if err != nil {
+		return nil, err
+	}
+
+	err = file.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile(fileParamName, fi.Name())
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = part.Write(fileContents)
+	if err != nil {
+		return nil, err
+	}
+
+	for key, val := range params {
+		_ = writer.WriteField(key, val)
+	}
+
+	err = writer.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(method, u.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	req.Header.Add("User-Agent", c.UserAgent)
+
 	return req, nil
 }
 
