@@ -39,3 +39,36 @@ func TestFriendshipsService_Create(t *testing.T) {
 		t.Errorf("friendships.create returned %+v, want %+v", user, want)
 	}
 }
+
+func TestFriendshipsService_Destroy(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/friendships/destroy.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}`)
+		if err != nil {
+			t.Errorf("friendships.destroy mock server error: %+v", err)
+		}
+	})
+
+	user, err := client.Friendships.Destroy("test_id", &FriendshipsOptParams{
+		Mode: "test5",
+	})
+	if err != nil {
+		t.Errorf("friendships.destroy returned error: %v", err)
+	}
+
+	want := &UserResult{
+		ID:              "test_id",
+		Name:            "test1",
+		ScreenName:      "test2",
+		Location:        "test3",
+		Gender:          "test4",
+		ProfileImageURL: "test7",
+	}
+
+	if !reflect.DeepEqual(user, want) {
+		t.Errorf("friendships.destroy returned %+v, want %+v", user, want)
+	}
+}
