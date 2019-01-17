@@ -27,7 +27,7 @@ func TestAccountService_VerifyCredentials(t *testing.T) {
 		t.Errorf("account.verify_credentials returned error: %v", err)
 	}
 
-	want := &User{
+	want := &UserResult{
 		ID:              "test_id",
 		Name:            "test1",
 		ScreenName:      "test2",
@@ -95,7 +95,7 @@ func TestAccountService_UpdateProfile(t *testing.T) {
 		t.Errorf("account.update_profile returned error: %v", err)
 	}
 
-	want := &User{
+	want := &UserResult{
 		ID:              "test_id",
 		Name:            "test1",
 		ScreenName:      "test2",

@@ -15,8 +15,8 @@ type UsersService struct {
 	client *Client
 }
 
-// User specifies Fanfou's users data structure
-type User struct {
+// UserResult specifies Fanfou's users data structure
+type UserResult struct {
 	ID                        string  `json:"id,omitempty"`
 	Name                      string  `json:"name,omitempty"`
 	ScreenName                string  `json:"screen_name,omitempty"`
@@ -61,7 +61,7 @@ type UsersOptParams struct {
 // Tagged shall get users by tag
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.tagged
-func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]User, error) {
+func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]UserResult, error) {
 	u := fmt.Sprintf("users/tagged.json")
 	params := url.Values{}
 	params.Add("tag", Tag)
@@ -88,7 +88,7 @@ func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]User, error) {
 		return nil, err
 	}
 
-	newUsers := new([]User)
+	newUsers := new([]UserResult)
 	_, err = s.client.Do(req, newUsers)
 	if err != nil {
 		return nil, err
@@ -101,7 +101,7 @@ func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]User, error) {
 // ID represents user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.show
-func (s *UsersService) Show(opt *UsersOptParams) (*User, error) {
+func (s *UsersService) Show(opt *UsersOptParams) (*UserResult, error) {
 	u := fmt.Sprintf("users/show.json")
 	params := url.Values{}
 
@@ -124,7 +124,7 @@ func (s *UsersService) Show(opt *UsersOptParams) (*User, error) {
 		return nil, err
 	}
 
-	newUser := new(User)
+	newUser := new(UserResult)
 	_, err = s.client.Do(req, newUser)
 	if err != nil {
 		return nil, err
@@ -165,7 +165,7 @@ func (s *UsersService) TagList(opt *UsersOptParams) ([]Tag, error) {
 // Followers shall get recently logged in followers
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.followers
-func (s *UsersService) Followers(opt *UsersOptParams) ([]User, error) {
+func (s *UsersService) Followers(opt *UsersOptParams) ([]UserResult, error) {
 	u := fmt.Sprintf("users/followers.json")
 	params := url.Values{}
 
@@ -194,7 +194,7 @@ func (s *UsersService) Followers(opt *UsersOptParams) ([]User, error) {
 		return nil, err
 	}
 
-	newUsers := new([]User)
+	newUsers := new([]UserResult)
 	_, err = s.client.Do(req, newUsers)
 	if err != nil {
 		return nil, err
@@ -207,7 +207,7 @@ func (s *UsersService) Followers(opt *UsersOptParams) ([]User, error) {
 // ID represents user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.friends
-func (s *UsersService) Friends(opt *UsersOptParams) ([]User, error) {
+func (s *UsersService) Friends(opt *UsersOptParams) ([]UserResult, error) {
 	u := fmt.Sprintf("users/friends.json")
 	params := url.Values{}
 
@@ -236,7 +236,7 @@ func (s *UsersService) Friends(opt *UsersOptParams) ([]User, error) {
 		return nil, err
 	}
 
-	newUsers := new([]User)
+	newUsers := new([]UserResult)
 	_, err = s.client.Do(req, newUsers)
 	if err != nil {
 		return nil, err
@@ -248,7 +248,7 @@ func (s *UsersService) Friends(opt *UsersOptParams) ([]User, error) {
 // Recommendation shall get users recommended by Fanfou
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.recommendation
-func (s *UsersService) Recommendation(opt *UsersOptParams) ([]User, error) {
+func (s *UsersService) Recommendation(opt *UsersOptParams) ([]UserResult, error) {
 	u := fmt.Sprintf("2/users/recommendation.json")
 	params := url.Values{}
 
@@ -274,7 +274,7 @@ func (s *UsersService) Recommendation(opt *UsersOptParams) ([]User, error) {
 		return nil, err
 	}
 
-	newUsers := new([]User)
+	newUsers := new([]UserResult)
 	_, err = s.client.Do(req, newUsers)
 	if err != nil {
 		return nil, err
@@ -287,7 +287,7 @@ func (s *UsersService) Recommendation(opt *UsersOptParams) ([]User, error) {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.cancel-recommendation
-func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*User, error) {
+func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*UserResult, error) {
 	u := fmt.Sprintf("2/users/cancel_recommendation.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -309,7 +309,7 @@ func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*Us
 		return nil, err
 	}
 
-	newUser := new(User)
+	newUser := new(UserResult)
 	_, err = s.client.Do(req, newUser)
 	if err != nil {
 		return nil, err

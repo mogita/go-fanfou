@@ -16,8 +16,8 @@ type SearchService struct {
 }
 
 type SearchUsersResult struct {
-	TotalNumber int64  `json:"total_number,omitempty"`
-	Users       []User `json:"users,omitempty"`
+	TotalNumber int64        `json:"total_number,omitempty"`
+	Users       []UserResult `json:"users,omitempty"`
 }
 
 // SearchOptParams specifies the optional params for search API

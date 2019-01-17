@@ -51,7 +51,7 @@ func (s *BlocksService) IDs() (*UserIDs, error) {
 // Users shall get the list of blocked user details
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.blocking
-func (s *BlocksService) Blocking(opt *BlocksOptParams) ([]User, error) {
+func (s *BlocksService) Blocking(opt *BlocksOptParams) ([]UserResult, error) {
 	u := fmt.Sprintf("blocks/blocking.json")
 	params := url.Values{}
 
@@ -74,7 +74,7 @@ func (s *BlocksService) Blocking(opt *BlocksOptParams) ([]User, error) {
 		return nil, err
 	}
 
-	newUsers := new([]User)
+	newUsers := new([]UserResult)
 	_, err = s.client.Do(req, newUsers)
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (s *BlocksService) Blocking(opt *BlocksOptParams) ([]User, error) {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.exists
-func (s *BlocksService) Exists(ID string, opt *BlocksOptParams) (*User, error) {
+func (s *BlocksService) Exists(ID string, opt *BlocksOptParams) (*UserResult, error) {
 	u := fmt.Sprintf("blocks/exists.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -107,7 +107,7 @@ func (s *BlocksService) Exists(ID string, opt *BlocksOptParams) (*User, error) {
 		return nil, err
 	}
 
-	newUser := new(User)
+	newUser := new(UserResult)
 	_, err = s.client.Do(req, newUser)
 	if err != nil {
 		return nil, err
@@ -120,7 +120,7 @@ func (s *BlocksService) Exists(ID string, opt *BlocksOptParams) (*User, error) {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.create
-func (s *BlocksService) Create(ID string, opt *BlocksOptParams) (*User, error) {
+func (s *BlocksService) Create(ID string, opt *BlocksOptParams) (*UserResult, error) {
 	u := fmt.Sprintf("blocks/create.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -142,7 +142,7 @@ func (s *BlocksService) Create(ID string, opt *BlocksOptParams) (*User, error) {
 		return nil, err
 	}
 
-	newUser := new(User)
+	newUser := new(UserResult)
 	_, err = s.client.Do(req, newUser)
 	if err != nil {
 		return nil, err
@@ -155,7 +155,7 @@ func (s *BlocksService) Create(ID string, opt *BlocksOptParams) (*User, error) {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.destroy
-func (s *BlocksService) Destroy(ID string, opt *BlocksOptParams) (*User, error) {
+func (s *BlocksService) Destroy(ID string, opt *BlocksOptParams) (*UserResult, error) {
 	u := fmt.Sprintf("blocks/destroy.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -174,7 +174,7 @@ func (s *BlocksService) Destroy(ID string, opt *BlocksOptParams) (*User, error) 
 		return nil, err
 	}
 
-	newUser := new(User)
+	newUser := new(UserResult)
 	_, err = s.client.Do(req, newUser)
 	if err != nil {
 		return nil, err

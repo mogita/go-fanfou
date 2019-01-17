@@ -126,7 +126,7 @@ func TestSearchService_Users(t *testing.T) {
 
 	want := &SearchUsersResult{
 		TotalNumber: 42,
-		Users: []User{
+		Users: []UserResult{
 			{
 				ID:              "test_id",
 				Name:            "test1",

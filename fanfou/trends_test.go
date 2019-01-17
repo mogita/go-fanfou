@@ -24,7 +24,7 @@ func TestTrendsService_List(t *testing.T) {
 		t.Errorf("trends.list returned error: %v", err)
 	}
 
-	want := &Trends{
+	want := &TrendsResult{
 		AsOf: "Thu Nov 10 09:57:23 +0000 2011",
 		Trends: []*TrendsItem{
 			{

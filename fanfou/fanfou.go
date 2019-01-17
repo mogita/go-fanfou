@@ -56,12 +56,13 @@ type Client struct {
 	ConsumerSecret string
 
 	// Services used for talking to different parts of the API.
-	Users    *UsersService
-	Statuses *StatusesService
-	Search   *SearchService
-	Trends   *TrendsService
-	Blocks   *BlocksService
-	Account  *AccountService
+	Users         *UsersService
+	Statuses      *StatusesService
+	Search        *SearchService
+	Trends        *TrendsService
+	Blocks        *BlocksService
+	Account       *AccountService
+	SavedSearches *SavedSearchesService
 
 	// Temporary Response
 	Response *Response
@@ -96,6 +97,7 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 	c.Trends = &TrendsService{client: c}
 	c.Blocks = &BlocksService{client: c}
 	c.Account = &AccountService{client: c}
+	c.SavedSearches = &SavedSearchesService{client: c}
 
 	return c
 }

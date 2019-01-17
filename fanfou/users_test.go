@@ -29,7 +29,7 @@ func TestUsersService_Tagged(t *testing.T) {
 		t.Errorf("users.tagged returned error: %v", err)
 	}
 
-	want := []User{
+	want := []UserResult{
 		{
 			ID:              "test_id",
 			Name:            "test1",
@@ -74,7 +74,7 @@ func TestUsersService_Show(t *testing.T) {
 		t.Errorf("users.show returned error: %v", err)
 	}
 
-	want := &User{
+	want := &UserResult{
 		ID:              "test_id",
 		Name:            "test1",
 		ScreenName:      "test2",
@@ -140,7 +140,7 @@ func TestUsersService_Followers(t *testing.T) {
 		t.Errorf("users.followers returned error: %v", err)
 	}
 
-	want := []User{
+	want := []UserResult{
 		{
 			ID:              "test_id",
 			Name:            "test1",
@@ -187,7 +187,7 @@ func TestUsersService_Friends(t *testing.T) {
 		t.Errorf("users.friends returned error: %v", err)
 	}
 
-	want := []User{
+	want := []UserResult{
 		{
 			ID:              "test_id",
 			Name:            "test1",
@@ -233,7 +233,7 @@ func TestUsersService_Recommendation(t *testing.T) {
 		t.Errorf("users.recommendation returned error: %v", err)
 	}
 
-	want := []User{
+	want := []UserResult{
 		{
 			ID:              "test_id",
 			Name:            "test1",
@@ -277,7 +277,7 @@ func TestUsersService_CancelRecommendation(t *testing.T) {
 		t.Errorf("users.cancel_recommendation returned error: %v", err)
 	}
 
-	want := &User{
+	want := &UserResult{
 		ID:              "test_id",
 		Name:            "test1",
 		ScreenName:      "test2",
