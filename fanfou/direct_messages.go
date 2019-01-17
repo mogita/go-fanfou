@@ -234,3 +234,44 @@ func (s *DirectMessagesService) Inbox(opt *DirectMessagesOptParams) ([]DirectMes
 
 	return *newDirectMessages, nil
 }
+
+// Sent shall get the sent direct messages by the current user
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.sent
+func (s *DirectMessagesService) Sent(opt *DirectMessagesOptParams) ([]DirectMessageResult, error) {
+	u := fmt.Sprintf("direct_messages/sent.json")
+	params := url.Values{}
+
+	if opt != nil {
+		if opt.Count != 0 {
+			params.Add("count", strconv.FormatInt(opt.Count, 10))
+		}
+		if opt.Page != 0 {
+			params.Add("page", strconv.FormatInt(opt.Page, 10))
+		}
+		if opt.MaxID != "" {
+			params.Add("max_id", opt.MaxID)
+		}
+		if opt.SinceID != "" {
+			params.Add("since_id", opt.SinceID)
+		}
+		if opt.Mode != "" {
+			params.Add("mode", opt.Mode)
+		}
+	}
+
+	u += "?" + params.Encode()
+
+	req, err := s.client.NewRequest(http.MethodGet, u, "")
+	if err != nil {
+		return nil, err
+	}
+
+	newDirectMessages := new([]DirectMessageResult)
+	_, err = s.client.Do(req, newDirectMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	return *newDirectMessages, nil
+}
