@@ -141,6 +141,36 @@ func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*UserResult, erro
 	return newUser, nil
 }
 
+// UpdateProfileImage shall update the current user's profile image
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.update-profile-image
+func (s *AccountService) UpdateProfileImage(filePath string, opt *AccountOptParams) (*UserResult, error) {
+	u := fmt.Sprintf("account/update_profile_image.json")
+	params := map[string]string{}
+
+	if opt != nil {
+		if opt.Mode != "" {
+			params["mode"] = opt.Mode
+		}
+		if opt.Format != "" {
+			params["format"] = opt.Format
+		}
+	}
+
+	req, err := s.client.NewUploadRequest(http.MethodPost, u, params, "image", filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	newUser := new(UserResult)
+	_, err = s.client.Do(req, newUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return newUser, nil
+}
+
 // Notification shall get the unread counts for mentions, direct
 // messages and friend requests of the current user
 //
