@@ -208,3 +208,51 @@ func TestFriendshipsService_Exists(t *testing.T) {
 		t.Errorf("friendships.exists returned %+v, want %+v", user, true)
 	}
 }
+
+func TestFriendshipsService_Show(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/friendships/show.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		_, err := fmt.Fprint(w, `{"relationship":{"source":{"id":"test","screen_name":"测试昵称","following":"false","followed_by":"false","notifications_enabled":"false","blocking":"true"},"target":{"id":"debug","screen_name":"debug","following":"false","followed_by":"false"}}}`)
+		if err != nil {
+			t.Errorf("friendships.show mock server error: %+v", err)
+		}
+	})
+
+	result, err := client.Friendships.Show(&FriendshipsShowOptParams{
+		SourceID:        "test_source_id",
+		SourceLoginName: "test_source_login_name",
+		TargetID:        "test_target_id",
+		TargetLoginName: "test_target_login_name",
+	})
+	if err != nil {
+		t.Errorf("friendships.show returned error: %v", err)
+	}
+
+	want := &FriendshipsShowResult{
+		Relationship: &RelationshipResult{
+			Source: &RelationshipItem{
+				ID:                   "test",
+				ScreenName:           "测试昵称",
+				Following:            "false",
+				FollowedBy:           "false",
+				NotificationsEnabled: "false",
+				Blocking:             "true",
+			},
+			Target: &RelationshipItem{
+				ID:                   "debug",
+				ScreenName:           "debug",
+				Following:            "false",
+				FollowedBy:           "false",
+				NotificationsEnabled: "",
+				Blocking:             "",
+			},
+		},
+	}
+
+	if !reflect.DeepEqual(result, want) {
+		t.Errorf("friendships.show returned %+v, want %+v", result, want)
+	}
+}
