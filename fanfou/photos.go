@@ -17,13 +17,16 @@ type PhotosService struct {
 
 // PhotosOptParams specifies the optional params for search API
 type PhotosOptParams struct {
-	ID      string
-	SinceID string
-	MaxID   string
-	Page    int64
-	Count   int64
-	Mode    string
-	Format  string
+	ID       string
+	Status   string
+	Source   string
+	Location string
+	SinceID  string
+	MaxID    string
+	Page     int64
+	Count    int64
+	Mode     string
+	Format   string
 }
 
 // UserTimeline shall get photos of the specified user, or of the current user
@@ -73,4 +76,49 @@ func (s *PhotosService) UserTimeline(opt *PhotosOptParams) ([]StatusResult, erro
 	}
 
 	return *newStatuses, nil
+}
+
+// Upload shall send a new status with a photo
+//
+// Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/photos.upload
+func (s *PhotosService) Upload(filePath string, opt *PhotosOptParams) (*StatusResult, error) {
+	u := fmt.Sprintf("photos/upload.json")
+	params := map[string]string{}
+
+	if opt != nil {
+		if opt.ID != "" {
+			params["id"] = opt.ID
+		}
+		if opt.SinceID != "" {
+			params["since_id"] = opt.SinceID
+		}
+		if opt.MaxID != "" {
+			params["max_id"] = opt.MaxID
+		}
+		if opt.Count != 0 {
+			params["count"] = strconv.FormatInt(opt.Count, 10)
+		}
+		if opt.Page != 0 {
+			params["page"] = strconv.FormatInt(opt.Page, 10)
+		}
+		if opt.Mode != "" {
+			params["mode"] = opt.Mode
+		}
+		if opt.Format != "" {
+			params["format"] = opt.Format
+		}
+	}
+
+	req, err := s.client.NewUploadRequest(http.MethodPost, u, params, "photo", filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	newStatuses := new(StatusResult)
+	_, err = s.client.Do(req, newStatuses)
+	if err != nil {
+		return nil, err
+	}
+
+	return newStatuses, nil
 }
