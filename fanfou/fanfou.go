@@ -65,6 +65,7 @@ type Client struct {
 	SavedSearches *SavedSearchesService
 	Photos        *PhotosService
 	Followers     *FollowersService
+	Favorites     *FavoritesService
 
 	// Temporary Response
 	Response *Response
@@ -102,6 +103,7 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 	c.SavedSearches = &SavedSearchesService{client: c}
 	c.Photos = &PhotosService{client: c}
 	c.Followers = &FollowersService{client: c}
+	c.Favorites = &FavoritesService{client: c}
 
 	return c
 }

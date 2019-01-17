@@ -7,29 +7,27 @@ import (
 	"testing"
 )
 
-func TestPhotosService_UserTimeline(t *testing.T) {
+func TestFavoritesService_IDs(t *testing.T) {
 	setup()
 	defer teardown()
 
-	mux.HandleFunc("/photos/user_timeline.json", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/favorites/id.json", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		_, err := fmt.Fprint(w, `[{"id": "test_id", "in_reply_to_status_id": "test1", "in_reply_to_user_id": "test2", "repost_status_id": "test3", "source": "test4", "location": "test7"},{"id": "test_id", "in_reply_to_status_id": "test1", "in_reply_to_user_id": "test2", "repost_status_id": "test3", "source": "test4", "location": "test7"}]`)
 		if err != nil {
-			t.Errorf("photos.user_timeline mock server error: %+v", err)
+			t.Errorf("favorites.id mock server error: %+v", err)
 		}
 	})
 
-	statuses, err := client.Photos.UserTimeline(&PhotosOptParams{
-		ID:      "test_id",
-		SinceID: "test_since_id",
-		MaxID:   "test_max_id",
-		Count:   1,
-		Page:    1,
-		Mode:    "test5",
-		Format:  "test6",
+	user, err := client.Favorites.IDs(&FavoritesOptParams{
+		ID:     "test_id",
+		Page:   1,
+		Count:  1,
+		Mode:   "test_mode",
+		Format: "test_format",
 	})
 	if err != nil {
-		t.Errorf("photos.user_timeline returned error: %v", err)
+		t.Errorf("favorites.id returned error: %v", err)
 	}
 
 	want := []StatusResult{
@@ -51,7 +49,7 @@ func TestPhotosService_UserTimeline(t *testing.T) {
 		},
 	}
 
-	if !reflect.DeepEqual(statuses, want) {
-		t.Errorf("photos.user_timeline returned %+v, want %+v", statuses, want)
+	if !reflect.DeepEqual(user, want) {
+		t.Errorf("favorites.id returned %+v, want %+v", user, want)
 	}
 }

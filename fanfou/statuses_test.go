@@ -40,7 +40,7 @@ func TestStatusesService_Update(t *testing.T) {
 		t.Errorf("statuses.update returned error: %v", err)
 	}
 
-	want := &Status{
+	want := &StatusResult{
 		ID:                "test_id",
 		InReplyToStatusID: "test1",
 		InReplyToUserID:   "test2",
@@ -74,7 +74,7 @@ func TestStatusesService_Show(t *testing.T) {
 		t.Errorf("statuses.show returned error: %v", err)
 	}
 
-	want := &Status{
+	want := &StatusResult{
 		ID:                "test_id",
 		InReplyToStatusID: "test1",
 		InReplyToUserID:   "test2",
@@ -108,7 +108,7 @@ func TestStatusesService_Destroy(t *testing.T) {
 		t.Errorf("statuses.destroy returned error: %v", err)
 	}
 
-	want := &Status{
+	want := &StatusResult{
 		ID:                "test_id",
 		InReplyToStatusID: "test1",
 		InReplyToUserID:   "test2",
@@ -147,7 +147,7 @@ func TestStatusesService_HomeTimeline(t *testing.T) {
 		t.Errorf("statuses.home_timeline returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",
@@ -195,7 +195,7 @@ func TestStatusesService_PublicTimeline(t *testing.T) {
 		t.Errorf("statuses.home_timeline returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",
@@ -243,7 +243,7 @@ func TestStatusesService_Replies(t *testing.T) {
 		t.Errorf("statuses.replies returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",
@@ -291,7 +291,7 @@ func TestStatusesService_Mentions(t *testing.T) {
 		t.Errorf("statuses.mentions returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",
@@ -339,7 +339,7 @@ func TestStatusesService_UserTimeline(t *testing.T) {
 		t.Errorf("statuses.user_timeline returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",
@@ -387,7 +387,7 @@ func TestStatusesService_ContextTimeline(t *testing.T) {
 		t.Errorf("statuses.context_timeline returned error: %v", err)
 	}
 
-	want := []Status{
+	want := []StatusResult{
 		{
 			ID:                "test_id",
 			InReplyToStatusID: "test1",
