@@ -56,18 +56,19 @@ type Client struct {
 	ConsumerSecret string
 
 	// Services used for talking to different parts of the API.
-	Users         *UsersService
-	Statuses      *StatusesService
-	Search        *SearchService
-	Trends        *TrendsService
-	Blocks        *BlocksService
-	Account       *AccountService
-	SavedSearches *SavedSearchesService
-	Photos        *PhotosService
-	Followers     *FollowersService
-	Favorites     *FavoritesService
-	Friends       *FriendsService
-	Friendships   *FriendshipsService
+	Users          *UsersService
+	Statuses       *StatusesService
+	Search         *SearchService
+	Trends         *TrendsService
+	Blocks         *BlocksService
+	Account        *AccountService
+	SavedSearches  *SavedSearchesService
+	Photos         *PhotosService
+	Followers      *FollowersService
+	Favorites      *FavoritesService
+	Friends        *FriendsService
+	Friendships    *FriendshipsService
+	DirectMessages *DirectMessagesService
 
 	// Temporary Response
 	Response *Response
@@ -108,6 +109,7 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 	c.Favorites = &FavoritesService{client: c}
 	c.Friends = &FriendsService{client: c}
 	c.Friendships = &FriendshipsService{client: c}
+	c.DirectMessages = &DirectMessagesService{client: c}
 
 	return c
 }
