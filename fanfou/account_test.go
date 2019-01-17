@@ -84,7 +84,6 @@ func TestAccountService_UpdateProfile(t *testing.T) {
 
 	user, err := client.Account.UpdateProfile(&AccountOptParams{
 		Mode:        "test5",
-		Format:      "test6",
 		URL:         "test_url",
 		Location:    "test_location",
 		Description: "test_description",
@@ -106,6 +105,40 @@ func TestAccountService_UpdateProfile(t *testing.T) {
 
 	if !reflect.DeepEqual(user, want) {
 		t.Errorf("account.update_profile returned %+v, want %+v", user, want)
+	}
+}
+
+func TestAccountService_UpdateProfileImage(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/account/update_profile_image.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "name": "test1", "screen_name": "test2", "location": "test3", "gender": "test4", "profile_image_url": "test7"}`)
+		if err != nil {
+			t.Errorf("account.update_profile_image mock server error: %+v", err)
+		}
+	})
+
+	user, err := client.Account.UpdateProfileImage("./account.go", &AccountOptParams{
+		Mode:   "test5",
+		Format: "test6",
+	})
+	if err != nil {
+		t.Errorf("account.update_profile_image returned error: %v", err)
+	}
+
+	want := &UserResult{
+		ID:              "test_id",
+		Name:            "test1",
+		ScreenName:      "test2",
+		Location:        "test3",
+		Gender:          "test4",
+		ProfileImageURL: "test7",
+	}
+
+	if !reflect.DeepEqual(user, want) {
+		t.Errorf("account.update_profile_image returned %+v, want %+v", user, want)
 	}
 }
 
