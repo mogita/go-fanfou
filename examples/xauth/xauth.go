@@ -1,24 +1,65 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"os"
 
-	"github.com/mogita/go-fanfou/examples"
 	"github.com/mogita/go-fanfou/fanfou"
 )
 
-const (
-	consumerKey    = examples.ConsumerKey
-	consumerSecret = examples.ConsumerSecret
-	username       = examples.Username
-	password       = examples.Password
-)
+func Usage() {
+	fmt.Println("Usage:")
+	fmt.Print("go run examples/xauth/xauth.go")
+	fmt.Print("  --consumerkey <consumerKey>")
+	fmt.Print("  --consumersecret <consumerSecret>")
+	fmt.Print("  --username <username>")
+	fmt.Println("  --password <password>")
+	fmt.Println("")
+	fmt.Println("In order to get your consumerKey and consumerSecret, you must register an 'app' at fanfou.com:")
+	fmt.Println("https://fanfou.com/apps")
+}
 
 func main() {
-	c := fanfou.NewClient(consumerKey, consumerSecret)
+	// Antecedent steps
+	consumerKey := flag.String(
+		"consumerkey",
+		"",
+		"Consumer Key from Fanfou. See: https://fanfou.com/apps")
 
-	err := c.AuthorizeClientWithXAuth(username, password)
+	consumerSecret := flag.String(
+		"consumersecret",
+		"",
+		"Consumer Secret from Fanfou. See: https://fanfou.com/apps")
+
+	username := flag.String(
+		"username",
+		"",
+		"Username from Fanfou.")
+
+	password := flag.String(
+		"password",
+		"",
+		"Password from Fanfou.")
+
+	flag.Parse()
+
+	if len(*consumerKey) == 0 || len(*consumerSecret) == 0 || len(*username) == 0 || len(*password) == 0 {
+		fmt.Println("Need to set all flags to run this example: consumerKey, consumerSecret, username, password")
+		fmt.Println("---")
+		Usage()
+		os.Exit(1)
+	}
+
+	// Step 1: initialize a new client
+	c := fanfou.NewClient(*consumerKey, *consumerSecret)
+
+	// Step 2: authorize the client
+	err := c.AuthorizeClientWithXAuth(*username, *password)
 	if err != nil {
+		// All go-fanfou errors are general errors of ErrorResponse type
+		// You can either handle them as normal errors
+		// or assert the type and get precise fields like below
 		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
 			fmt.Printf("authorize client error: %+v", fanfouErr.GetFanfouError())
 			return
@@ -28,7 +69,8 @@ func main() {
 		return
 	}
 
-	resp, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{ID: "montanathief", Count: 2, Format: "html"})
+	// Step 3: call the endpoints
+	resp, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{ID: *username, Count: 3, Format: "html"})
 	if err != nil {
 		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
 			fmt.Printf("%s\n", fanfouErr.GetFanfouError())
