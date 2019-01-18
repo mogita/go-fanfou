@@ -117,6 +117,9 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 }
 
 // GetRequestTokenAndURL returns the request token and the login url for authorizing this token
+// "callbackURL" can be "oob" if you're running your application outside a browser
+// Read more about "oob" authorization at:
+// https://github.com/mogita/FanFouAPIDoc/wiki/Oauth#%E4%BD%BF%E7%94%A8pin%E7%A0%81%E8%8E%B7%E5%BE%97%E6%8E%88%E6%9D%83
 func (c *Client) GetRequestTokenAndURL(callbackURL string) (*oauth.RequestToken, string, error) {
 	rToken, loginURL, err := c.oauthConsumer.GetRequestTokenAndUrl(callbackURL)
 	if err != nil {
