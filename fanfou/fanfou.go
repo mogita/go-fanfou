@@ -76,8 +76,7 @@ type Client struct {
 	Response *Response
 }
 
-// NewClient returns a new Fanfou API client. if a nil httpClient is
-// provided, http.DefaultClient will be used.
+// NewClient returns a new Fanfou API client.
 func NewClient(consumerKey, consumerSecret string) *Client {
 	baseURL, _ := url.Parse(BaseURL)
 
