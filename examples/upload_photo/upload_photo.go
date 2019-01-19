@@ -73,7 +73,7 @@ func main() {
 
 	// Step 3: call the endpoints
 	resp, err := c.Photos.Upload("examples/upload_photo/fanfou.jpg", &fanfou.PhotosOptParams{
-		Status: "go-fanfou SDk test",
+		Status: "go-fanfou library test",
 	})
 	if err != nil {
 		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
