@@ -2,20 +2,21 @@
   <img src="/fanfou.png?raw=true" width="300" height="200" />
 </p>
 
-<p align="center">
-  <h1>GO FANFOU</h1>
-</p>
-
-<p align="center">
-A Fanfou API client SDK library for [Go](http://golang.org/)
-</p>
+# GO FANFOU
 
 [![Build Status](https://travis-ci.org/mogita/go-fanfou.svg?branch=master)](https://travis-ci.org/mogita/go-fanfou)
 [![Coverage Status](https://coveralls.io/repos/github/mogita/go-fanfou/badge.svg?branch=master&service=github)](https://coveralls.io/github/mogita/go-fanfou?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mogita/go-fanfou)](https://goreportcard.com/report/github.com/mogita/go-fanfou)
 [![GoDoc](https://godoc.org/github.com/mogita/go-fanfou?status.svg)](https://godoc.org/github.com/mogita/go-fanfou/fanfou)
 
-**Please note that the library is at a very early stage of development.** Things could be changing at times. Breaking changes are expected, but I'll make it as less as possible. The stable versions will begin with the first [release](https://github.com/mogita/go-fanfou/releases) in the future.
+Go Fanfou is a Fanfou API client SDK library for [Go](http://golang.org/)
+
+## Features
+
+- Lightweight and easy to use
+- Simple and intuitive endponits and error wrapping
+- Struct and original JSON output
+- Supports OAuth (safer) and XAuth (simpler)
 
 ## Installation
 
@@ -49,11 +50,11 @@ go run examples/upload_photo/upload_photo.go
 
 ## Built With
 
-* [oauth](https://godoc.org/github.com/mrjones/oauth) - OAuth 1.0 implementation in go (golang)
+* [oauth](https://godoc.org/github.com/mogita/oauth) (a fork of [mrjones/oauth](https://godoc.org/github.com/mrjones/oauth)) - OAuth 1.0 implementation in go (golang)
 
 ## Contributing
 
-First of all, thank you very much for paying attention to this library. If you feel like helping improve it, please kindly make sure to follow the instructions:
+Thank you very much for paying attention to this library. If you feel like helping improve it, please kindly make sure to follow the instructions:
 
 Please link the pre-commit hook which runs tests and go-fmt before committing
 
@@ -66,6 +67,8 @@ Please always run tests before committing
 ```
 go test ./...
 ```
+
+You can also follow this [Trello board](https://trello.com/b/Z6XTVn7U/go-fanfou) if you're interested in how we progress in pushing this project forward.
 
 ## License
 
