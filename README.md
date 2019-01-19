@@ -1,4 +1,4 @@
-<img src="/fanfou.png?raw=true" width="300" align="right" />
+<img src="/fanfou.png?raw=true" width="300" align="center" />
 
 # GO FANFOU
 
