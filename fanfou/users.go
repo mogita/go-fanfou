@@ -61,7 +61,7 @@ type UsersOptParams struct {
 // Tagged shall get users by tag
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.tagged
-func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]UserResult, error) {
+func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]UserResult, *string, error) {
 	u := fmt.Sprintf("users/tagged.json")
 	params := url.Values{}
 	params.Add("tag", Tag)
@@ -85,23 +85,23 @@ func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]UserResult, er
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUsers := new([]UserResult)
-	_, err = s.client.Do(req, newUsers)
+	resp, err := s.client.Do(req, newUsers)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newUsers, nil
+	return *newUsers, resp.BodyStrPtr, nil
 }
 
 // Show shall get a user by ID, or the current user if not specified
 // ID represents user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.show
-func (s *UsersService) Show(opt *UsersOptParams) (*UserResult, error) {
+func (s *UsersService) Show(opt *UsersOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("users/show.json")
 	params := url.Values{}
 
@@ -121,22 +121,22 @@ func (s *UsersService) Show(opt *UsersOptParams) (*UserResult, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // TagList shall get tags of a specified user or of the current user if not specified
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.tag-list
-func (s *UsersService) TagList(opt *UsersOptParams) ([]Tag, error) {
+func (s *UsersService) TagList(opt *UsersOptParams) ([]Tag, *string, error) {
 	u := fmt.Sprintf("users/tag_list.json")
 	params := url.Values{}
 
@@ -150,22 +150,22 @@ func (s *UsersService) TagList(opt *UsersOptParams) ([]Tag, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newTags := new([]Tag)
-	_, err = s.client.Do(req, newTags)
+	resp, err := s.client.Do(req, newTags)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newTags, nil
+	return *newTags, resp.BodyStrPtr, nil
 }
 
 // Followers shall get recently logged in followers
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.followers
-func (s *UsersService) Followers(opt *UsersOptParams) ([]UserResult, error) {
+func (s *UsersService) Followers(opt *UsersOptParams) ([]UserResult, *string, error) {
 	u := fmt.Sprintf("users/followers.json")
 	params := url.Values{}
 
@@ -191,23 +191,23 @@ func (s *UsersService) Followers(opt *UsersOptParams) ([]UserResult, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUsers := new([]UserResult)
-	_, err = s.client.Do(req, newUsers)
+	resp, err := s.client.Do(req, newUsers)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newUsers, nil
+	return *newUsers, resp.BodyStrPtr, nil
 }
 
 // Friends shall get recently logged in friends
 // ID represents user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.friends
-func (s *UsersService) Friends(opt *UsersOptParams) ([]UserResult, error) {
+func (s *UsersService) Friends(opt *UsersOptParams) ([]UserResult, *string, error) {
 	u := fmt.Sprintf("users/friends.json")
 	params := url.Values{}
 
@@ -233,22 +233,22 @@ func (s *UsersService) Friends(opt *UsersOptParams) ([]UserResult, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUsers := new([]UserResult)
-	_, err = s.client.Do(req, newUsers)
+	resp, err := s.client.Do(req, newUsers)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newUsers, nil
+	return *newUsers, resp.BodyStrPtr, nil
 }
 
 // Recommendation shall get users recommended by Fanfou
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.recommendation
-func (s *UsersService) Recommendation(opt *UsersOptParams) ([]UserResult, error) {
+func (s *UsersService) Recommendation(opt *UsersOptParams) ([]UserResult, *string, error) {
 	u := fmt.Sprintf("2/users/recommendation.json")
 	params := url.Values{}
 
@@ -271,23 +271,23 @@ func (s *UsersService) Recommendation(opt *UsersOptParams) ([]UserResult, error)
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUsers := new([]UserResult)
-	_, err = s.client.Do(req, newUsers)
+	resp, err := s.client.Do(req, newUsers)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newUsers, nil
+	return *newUsers, resp.BodyStrPtr, nil
 }
 
 // CancelRecommendation shall dismiss user recommended by Fanfou by ID
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.cancel-recommendation
-func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*UserResult, error) {
+func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("2/users/cancel_recommendation.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -306,14 +306,14 @@ func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*Us
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
