@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 
 	"github.com/mogita/oauth"
 )
@@ -122,7 +123,11 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 func (c *Client) GetRequestTokenAndURL(callbackURL string) (*oauth.RequestToken, string, error) {
 	rToken, loginURL, err := c.oauthConsumer.GetRequestTokenAndUrl(callbackURL)
 	if err != nil {
-		return nil, "", err
+		return nil, "", CheckAuthResponse(err, "GetRequestTokenAndURL")
+	}
+
+	if callbackURL == "oob" {
+		loginURL += "&oauth_callback=oob"
 	}
 
 	return rToken, loginURL, nil
@@ -130,39 +135,21 @@ func (c *Client) GetRequestTokenAndURL(callbackURL string) (*oauth.RequestToken,
 
 // AuthorizeClient completes the OAuth authorization to the client
 // so it can communicate with Fanfou API
-func (c *Client) AuthorizeClient(rToken *oauth.RequestToken) error {
-	accessToken, err := c.oauthConsumer.AuthorizeToken(rToken, "")
+// If you use "oob" mode, you also need to provide the verificationCode
+func (c *Client) AuthorizeClient(rToken *oauth.RequestToken, verificationCode string) (*oauth.AccessToken, error) {
+	accessToken, err := c.oauthConsumer.AuthorizeToken(rToken, verificationCode)
 
 	if err != nil {
-		errResp := new(ErrorResponse)
-		errResp.Meta = &ResponseMeta{
-			Error:   "unknown authorization error",
-			Request: "",
-		}
-
-		if oauthErr, ok := err.(oauth.HTTPExecuteError); ok {
-			// fanfou auth error body is in XML
-			errResp.Response = oauthErr.Response
-			errXML := xml.Unmarshal(oauthErr.ResponseBodyBytes, &errResp.Meta)
-			if errXML != nil {
-				errResp.Meta.Error = errXML.Error()
-				return errResp
-			}
-
-			return errResp
-		}
-
-		errResp.Meta.Error = err.Error()
-		return err
+		return nil, CheckAuthResponse(err, "AuthorizeClient")
 	}
 
 	c.client, err = c.oauthConsumer.MakeHttpClient(accessToken)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return accessToken, nil
 }
 
 // AuthorizeClientWithXAuth completes the OAuth authorization to the client
@@ -179,26 +166,7 @@ func (c *Client) AuthorizeClientWithXAuth(username, password string) error {
 	accessToken, err := c.oauthConsumer.AuthorizeToken(&reqToken, "")
 
 	if err != nil {
-		errResp := new(ErrorResponse)
-		errResp.Meta = &ResponseMeta{
-			Error:   "unknown authorization error",
-			Request: "",
-		}
-
-		if oauthErr, ok := err.(oauth.HTTPExecuteError); ok {
-			// fanfou auth error body is in XML
-			errResp.Response = oauthErr.Response
-			errXML := xml.Unmarshal(oauthErr.ResponseBodyBytes, &errResp.Meta)
-			if errXML != nil {
-				errResp.Meta.Error = errXML.Error()
-				return errResp
-			}
-
-			return errResp
-		}
-
-		errResp.Meta.Error = err.Error()
-		return err
+		return CheckAuthResponse(err, "AuthorizeClientWithXAuth")
 	}
 
 	c.client, err = c.oauthConsumer.MakeHttpClient(accessToken)
@@ -387,7 +355,7 @@ func CheckResponse(res *http.Response) error {
 	r.Response = res
 	// default error message
 	r.Meta = &ResponseMeta{
-		Error:   "unknown error",
+		Error:   "api request error",
 		Request: res.Request.URL.String(),
 	}
 
@@ -403,6 +371,41 @@ func CheckResponse(res *http.Response) error {
 
 	if err := json.Unmarshal(data, &r.Meta); err != nil {
 		r.Meta.Error = err.Error()
+	}
+
+	return r
+}
+
+// CheckAuthResponse checks the API response for error for
+// the requests during authorization, and returns it if present.
+// A response is considered an error if it has non StatusOK code.
+func CheckAuthResponse(err error, tag string) error {
+	r := new(ErrorResponse)
+	r.Response = &http.Response{StatusCode: http.StatusBadRequest}
+	r.Meta = &ResponseMeta{
+		Error:   "authorization error",
+		Request: "",
+	}
+
+	if tag != "" {
+		r.Meta.Error = tag + " error"
+	}
+
+	if err, ok := err.(oauth.HTTPExecuteError); ok {
+		r.Response = err.Response
+
+		if err.Response.StatusCode >= http.StatusInternalServerError {
+			r.Meta.Error = http.StatusText(err.Response.StatusCode)
+			return r
+		}
+
+		// Fanfou auth errors with a valid body shall be in XML
+		decoder := xml.NewDecoder(strings.NewReader(string(err.ResponseBodyBytes)))
+		decoder.Strict = false
+
+		if err := decoder.Decode(&r.Meta); err != nil {
+			r.Meta.Error = err.Error()
+		}
 	}
 
 	return r

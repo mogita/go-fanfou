@@ -3,10 +3,10 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "FcwqBsmuYP+H6gDU9ygoh20t6IQ=",
+			"checksumSHA1": "GfDp4uVRn8F0M7DRbOfJyOSjVrM=",
 			"path": "github.com/mogita/oauth",
-			"revision": "0ae1e586cc494f812957839b54b67f14d351c8ab",
-			"revisionTime": "2019-01-14T16:14:56Z"
+			"revision": "ef9cc28f2880a90bd140304fa4e8ebea8158a4da",
+			"revisionTime": "2019-01-19T04:19:35Z"
 		}
 	],
 	"rootPath": "github.com/mogita/go-fanfou"
