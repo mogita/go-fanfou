@@ -27,7 +27,7 @@ type FriendsOptParams struct {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friends.ids
-func (s *FriendsService) IDs(opt *FriendsOptParams) (*UserIDs, error) {
+func (s *FriendsService) IDs(opt *FriendsOptParams) (*UserIDs, *string, error) {
 	u := fmt.Sprintf("friends/ids.json")
 	params := url.Values{}
 
@@ -47,14 +47,14 @@ func (s *FriendsService) IDs(opt *FriendsOptParams) (*UserIDs, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUserIDs := new(UserIDs)
-	_, err = s.client.Do(req, newUserIDs)
+	resp, err := s.client.Do(req, newUserIDs)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUserIDs, nil
+	return newUserIDs, resp.BodyStrPtr, nil
 }
