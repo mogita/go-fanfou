@@ -19,7 +19,7 @@ func TestAccountService_VerifyCredentials(t *testing.T) {
 		}
 	})
 
-	user, err := client.Account.VerifyCredentials(&AccountOptParams{
+	user, _, err := client.Account.VerifyCredentials(&AccountOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
@@ -53,7 +53,7 @@ func TestAccountService_RateLimitStatus(t *testing.T) {
 		}
 	})
 
-	result, err := client.Account.RateLimitStatus()
+	result, _, err := client.Account.RateLimitStatus()
 	if err != nil {
 		t.Errorf("account.rate_limit_status returned error: %v", err)
 	}
@@ -82,7 +82,7 @@ func TestAccountService_UpdateProfile(t *testing.T) {
 		}
 	})
 
-	user, err := client.Account.UpdateProfile(&AccountOptParams{
+	user, _, err := client.Account.UpdateProfile(&AccountOptParams{
 		Mode:        "test5",
 		URL:         "test_url",
 		Location:    "test_location",
@@ -120,7 +120,7 @@ func TestAccountService_UpdateProfileImage(t *testing.T) {
 		}
 	})
 
-	user, err := client.Account.UpdateProfileImage("./account.go", &AccountOptParams{
+	user, _, err := client.Account.UpdateProfileImage("./account.go", &AccountOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
@@ -154,7 +154,7 @@ func TestAccountService_Notification(t *testing.T) {
 		}
 	})
 
-	result, err := client.Account.Notification()
+	result, _, err := client.Account.Notification()
 	if err != nil {
 		t.Errorf("account.notification returned error: %v", err)
 	}
@@ -182,7 +182,7 @@ func TestAccountService_NotifyNum(t *testing.T) {
 		}
 	})
 
-	result, err := client.Account.NotifyNum()
+	result, _, err := client.Account.NotifyNum()
 	if err != nil {
 		t.Errorf("account.notify_num returned error: %v", err)
 	}
@@ -209,7 +209,7 @@ func TestAccountService_UpdateNotifyNum(t *testing.T) {
 		}
 	})
 
-	result, err := client.Account.UpdateNotifyNum(&AccountOptParams{
+	result, _, err := client.Account.UpdateNotifyNum(&AccountOptParams{
 		NotifyNum: 5,
 	})
 	if err != nil {
