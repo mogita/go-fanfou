@@ -19,7 +19,7 @@ func TestPhotosService_UserTimeline(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Photos.UserTimeline(&PhotosOptParams{
+	statuses, _, err := client.Photos.UserTimeline(&PhotosOptParams{
 		ID:      "test_id",
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
@@ -68,7 +68,7 @@ func TestPhotosService_Upload(t *testing.T) {
 		}
 	})
 
-	status, err := client.Photos.Upload("./photos.go", &PhotosOptParams{
+	status, _, err := client.Photos.Upload("./photos.go", &PhotosOptParams{
 		Status:   "test_status",
 		Source:   "test_source",
 		Location: "test_location",

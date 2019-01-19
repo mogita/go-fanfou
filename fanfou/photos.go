@@ -34,7 +34,7 @@ type PhotosOptParams struct {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/photos.user-timeline
-func (s *PhotosService) UserTimeline(opt *PhotosOptParams) ([]StatusResult, error) {
+func (s *PhotosService) UserTimeline(opt *PhotosOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("photos/user_timeline.json")
 	params := url.Values{}
 
@@ -66,22 +66,22 @@ func (s *PhotosService) UserTimeline(opt *PhotosOptParams) ([]StatusResult, erro
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // Upload shall send a new status with a photo
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/photos.upload
-func (s *PhotosService) Upload(filePath string, opt *PhotosOptParams) (*StatusResult, error) {
+func (s *PhotosService) Upload(filePath string, opt *PhotosOptParams) (*StatusResult, *string, error) {
 	u := fmt.Sprintf("photos/upload.json")
 	params := map[string]string{}
 
@@ -105,14 +105,14 @@ func (s *PhotosService) Upload(filePath string, opt *PhotosOptParams) (*StatusRe
 
 	req, err := s.client.NewUploadRequest(http.MethodPost, u, params, "photo", filePath)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new(StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newStatuses, nil
+	return newStatuses, resp.BodyStrPtr, nil
 }
