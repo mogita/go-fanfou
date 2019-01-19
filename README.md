@@ -2,9 +2,13 @@
   <img src="/fanfou.png?raw=true" width="300" height="200" />
 </p>
 
-# GO FANFOU
+<p align="center">
+  <h1>GO FANFOU</h1>
+</p>
 
+<p align="center">
 A Fanfou API client SDK library for [Go](http://golang.org/)
+</p>
 
 [![Build Status](https://travis-ci.org/mogita/go-fanfou.svg?branch=master)](https://travis-ci.org/mogita/go-fanfou)
 [![Coverage Status](https://coveralls.io/repos/github/mogita/go-fanfou/badge.svg?branch=master&service=github)](https://coveralls.io/github/mogita/go-fanfou?branch=master)
