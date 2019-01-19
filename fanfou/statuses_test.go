@@ -27,7 +27,7 @@ func TestStatusesService_Update(t *testing.T) {
 		}
 	})
 
-	status, err := client.Statuses.Update("status text", &StatusesOptParams{
+	status, _, err := client.Statuses.Update("status text", &StatusesOptParams{
 		InReplyToStatusID: "test1",
 		InReplyToUserID:   "test2",
 		RepostStatusID:    "test3",
@@ -66,7 +66,7 @@ func TestStatusesService_Show(t *testing.T) {
 		}
 	})
 
-	status, err := client.Statuses.Show("test_id", &StatusesOptParams{
+	status, _, err := client.Statuses.Show("test_id", &StatusesOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
@@ -100,7 +100,7 @@ func TestStatusesService_Destroy(t *testing.T) {
 		}
 	})
 
-	status, err := client.Statuses.Destroy("test_id", &StatusesOptParams{
+	status, _, err := client.Statuses.Destroy("test_id", &StatusesOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
@@ -134,7 +134,7 @@ func TestStatusesService_HomeTimeline(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Statuses.HomeTimeline(&StatusesOptParams{
+	statuses, _, err := client.Statuses.HomeTimeline(&StatusesOptParams{
 		ID:      "test_user_id",
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
@@ -183,7 +183,7 @@ func TestStatusesService_PublicTimeline(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Statuses.PublicTimeline(&StatusesOptParams{
+	statuses, _, err := client.Statuses.PublicTimeline(&StatusesOptParams{
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
 		Page:    1,
@@ -231,7 +231,7 @@ func TestStatusesService_Replies(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Statuses.Replies(&StatusesOptParams{
+	statuses, _, err := client.Statuses.Replies(&StatusesOptParams{
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
 		Page:    1,
@@ -279,7 +279,7 @@ func TestStatusesService_Mentions(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Statuses.Mentions(&StatusesOptParams{
+	statuses, _, err := client.Statuses.Mentions(&StatusesOptParams{
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
 		Page:    1,
@@ -327,7 +327,7 @@ func TestStatusesService_UserTimeline(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Statuses.UserTimeline(&StatusesOptParams{
+	statuses, _, err := client.Statuses.UserTimeline(&StatusesOptParams{
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
 		Page:    1,
@@ -375,7 +375,7 @@ func TestStatusesService_ContextTimeline(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Statuses.ContextTimeline("test_id", &StatusesOptParams{
+	statuses, _, err := client.Statuses.ContextTimeline("test_id", &StatusesOptParams{
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
 		Page:    1,
@@ -423,7 +423,7 @@ func TestStatusesService_Followers(t *testing.T) {
 		}
 	})
 
-	users, err := client.Statuses.Followers(&StatusesOptParams{
+	users, _, err := client.Statuses.Followers(&StatusesOptParams{
 		ID:     "test_id",
 		Page:   1,
 		Count:  1,
@@ -470,7 +470,7 @@ func TestStatusesService_Friends(t *testing.T) {
 		}
 	})
 
-	users, err := client.Statuses.Friends(&StatusesOptParams{
+	users, _, err := client.Statuses.Friends(&StatusesOptParams{
 		ID:     "test_id",
 		Page:   1,
 		Count:  1,

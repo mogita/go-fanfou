@@ -298,7 +298,7 @@ func (c *Client) NewUploadRequest(method, uri string, params map[string]string, 
 // Do sends an API request and returns the API response. The API response is
 // decoded and stored in the value pointed to by v, or returned as an error if
 // an API error has occurred.
-func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
+func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -313,24 +313,30 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 
 	err = CheckResponse(resp)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	response := new(Response)
+
+	bodyBytes, _ := ioutil.ReadAll(resp.Body)
+	tempStr := string(bodyBytes)
+	response.BodyStrPtr = &tempStr
+
 	if v != nil {
 		response.Data = v
-		err = json.NewDecoder(resp.Body).Decode(response.Data)
+		err = json.Unmarshal(bodyBytes, response.Data)
 		c.Response = response
 	}
 
-	return resp, err
+	return response, err
 }
 
 // Response specifies Fanfou's response structure.
 type Response struct {
-	Response *http.Response // HTTP response
-	Data     interface{}
-	Meta     *ResponseMeta
+	Response   *http.Response // HTTP response
+	BodyStrPtr *string
+	Data       interface{}
+	Meta       *ResponseMeta
 }
 
 // ResponseMeta represents information about the response. If all goes well,

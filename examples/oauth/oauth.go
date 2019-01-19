@@ -77,7 +77,7 @@ func GetFanfouToken(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(accessToken)
 
 	// Calling the endpoints
-	resp, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{
+	resp, _, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{
 		Count:  3,
 		Format: "html",
 	})

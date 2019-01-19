@@ -86,7 +86,7 @@ type StatusesOptParams struct {
 // Update shall post a new status
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.update
-func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*StatusResult, error) {
+func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/update.json")
 	params := url.Values{
 		"status": []string{status},
@@ -118,23 +118,23 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 
 	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatus := new(StatusResult)
-	_, err = s.client.Do(req, newStatus)
+	resp, err := s.client.Do(req, newStatus)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newStatus, nil
+	return newStatus, resp.BodyStrPtr, nil
 }
 
 // Show shall get a status by ID
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
-func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*StatusResult, error) {
+func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/show.json")
 	params := url.Values{}
 	params.Add("id", ID)
@@ -153,16 +153,16 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*StatusResult
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatus := new(StatusResult)
-	_, err = s.client.Do(req, newStatus)
+	resp, err := s.client.Do(req, newStatus)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newStatus, nil
+	return newStatus, resp.BodyStrPtr, nil
 }
 
 // HomeTimeline shall get statuses of the specified user and his/her followed users
@@ -170,7 +170,7 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*StatusResult
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.home-timeline
-func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]StatusResult, error) {
+func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/home_timeline.json")
 	params := url.Values{}
 
@@ -202,22 +202,22 @@ func (s *StatusesService) HomeTimeline(opt *StatusesOptParams) ([]StatusResult, 
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // PublicTimeline shall get latest public statuses
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.public-timeline
-func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]StatusResult, error) {
+func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/public_timeline.json")
 	params := url.Values{}
 
@@ -246,16 +246,16 @@ func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]StatusResult
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // UserTimeline shall get statuses of the specified user or of the current
@@ -263,7 +263,7 @@ func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]StatusResult
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.user-timeline
-func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]StatusResult, error) {
+func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/user_timeline.json")
 	params := url.Values{}
 
@@ -295,23 +295,23 @@ func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]StatusResult, 
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // ContextTimeline shall get contextual statuses of a given status ID
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.context-timeline
-func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]StatusResult, error) {
+func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/context_timeline.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -330,22 +330,22 @@ func (s *StatusesService) ContextTimeline(ID string, opt *StatusesOptParams) ([]
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // Replies shall get latest replies to the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.replies
-func (s *StatusesService) Replies(opt *StatusesOptParams) ([]StatusResult, error) {
+func (s *StatusesService) Replies(opt *StatusesOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/replies.json")
 	params := url.Values{}
 
@@ -374,22 +374,22 @@ func (s *StatusesService) Replies(opt *StatusesOptParams) ([]StatusResult, error
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // Mentions shall get latest statuses mentioning the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.mentions
-func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]StatusResult, error) {
+func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/mentions.json")
 	params := url.Values{}
 
@@ -418,23 +418,23 @@ func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]StatusResult, erro
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // Destroy shall delete a status by ID
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.destroy
-func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*StatusResult, error) {
+func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*StatusResult, *string, error) {
 	u := fmt.Sprintf("statuses/destroy.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -451,16 +451,16 @@ func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*StatusRes
 
 	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatus := new(StatusResult)
-	_, err = s.client.Do(req, newStatus)
+	resp, err := s.client.Do(req, newStatus)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newStatus, nil
+	return newStatus, resp.BodyStrPtr, nil
 }
 
 // Followers shall get followers of the specified user, or of the current user
@@ -468,7 +468,7 @@ func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*StatusRes
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.followers
-func (s *StatusesService) Followers(opt *StatusesOptParams) ([]UserResult, error) {
+func (s *StatusesService) Followers(opt *StatusesOptParams) ([]UserResult, *string, error) {
 	u := fmt.Sprintf("statuses/followers.json")
 	params := url.Values{}
 
@@ -494,16 +494,16 @@ func (s *StatusesService) Followers(opt *StatusesOptParams) ([]UserResult, error
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUsers := new([]UserResult)
-	_, err = s.client.Do(req, newUsers)
+	resp, err := s.client.Do(req, newUsers)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newUsers, nil
+	return *newUsers, resp.BodyStrPtr, nil
 }
 
 // Friends shall get friends of the specified user, or of the current user
@@ -511,7 +511,7 @@ func (s *StatusesService) Followers(opt *StatusesOptParams) ([]UserResult, error
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.friends
-func (s *StatusesService) Friends(opt *StatusesOptParams) ([]UserResult, error) {
+func (s *StatusesService) Friends(opt *StatusesOptParams) ([]UserResult, *string, error) {
 	u := fmt.Sprintf("statuses/friends.json")
 	params := url.Values{}
 
@@ -537,14 +537,14 @@ func (s *StatusesService) Friends(opt *StatusesOptParams) ([]UserResult, error) 
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUsers := new([]UserResult)
-	_, err = s.client.Do(req, newUsers)
+	resp, err := s.client.Do(req, newUsers)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newUsers, nil
+	return *newUsers, resp.BodyStrPtr, nil
 }
