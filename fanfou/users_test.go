@@ -19,7 +19,7 @@ func TestUsersService_Tagged(t *testing.T) {
 		}
 	})
 
-	users, err := client.Users.Tagged("test_tag", &UsersOptParams{
+	users, _, err := client.Users.Tagged("test_tag", &UsersOptParams{
 		Page:   1,
 		Count:  1,
 		Mode:   "test5",
@@ -65,7 +65,7 @@ func TestUsersService_Show(t *testing.T) {
 		}
 	})
 
-	user, err := client.Users.Show(&UsersOptParams{
+	user, _, err := client.Users.Show(&UsersOptParams{
 		ID:     "test_id",
 		Mode:   "test5",
 		Format: "test6",
@@ -100,7 +100,7 @@ func TestUsersService_TagList(t *testing.T) {
 		}
 	})
 
-	tags, err := client.Users.TagList(&UsersOptParams{
+	tags, _, err := client.Users.TagList(&UsersOptParams{
 		ID: "test_id",
 	})
 	if err != nil {
@@ -129,7 +129,7 @@ func TestUsersService_Followers(t *testing.T) {
 		}
 	})
 
-	users, err := client.Users.Followers(&UsersOptParams{
+	users, _, err := client.Users.Followers(&UsersOptParams{
 		ID:     "test_id",
 		Page:   1,
 		Count:  1,
@@ -176,7 +176,7 @@ func TestUsersService_Friends(t *testing.T) {
 		}
 	})
 
-	users, err := client.Users.Friends(&UsersOptParams{
+	users, _, err := client.Users.Friends(&UsersOptParams{
 		ID:     "test_id",
 		Page:   1,
 		Count:  1,
@@ -223,7 +223,7 @@ func TestUsersService_Recommendation(t *testing.T) {
 		}
 	})
 
-	users, err := client.Users.Recommendation(&UsersOptParams{
+	users, _, err := client.Users.Recommendation(&UsersOptParams{
 		Page:   1,
 		Count:  1,
 		Mode:   "test5",
@@ -269,7 +269,7 @@ func TestUsersService_CancelRecommendation(t *testing.T) {
 		}
 	})
 
-	user, err := client.Users.CancelRecommendation("test_id", &UsersOptParams{
+	user, _, err := client.Users.CancelRecommendation("test_id", &UsersOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
