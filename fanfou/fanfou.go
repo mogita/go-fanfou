@@ -77,6 +77,19 @@ type Client struct {
 	Response *Response
 }
 
+// ReqeustToken provides the structure as oauth.RequestToken
+type RequestToken struct {
+	Token  string
+	Secret string
+}
+
+// AccessToken provides the structure as oauth.AccessToken
+type AccessToken struct {
+	Token          string
+	Secret         string
+	AdditionalData map[string]string
+}
+
 // NewClient returns a new Fanfou API client.
 func NewClient(consumerKey, consumerSecret string) *Client {
 	baseURL, _ := url.Parse(BaseURL)
@@ -120,7 +133,7 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 // "callbackURL" can be "oob" if you're running your application outside a browser
 // Read more about "oob" authorization at:
 // https://github.com/mogita/FanFouAPIDoc/wiki/Oauth#%E4%BD%BF%E7%94%A8pin%E7%A0%81%E8%8E%B7%E5%BE%97%E6%8E%88%E6%9D%83
-func (c *Client) GetRequestTokenAndURL(callbackURL string) (*oauth.RequestToken, string, error) {
+func (c *Client) GetRequestTokenAndURL(callbackURL string) (*RequestToken, string, error) {
 	rToken, loginURL, err := c.oauthConsumer.GetRequestTokenAndUrl(callbackURL)
 	if err != nil {
 		return nil, "", CheckAuthResponse(err, "GetRequestTokenAndURL")
@@ -130,14 +143,24 @@ func (c *Client) GetRequestTokenAndURL(callbackURL string) (*oauth.RequestToken,
 		loginURL += "&oauth_callback=oob"
 	}
 
-	return rToken, loginURL, nil
+	newRequestToken := RequestToken{
+		Token:  rToken.Token,
+		Secret: rToken.Secret,
+	}
+
+	return &newRequestToken, loginURL, nil
 }
 
 // AuthorizeClient completes the OAuth authorization to the client
 // so it can communicate with Fanfou API
 // If you use "oob" mode, you also need to provide the verificationCode
-func (c *Client) AuthorizeClient(rToken *oauth.RequestToken, verificationCode string) (*oauth.AccessToken, error) {
-	accessToken, err := c.oauthConsumer.AuthorizeToken(rToken, verificationCode)
+func (c *Client) AuthorizeClient(requestToken *RequestToken, verificationCode string) (*AccessToken, error) {
+	rToken := oauth.RequestToken{
+		Token:  requestToken.Token,
+		Secret: requestToken.Secret,
+	}
+
+	accessToken, err := c.oauthConsumer.AuthorizeToken(&rToken, verificationCode)
 
 	if err != nil {
 		return nil, CheckAuthResponse(err, "AuthorizeClient")
@@ -149,7 +172,13 @@ func (c *Client) AuthorizeClient(rToken *oauth.RequestToken, verificationCode st
 		return nil, err
 	}
 
-	return accessToken, nil
+	newAccessToken := AccessToken{
+		Token:          accessToken.Token,
+		Secret:         accessToken.Secret,
+		AdditionalData: accessToken.AdditionalData,
+	}
+
+	return &newAccessToken, nil
 }
 
 // AuthorizeClientWithXAuth completes the OAuth authorization to the client
