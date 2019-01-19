@@ -1,6 +1,10 @@
+<p style="text-align: center;">
+  <img src="/fanfou.png?raw=true" width="300" height="200" />
+</p>
+
 # GO FANFOU
 
-A Fanfou API Client SDK library for [Go](http://golang.org/)
+A Fanfou API client SDK library for [Go](http://golang.org/)
 
 [![Build Status](https://travis-ci.org/mogita/go-fanfou.svg?branch=master)](https://travis-ci.org/mogita/go-fanfou)
 [![Coverage Status](https://coveralls.io/repos/github/mogita/go-fanfou/badge.svg?branch=master&service=github)](https://coveralls.io/github/mogita/go-fanfou?branch=master)
@@ -9,11 +13,13 @@ A Fanfou API Client SDK library for [Go](http://golang.org/)
 
 **Please note that the library is at a very early stage of development.** Things could be changing at times. Breaking changes are expected, but I'll make it as less as possible. The stable versions will begin with the first [release](https://github.com/mogita/go-fanfou/releases) in the future.
 
-## Usage
+## Installation
 
 ```
 go get -u github.com/mogita/go-fanfou
 ```
+
+## Usage
 
 ```go
 package main
