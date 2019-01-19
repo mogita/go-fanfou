@@ -1,6 +1,4 @@
-<p style="text-align: center;">
-  <img src="/fanfou.png?raw=true" width="300" height="200" />
-</p>
+<img src="/fanfou.png?raw=true" width="300" align="right" />
 
 # GO FANFOU
 
