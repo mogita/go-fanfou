@@ -78,7 +78,7 @@ func main() {
 	fmt.Println(accessToken)
 
 	// Step 3: call the endpoints
-	resp, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{Count: 3, Format: "html"})
+	resp, _, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{Count: 3, Format: "html"})
 	if err != nil {
 		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
 			fmt.Printf("%s\n", fanfouErr.GetFanfouError())
