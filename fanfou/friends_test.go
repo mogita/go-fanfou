@@ -19,7 +19,7 @@ func TestFriendsService_IDs(t *testing.T) {
 		}
 	})
 
-	users, err := client.Friends.IDs(&FriendsOptParams{
+	users, _, err := client.Friends.IDs(&FriendsOptParams{
 		ID:    "test_id",
 		Count: 1,
 		Page:  1,
