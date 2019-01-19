@@ -48,7 +48,7 @@ type AccountOptParams struct {
 // VerifyCredentials shall verify the current user's username and password
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.verify-credentials
-func (s *AccountService) VerifyCredentials(opt *AccountOptParams) (*UserResult, error) {
+func (s *AccountService) VerifyCredentials(opt *AccountOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("account/verify_credentials.json")
 	params := url.Values{}
 
@@ -65,42 +65,42 @@ func (s *AccountService) VerifyCredentials(opt *AccountOptParams) (*UserResult, 
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // RateLimitStatus shall get the API rate limit information of the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.rate-limit-status
-func (s *AccountService) RateLimitStatus() (*RateLimitStatusResult, error) {
+func (s *AccountService) RateLimitStatus() (*RateLimitStatusResult, *string, error) {
 	u := fmt.Sprintf("account/rate_limit_status.json")
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newRateLimitStatus := new(RateLimitStatusResult)
-	_, err = s.client.Do(req, newRateLimitStatus)
+	resp, err := s.client.Do(req, newRateLimitStatus)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newRateLimitStatus, nil
+	return newRateLimitStatus, resp.BodyStrPtr, nil
 }
 
 // UpdateProfile shall update the current user's profile
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.update-profile
-func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*UserResult, error) {
+func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("account/update_profile.json")
 	params := url.Values{}
 
@@ -129,22 +129,22 @@ func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*UserResult, erro
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // UpdateProfileImage shall update the current user's profile image
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.update-profile-image
-func (s *AccountService) UpdateProfileImage(filePath string, opt *AccountOptParams) (*UserResult, error) {
+func (s *AccountService) UpdateProfileImage(filePath string, opt *AccountOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("account/update_profile_image.json")
 	params := map[string]string{}
 
@@ -159,63 +159,63 @@ func (s *AccountService) UpdateProfileImage(filePath string, opt *AccountOptPara
 
 	req, err := s.client.NewUploadRequest(http.MethodPost, u, params, "image", filePath)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // Notification shall get the unread counts for mentions, direct
 // messages and friend requests of the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.notification
-func (s *AccountService) Notification() (*NotificationResult, error) {
+func (s *AccountService) Notification() (*NotificationResult, *string, error) {
 	u := fmt.Sprintf("account/notification.json")
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newNotification := new(NotificationResult)
-	_, err = s.client.Do(req, newNotification)
+	resp, err := s.client.Do(req, newNotification)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newNotification, nil
+	return newNotification, resp.BodyStrPtr, nil
 }
 
 // NotifyNum shall get new notification number of the current app
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.notify-num
-func (s *AccountService) NotifyNum() (*NotifyNumResult, error) {
+func (s *AccountService) NotifyNum() (*NotifyNumResult, *string, error) {
 	u := fmt.Sprintf("account/notify_num.json")
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newNotifyNum := new(NotifyNumResult)
-	_, err = s.client.Do(req, newNotifyNum)
+	resp, err := s.client.Do(req, newNotifyNum)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newNotifyNum, nil
+	return newNotifyNum, resp.BodyStrPtr, nil
 }
 
 // UpdateNotifyNum shall update the notification number of the current app
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/account.update-notify-num
-func (s *AccountService) UpdateNotifyNum(opt *AccountOptParams) (*NotifyNumResult, error) {
+func (s *AccountService) UpdateNotifyNum(opt *AccountOptParams) (*NotifyNumResult, *string, error) {
 	u := fmt.Sprintf("account/update_notify_num.json")
 	params := url.Values{}
 
@@ -229,14 +229,14 @@ func (s *AccountService) UpdateNotifyNum(opt *AccountOptParams) (*NotifyNumResul
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newNotifyNum := new(NotifyNumResult)
-	_, err = s.client.Do(req, newNotifyNum)
+	resp, err := s.client.Do(req, newNotifyNum)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newNotifyNum, nil
+	return newNotifyNum, resp.BodyStrPtr, nil
 }
