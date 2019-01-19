@@ -29,7 +29,7 @@ type FavoritesOptParams struct {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/favorites
-func (s *FavoritesService) IDs(opt *FavoritesOptParams) ([]StatusResult, error) {
+func (s *FavoritesService) IDs(opt *FavoritesOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("favorites/id.json")
 	params := url.Values{}
 
@@ -55,23 +55,23 @@ func (s *FavoritesService) IDs(opt *FavoritesOptParams) ([]StatusResult, error) 
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // Create shall create a favorite
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/favorites.create
-func (s *FavoritesService) Create(ID string, opt *FavoritesOptParams) (*StatusResult, error) {
+func (s *FavoritesService) Create(ID string, opt *FavoritesOptParams) (*StatusResult, *string, error) {
 	u := fmt.Sprintf("favorites/create.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -90,23 +90,23 @@ func (s *FavoritesService) Create(ID string, opt *FavoritesOptParams) (*StatusRe
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatus := new(StatusResult)
-	_, err = s.client.Do(req, newStatus)
+	resp, err := s.client.Do(req, newStatus)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newStatus, nil
+	return newStatus, resp.BodyStrPtr, nil
 }
 
 // Destroy shall delete a favorite
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/favorites.destroy
-func (s *FavoritesService) Destroy(ID string, opt *FavoritesOptParams) (*StatusResult, error) {
+func (s *FavoritesService) Destroy(ID string, opt *FavoritesOptParams) (*StatusResult, *string, error) {
 	u := fmt.Sprintf("favorites/destroy.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -125,14 +125,14 @@ func (s *FavoritesService) Destroy(ID string, opt *FavoritesOptParams) (*StatusR
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatus := new(StatusResult)
-	_, err = s.client.Do(req, newStatus)
+	resp, err := s.client.Do(req, newStatus)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newStatus, nil
+	return newStatus, resp.BodyStrPtr, nil
 }
