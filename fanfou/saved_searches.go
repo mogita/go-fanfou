@@ -24,7 +24,7 @@ type SavedSearchResult struct {
 // Show shall get a saved searches detail
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/saved-searches.show
-func (s *SavedSearchesService) Show(ID string) (*SavedSearchResult, error) {
+func (s *SavedSearchesService) Show(ID string) (*SavedSearchResult, *string, error) {
 	u := fmt.Sprintf("saved_searches/show.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -34,42 +34,42 @@ func (s *SavedSearchesService) Show(ID string) (*SavedSearchResult, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newSavedSearch := new(SavedSearchResult)
-	_, err = s.client.Do(req, newSavedSearch)
+	resp, err := s.client.Do(req, newSavedSearch)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newSavedSearch, nil
+	return newSavedSearch, resp.BodyStrPtr, nil
 }
 
 // List shall get the list of the current user's saved searches
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/saved-searches.list
-func (s *SavedSearchesService) List() ([]SavedSearchResult, error) {
+func (s *SavedSearchesService) List() ([]SavedSearchResult, *string, error) {
 	u := fmt.Sprintf("saved_searches/list.json")
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newSavedSearches := new([]SavedSearchResult)
-	_, err = s.client.Do(req, newSavedSearches)
+	resp, err := s.client.Do(req, newSavedSearches)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newSavedSearches, nil
+	return *newSavedSearches, resp.BodyStrPtr, nil
 }
 
 // Create shall create a saved search
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/saved-searches.create
-func (s *SavedSearchesService) Create(query string) (*SavedSearchResult, error) {
+func (s *SavedSearchesService) Create(query string) (*SavedSearchResult, *string, error) {
 	u := fmt.Sprintf("saved_searches/create.json")
 	params := url.Values{
 		"query": []string{query},
@@ -79,22 +79,22 @@ func (s *SavedSearchesService) Create(query string) (*SavedSearchResult, error) 
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newSavedSearch := new(SavedSearchResult)
-	_, err = s.client.Do(req, newSavedSearch)
+	resp, err := s.client.Do(req, newSavedSearch)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newSavedSearch, nil
+	return newSavedSearch, resp.BodyStrPtr, nil
 }
 
 // Destroy shall delete a saved search
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/saved-searches.destroy
-func (s *SavedSearchesService) Destroy(ID string) (*SavedSearchResult, error) {
+func (s *SavedSearchesService) Destroy(ID string) (*SavedSearchResult, *string, error) {
 	u := fmt.Sprintf("saved_searches/destroy.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -104,14 +104,14 @@ func (s *SavedSearchesService) Destroy(ID string) (*SavedSearchResult, error) {
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newSavedSearch := new(SavedSearchResult)
-	_, err = s.client.Do(req, newSavedSearch)
+	resp, err := s.client.Do(req, newSavedSearch)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newSavedSearch, nil
+	return newSavedSearch, resp.BodyStrPtr, nil
 }
