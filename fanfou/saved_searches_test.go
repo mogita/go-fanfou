@@ -19,7 +19,7 @@ func TestSavedSearchesService_Show(t *testing.T) {
 		}
 	})
 
-	user, err := client.SavedSearches.Show("test_id")
+	user, _, err := client.SavedSearches.Show("test_id")
 	if err != nil {
 		t.Errorf("saved_searches.show returned error: %v", err)
 	}
@@ -48,7 +48,7 @@ func TestSavedSearchesService_List(t *testing.T) {
 		}
 	})
 
-	user, err := client.SavedSearches.List()
+	user, _, err := client.SavedSearches.List()
 	if err != nil {
 		t.Errorf("saved_searches.list returned error: %v", err)
 	}
@@ -84,7 +84,7 @@ func TestSavedSearchesService_Create(t *testing.T) {
 		}
 	})
 
-	user, err := client.SavedSearches.Create("fanfou|test")
+	user, _, err := client.SavedSearches.Create("fanfou|test")
 	if err != nil {
 		t.Errorf("saved_searches.create returned error: %v", err)
 	}
@@ -113,7 +113,7 @@ func TestSavedSearchesService_Destroy(t *testing.T) {
 		}
 	})
 
-	user, err := client.SavedSearches.Destroy("21071")
+	user, _, err := client.SavedSearches.Destroy("21071")
 	if err != nil {
 		t.Errorf("saved_searches.destroy returned error: %v", err)
 	}
