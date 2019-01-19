@@ -19,7 +19,7 @@ func TestSearchService_PublicTimeline(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Search.PublicTimeline("test_query", &SearchOptParams{
+	statuses, _, err := client.Search.PublicTimeline("test_query", &SearchOptParams{
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
 		Count:   1,
@@ -66,7 +66,7 @@ func TestSearchService_UserTimeline(t *testing.T) {
 		}
 	})
 
-	statuses, err := client.Search.UserTimeline("test_query", &SearchOptParams{
+	statuses, _, err := client.Search.UserTimeline("test_query", &SearchOptParams{
 		ID:      "test_id",
 		SinceID: "test_since_id",
 		MaxID:   "test_max_id",
@@ -114,7 +114,7 @@ func TestSearchService_Users(t *testing.T) {
 		}
 	})
 
-	users, err := client.Search.Users("test_query", &SearchOptParams{
+	users, _, err := client.Search.Users("test_query", &SearchOptParams{
 		Page:   1,
 		Count:  1,
 		Mode:   "test5",

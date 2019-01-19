@@ -34,7 +34,7 @@ type SearchOptParams struct {
 // PublicTimeline shall search for statuses of the whole platform
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.public-timeline
-func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]StatusResult, error) {
+func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("search/public_timeline.json")
 	params := url.Values{
 		"q": []string{q},
@@ -62,16 +62,16 @@ func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // UserTimeline shall search for statuses of the specified user, or of the current user
@@ -79,7 +79,7 @@ func (s *SearchService) PublicTimeline(q string, opt *SearchOptParams) ([]Status
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.user-timeline
-func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]StatusResult, error) {
+func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]StatusResult, *string, error) {
 	u := fmt.Sprintf("search/user_timeline.json")
 	params := url.Values{
 		"q": []string{q},
@@ -110,22 +110,22 @@ func (s *SearchService) UserTimeline(q string, opt *SearchOptParams) ([]StatusRe
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newStatuses := new([]StatusResult)
-	_, err = s.client.Do(req, newStatuses)
+	resp, err := s.client.Do(req, newStatuses)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newStatuses, nil
+	return *newStatuses, resp.BodyStrPtr, nil
 }
 
 // Users shall search for users of the whole platform
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/search.users
-func (s *SearchService) Users(q string, opt *SearchOptParams) (*SearchUsersResult, error) {
+func (s *SearchService) Users(q string, opt *SearchOptParams) (*SearchUsersResult, *string, error) {
 	u := fmt.Sprintf("search/users.json")
 	params := url.Values{
 		"q": []string{q},
@@ -150,14 +150,14 @@ func (s *SearchService) Users(q string, opt *SearchOptParams) (*SearchUsersResul
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newSearchUsersResult := new(SearchUsersResult)
-	_, err = s.client.Do(req, newSearchUsersResult)
+	resp, err := s.client.Do(req, newSearchUsersResult)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newSearchUsersResult, nil
+	return newSearchUsersResult, resp.BodyStrPtr, nil
 }
