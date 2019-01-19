@@ -27,7 +27,7 @@ type FollowersOptParams struct {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/followers.ids
-func (s *FollowersService) IDs(opt *FollowersOptParams) (*UserIDs, error) {
+func (s *FollowersService) IDs(opt *FollowersOptParams) (*UserIDs, *string, error) {
 	u := fmt.Sprintf("followers/ids.json")
 	params := url.Values{}
 
@@ -47,14 +47,14 @@ func (s *FollowersService) IDs(opt *FollowersOptParams) (*UserIDs, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUserIDs := new(UserIDs)
-	_, err = s.client.Do(req, newUserIDs)
+	resp, err := s.client.Do(req, newUserIDs)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUserIDs, nil
+	return newUserIDs, resp.BodyStrPtr, nil
 }

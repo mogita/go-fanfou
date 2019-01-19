@@ -19,7 +19,7 @@ func TestFollowersService_IDs(t *testing.T) {
 		}
 	})
 
-	users, err := client.Followers.IDs(&FollowersOptParams{
+	users, _, err := client.Followers.IDs(&FollowersOptParams{
 		ID:    "test_id",
 		Count: 1,
 		Page:  1,
