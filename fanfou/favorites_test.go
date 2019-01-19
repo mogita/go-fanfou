@@ -19,7 +19,7 @@ func TestFavoritesService_IDs(t *testing.T) {
 		}
 	})
 
-	user, err := client.Favorites.IDs(&FavoritesOptParams{
+	user, _, err := client.Favorites.IDs(&FavoritesOptParams{
 		ID:     "test_id",
 		Page:   1,
 		Count:  1,
@@ -66,7 +66,7 @@ func TestFavoritesService_Create(t *testing.T) {
 		}
 	})
 
-	status, err := client.Favorites.Create("test_id", &FavoritesOptParams{
+	status, _, err := client.Favorites.Create("test_id", &FavoritesOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
@@ -100,7 +100,7 @@ func TestFavoritesService_Destroy(t *testing.T) {
 		}
 	})
 
-	status, err := client.Favorites.Destroy("test_id", &FavoritesOptParams{
+	status, _, err := client.Favorites.Destroy("test_id", &FavoritesOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
