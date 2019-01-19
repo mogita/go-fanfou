@@ -19,7 +19,7 @@ func TestBlocksService_IDs(t *testing.T) {
 		}
 	})
 
-	users, err := client.Blocks.IDs()
+	users, _, err := client.Blocks.IDs()
 	if err != nil {
 		t.Errorf("blocks.ids returned error: %v", err)
 	}
@@ -47,7 +47,7 @@ func TestBlocksService_Blocking(t *testing.T) {
 		}
 	})
 
-	users, err := client.Blocks.Blocking(&BlocksOptParams{
+	users, _, err := client.Blocks.Blocking(&BlocksOptParams{
 		Page:  1,
 		Count: 1,
 		Mode:  "test5",
@@ -92,7 +92,7 @@ func TestBlocksService_Exists(t *testing.T) {
 		}
 	})
 
-	user, err := client.Blocks.Exists("test_id", &BlocksOptParams{
+	user, _, err := client.Blocks.Exists("test_id", &BlocksOptParams{
 		Mode: "test5",
 	})
 	if err != nil {
@@ -125,7 +125,7 @@ func TestBlocksService_Create(t *testing.T) {
 		}
 	})
 
-	user, err := client.Blocks.Create("test_id", &BlocksOptParams{
+	user, _, err := client.Blocks.Create("test_id", &BlocksOptParams{
 		Mode:   "test5",
 		Format: "test6",
 	})
@@ -159,7 +159,7 @@ func TestBlocksService_Destroy(t *testing.T) {
 		}
 	})
 
-	user, err := client.Blocks.Destroy("test_id", &BlocksOptParams{
+	user, _, err := client.Blocks.Destroy("test_id", &BlocksOptParams{
 		Mode: "test5",
 	})
 	if err != nil {
