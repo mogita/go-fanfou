@@ -29,14 +29,14 @@ type TrendsItem struct {
 // List shall get information about the most recent trends.
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/trends.list
-func (s *TrendsService) List() (*TrendsResult, error) {
+func (s *TrendsService) List() (*TrendsResult, *string, error) {
 	u := fmt.Sprintf("trends/list.json")
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	trends := new(TrendsResult)
-	_, err = s.client.Do(req, trends)
-	return trends, err
+	resp, err := s.client.Do(req, trends)
+	return trends, resp.BodyStrPtr, err
 }

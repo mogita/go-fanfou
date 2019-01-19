@@ -19,7 +19,7 @@ func TestTrendsService_List(t *testing.T) {
 		}
 	})
 
-	trends, err := client.Trends.List()
+	trends, _, err := client.Trends.List()
 	if err != nil {
 		t.Errorf("trends.list returned error: %v", err)
 	}
