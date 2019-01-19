@@ -56,7 +56,7 @@ type FriendshipsShowOptParams struct {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.create
-func (s *FriendshipsService) Create(ID string, opt *FriendshipsOptParams) (*UserResult, error) {
+func (s *FriendshipsService) Create(ID string, opt *FriendshipsOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("friendships/create.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -72,23 +72,23 @@ func (s *FriendshipsService) Create(ID string, opt *FriendshipsOptParams) (*User
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // Destroy shall unfriend the specified user (unfollow)
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.destroy
-func (s *FriendshipsService) Destroy(ID string, opt *FriendshipsOptParams) (*UserResult, error) {
+func (s *FriendshipsService) Destroy(ID string, opt *FriendshipsOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("friendships/destroy.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -107,23 +107,23 @@ func (s *FriendshipsService) Destroy(ID string, opt *FriendshipsOptParams) (*Use
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // Requests shall get the list of friendship requests (other users'
 // requests to follow the current user)
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.requests
-func (s *FriendshipsService) Requests(opt *FriendshipsOptParams) ([]UserResult, error) {
+func (s *FriendshipsService) Requests(opt *FriendshipsOptParams) ([]UserResult, *string, error) {
 	u := fmt.Sprintf("friendships/requests.json")
 	params := url.Values{}
 
@@ -146,23 +146,23 @@ func (s *FriendshipsService) Requests(opt *FriendshipsOptParams) ([]UserResult, 
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUsers := new([]UserResult)
-	_, err = s.client.Do(req, newUsers)
+	resp, err := s.client.Do(req, newUsers)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newUsers, nil
+	return *newUsers, resp.BodyStrPtr, nil
 }
 
 // Deny shall reject the friendship request from the specified user
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.deny
-func (s *FriendshipsService) Deny(ID string, opt *FriendshipsOptParams) (*UserResult, error) {
+func (s *FriendshipsService) Deny(ID string, opt *FriendshipsOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("friendships/deny.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -181,23 +181,23 @@ func (s *FriendshipsService) Deny(ID string, opt *FriendshipsOptParams) (*UserRe
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // Accept shall accept the friendship request from the specified user
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.accept
-func (s *FriendshipsService) Accept(ID string, opt *FriendshipsOptParams) (*UserResult, error) {
+func (s *FriendshipsService) Accept(ID string, opt *FriendshipsOptParams) (*UserResult, *string, error) {
 	u := fmt.Sprintf("friendships/accept.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -216,23 +216,23 @@ func (s *FriendshipsService) Accept(ID string, opt *FriendshipsOptParams) (*User
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newUser := new(UserResult)
-	_, err = s.client.Do(req, newUser)
+	resp, err := s.client.Do(req, newUser)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newUser, nil
+	return newUser, resp.BodyStrPtr, nil
 }
 
 // Exists shall check if user A follows user B
 // "userA" and "userB" can be either the user ID or login name
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.exists
-func (s *FriendshipsService) Exists(userA, userB string) (bool, error) {
+func (s *FriendshipsService) Exists(userA, userB string) (bool, *string, error) {
 	u := fmt.Sprintf("friendships/exists.json")
 	params := url.Values{
 		"user_a": []string{userA},
@@ -243,14 +243,14 @@ func (s *FriendshipsService) Exists(userA, userB string) (bool, error) {
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return false, err
+		return false, nil, err
 	}
 
 	// Caveat: Fanfou API returns "true" and "false" in string on this endpoint
 	result := new(string)
-	_, err = s.client.Do(req, result)
+	resp, err := s.client.Do(req, result)
 	if err != nil {
-		return false, err
+		return false, nil, err
 	}
 
 	resultBool := false
@@ -258,14 +258,14 @@ func (s *FriendshipsService) Exists(userA, userB string) (bool, error) {
 		resultBool = true
 	}
 
-	return resultBool, nil
+	return resultBool, resp.BodyStrPtr, nil
 }
 
 // Show shall get the friendship between two users
 // Note: Please either supply both a source and a target
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.show
-func (s *FriendshipsService) Show(opt *FriendshipsShowOptParams) (*FriendshipsShowResult, error) {
+func (s *FriendshipsService) Show(opt *FriendshipsShowOptParams) (*FriendshipsShowResult, *string, error) {
 	u := fmt.Sprintf("friendships/show.json")
 	params := url.Values{}
 
@@ -288,14 +288,14 @@ func (s *FriendshipsService) Show(opt *FriendshipsShowOptParams) (*FriendshipsSh
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	result := new(FriendshipsShowResult)
-	_, err = s.client.Do(req, result)
+	resp, err := s.client.Do(req, result)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return result, nil
+	return result, resp.BodyStrPtr, nil
 }

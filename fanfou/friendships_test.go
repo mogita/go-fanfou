@@ -19,7 +19,7 @@ func TestFriendshipsService_Create(t *testing.T) {
 		}
 	})
 
-	user, err := client.Friendships.Create("test_id", &FriendshipsOptParams{
+	user, _, err := client.Friendships.Create("test_id", &FriendshipsOptParams{
 		Mode: "test5",
 	})
 	if err != nil {
@@ -52,7 +52,7 @@ func TestFriendshipsService_Destroy(t *testing.T) {
 		}
 	})
 
-	user, err := client.Friendships.Destroy("test_id", &FriendshipsOptParams{
+	user, _, err := client.Friendships.Destroy("test_id", &FriendshipsOptParams{
 		Mode: "test5",
 	})
 	if err != nil {
@@ -85,7 +85,7 @@ func TestFriendshipsService_Requests(t *testing.T) {
 		}
 	})
 
-	users, err := client.Friendships.Requests(&FriendshipsOptParams{
+	users, _, err := client.Friendships.Requests(&FriendshipsOptParams{
 		Page:   1,
 		Count:  1,
 		Mode:   "test5",
@@ -131,7 +131,7 @@ func TestFriendshipsService_Deny(t *testing.T) {
 		}
 	})
 
-	user, err := client.Friendships.Deny("test_id", &FriendshipsOptParams{
+	user, _, err := client.Friendships.Deny("test_id", &FriendshipsOptParams{
 		Mode:   "test5",
 		Format: "test_format",
 	})
@@ -165,7 +165,7 @@ func TestFriendshipsService_Accept(t *testing.T) {
 		}
 	})
 
-	user, err := client.Friendships.Accept("test_id", &FriendshipsOptParams{
+	user, _, err := client.Friendships.Accept("test_id", &FriendshipsOptParams{
 		Mode:   "test5",
 		Format: "test_format",
 	})
@@ -199,7 +199,7 @@ func TestFriendshipsService_Exists(t *testing.T) {
 		}
 	})
 
-	user, err := client.Friendships.Exists("test_id_a", "test_id_b")
+	user, _, err := client.Friendships.Exists("test_id_a", "test_id_b")
 	if err != nil {
 		t.Errorf("friendships.exists returned error: %v", err)
 	}
@@ -221,7 +221,7 @@ func TestFriendshipsService_Show(t *testing.T) {
 		}
 	})
 
-	result, err := client.Friendships.Show(&FriendshipsShowOptParams{
+	result, _, err := client.Friendships.Show(&FriendshipsShowOptParams{
 		SourceID:        "test_source_id",
 		SourceLoginName: "test_source_login_name",
 		TargetID:        "test_target_id",
