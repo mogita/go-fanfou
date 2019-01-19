@@ -86,20 +86,14 @@ func (s *PhotosService) Upload(filePath string, opt *PhotosOptParams) (*StatusRe
 	params := map[string]string{}
 
 	if opt != nil {
-		if opt.ID != "" {
-			params["id"] = opt.ID
+		if opt.Status != "" {
+			params["status"] = opt.Status
 		}
-		if opt.SinceID != "" {
-			params["since_id"] = opt.SinceID
+		if opt.Source != "" {
+			params["source"] = opt.Source
 		}
-		if opt.MaxID != "" {
-			params["max_id"] = opt.MaxID
-		}
-		if opt.Count != 0 {
-			params["count"] = strconv.FormatInt(opt.Count, 10)
-		}
-		if opt.Page != 0 {
-			params["page"] = strconv.FormatInt(opt.Page, 10)
+		if opt.Location != "" {
+			params["location"] = opt.Location
 		}
 		if opt.Mode != "" {
 			params["mode"] = opt.Mode
