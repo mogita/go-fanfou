@@ -19,7 +19,7 @@ func TestDirectMessagesService_Conversation(t *testing.T) {
 		}
 	})
 
-	user, err := client.DirectMessages.Conversation("test_id", &DirectMessagesOptParams{
+	user, _, err := client.DirectMessages.Conversation("test_id", &DirectMessagesOptParams{
 		Page:    1,
 		Count:   1,
 		MaxID:   "test_max_id",
@@ -111,7 +111,7 @@ func TestDirectMessagesService_New(t *testing.T) {
 		}
 	})
 
-	status, err := client.DirectMessages.New("test_id", "test_text", &DirectMessagesOptParams{
+	status, _, err := client.DirectMessages.New("test_id", "test_text", &DirectMessagesOptParams{
 		Mode:        "test5",
 		InReplyToID: "test6",
 	})
@@ -167,7 +167,7 @@ func TestDirectMessagesService_Destroy(t *testing.T) {
 		}
 	})
 
-	status, err := client.DirectMessages.Destroy("test_id")
+	status, _, err := client.DirectMessages.Destroy("test_id")
 	if err != nil {
 		t.Errorf("direct_messages.destroy returned error: %v", err)
 	}
@@ -220,7 +220,7 @@ func TestDirectMessagesService_ConversationList(t *testing.T) {
 		}
 	})
 
-	result, err := client.DirectMessages.ConversationList(&DirectMessagesOptParams{
+	result, _, err := client.DirectMessages.ConversationList(&DirectMessagesOptParams{
 		Count: 1,
 		Page:  1,
 		Mode:  "test_mode",
@@ -291,7 +291,7 @@ func TestDirectMessagesService_Inbox(t *testing.T) {
 		}
 	})
 
-	user, err := client.DirectMessages.Inbox(&DirectMessagesOptParams{
+	user, _, err := client.DirectMessages.Inbox(&DirectMessagesOptParams{
 		Page:    1,
 		Count:   1,
 		MaxID:   "test_max_id",
@@ -382,7 +382,7 @@ func TestDirectMessagesService_Sent(t *testing.T) {
 		}
 	})
 
-	user, err := client.DirectMessages.Sent(&DirectMessagesOptParams{
+	user, _, err := client.DirectMessages.Sent(&DirectMessagesOptParams{
 		Page:    1,
 		Count:   1,
 		MaxID:   "test_max_id",

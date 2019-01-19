@@ -57,7 +57,7 @@ type DirectMessagesOptParams struct {
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.conversation
-func (s *DirectMessagesService) Conversation(ID string, opt *DirectMessagesOptParams) ([]DirectMessageResult, error) {
+func (s *DirectMessagesService) Conversation(ID string, opt *DirectMessagesOptParams) ([]DirectMessageResult, *string, error) {
 	u := fmt.Sprintf("direct_messages/conversation.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -85,22 +85,22 @@ func (s *DirectMessagesService) Conversation(ID string, opt *DirectMessagesOptPa
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newDirectMessages := new([]DirectMessageResult)
-	_, err = s.client.Do(req, newDirectMessages)
+	resp, err := s.client.Do(req, newDirectMessages)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newDirectMessages, nil
+	return *newDirectMessages, resp.BodyStrPtr, nil
 }
 
 // New shall send a new direct message to the specified user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.new
-func (s *DirectMessagesService) New(user, text string, opt *DirectMessagesOptParams) (*DirectMessageResult, error) {
+func (s *DirectMessagesService) New(user, text string, opt *DirectMessagesOptParams) (*DirectMessageResult, *string, error) {
 	u := fmt.Sprintf("direct_messages/new.json")
 	params := url.Values{
 		"user": []string{user},
@@ -120,23 +120,23 @@ func (s *DirectMessagesService) New(user, text string, opt *DirectMessagesOptPar
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newDirectMessage := new(DirectMessageResult)
-	_, err = s.client.Do(req, newDirectMessage)
+	resp, err := s.client.Do(req, newDirectMessage)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newDirectMessage, nil
+	return newDirectMessage, resp.BodyStrPtr, nil
 }
 
 // Destroy shall delete a specified direct message
 // ID represents the direct message ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.destroy
-func (s *DirectMessagesService) Destroy(ID string) (*DirectMessageResult, error) {
+func (s *DirectMessagesService) Destroy(ID string) (*DirectMessageResult, *string, error) {
 	u := fmt.Sprintf("direct_messages/destroy.json")
 	params := url.Values{
 		"id": []string{ID},
@@ -146,23 +146,23 @@ func (s *DirectMessagesService) Destroy(ID string) (*DirectMessageResult, error)
 
 	req, err := s.client.NewRequest(http.MethodPost, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newDirectMessage := new(DirectMessageResult)
-	_, err = s.client.Do(req, newDirectMessage)
+	resp, err := s.client.Do(req, newDirectMessage)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newDirectMessage, nil
+	return newDirectMessage, resp.BodyStrPtr, nil
 }
 
 // ConversationList shall get the conversation list of the direct messages of
 // the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.conversation-list
-func (s *DirectMessagesService) ConversationList(opt *DirectMessagesOptParams) (*DirectMessageConversationListResult, error) {
+func (s *DirectMessagesService) ConversationList(opt *DirectMessagesOptParams) (*DirectMessageConversationListResult, *string, error) {
 	u := fmt.Sprintf("direct_messages/conversation_list.json")
 	params := url.Values{}
 
@@ -182,22 +182,22 @@ func (s *DirectMessagesService) ConversationList(opt *DirectMessagesOptParams) (
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newDirectMessages := new(DirectMessageConversationListResult)
-	_, err = s.client.Do(req, newDirectMessages)
+	resp, err := s.client.Do(req, newDirectMessages)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return newDirectMessages, nil
+	return newDirectMessages, resp.BodyStrPtr, nil
 }
 
 // Inbox shall get the latest direct messages in the inbox
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.inbox
-func (s *DirectMessagesService) Inbox(opt *DirectMessagesOptParams) ([]DirectMessageResult, error) {
+func (s *DirectMessagesService) Inbox(opt *DirectMessagesOptParams) ([]DirectMessageResult, *string, error) {
 	u := fmt.Sprintf("direct_messages/inbox.json")
 	params := url.Values{}
 
@@ -223,22 +223,22 @@ func (s *DirectMessagesService) Inbox(opt *DirectMessagesOptParams) ([]DirectMes
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newDirectMessages := new([]DirectMessageResult)
-	_, err = s.client.Do(req, newDirectMessages)
+	resp, err := s.client.Do(req, newDirectMessages)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newDirectMessages, nil
+	return *newDirectMessages, resp.BodyStrPtr, nil
 }
 
 // Sent shall get the sent direct messages by the current user
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.sent
-func (s *DirectMessagesService) Sent(opt *DirectMessagesOptParams) ([]DirectMessageResult, error) {
+func (s *DirectMessagesService) Sent(opt *DirectMessagesOptParams) ([]DirectMessageResult, *string, error) {
 	u := fmt.Sprintf("direct_messages/sent.json")
 	params := url.Values{}
 
@@ -264,14 +264,14 @@ func (s *DirectMessagesService) Sent(opt *DirectMessagesOptParams) ([]DirectMess
 
 	req, err := s.client.NewRequest(http.MethodGet, u, "")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	newDirectMessages := new([]DirectMessageResult)
-	_, err = s.client.Do(req, newDirectMessages)
+	resp, err := s.client.Do(req, newDirectMessages)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return *newDirectMessages, nil
+	return *newDirectMessages, resp.BodyStrPtr, nil
 }
