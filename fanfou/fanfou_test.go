@@ -9,8 +9,6 @@ import (
 	"net/url"
 	"reflect"
 	"testing"
-
-	"github.com/mogita/oauth"
 )
 
 var (
@@ -108,7 +106,7 @@ func TestGetRequestTokenAndURL(t *testing.T) {
 		panic(err)
 	}
 
-	want := reflect.TypeOf(oauth.RequestToken{Token: "", Secret: ""})
+	want := reflect.TypeOf(RequestToken{Token: "", Secret: ""})
 	actual := reflect.TypeOf(*rToken)
 	if actual != want {
 		t.Errorf("NewClient rToken type = %v, want %v", actual, want)
@@ -131,7 +129,12 @@ func TestAuthorizeClient(t *testing.T) {
 		panic(err)
 	}
 
-	err = c.AuthorizeClient(rToken)
+	token := RequestToken{
+		Token:  rToken.Token,
+		Secret: rToken.Secret,
+	}
+
+	_, err = c.AuthorizeClient(&token, "")
 	if err != nil {
 		panic(err)
 	}
