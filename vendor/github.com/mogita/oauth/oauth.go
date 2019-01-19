@@ -409,12 +409,12 @@ func (c *Consumer) GetRequestTokenAndUrlWithParams(callbackUrl string, additiona
 
 	resp, err := c.getBody(c.serviceProvider.httpMethod(), c.serviceProvider.RequestTokenUrl, params)
 	if err != nil {
-		return nil, "", errors.New("getBody: " + err.Error())
+		return nil, "", err
 	}
 
 	requestToken, err := parseRequestToken(*resp)
 	if err != nil {
-		return nil, "", errors.New("parseRequestToken: " + err.Error())
+		return nil, "", err
 	}
 
 	loginParams := make(url.Values)
