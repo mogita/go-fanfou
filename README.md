@@ -1,6 +1,6 @@
 <p align="center">
   <img src="fanfou.png?raw=true" width="300" height="200" />
-  <h2 align="center">GO FANFOU</h2>
+  <h3 align="center">GO FANFOU</h3>
   <p align="center">A Fanfou API library for <a href="http://golang.org/" target="_blank">Go</a></p>
   <p align="center">
     <a href="/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"></a>
