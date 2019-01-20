@@ -9,6 +9,8 @@ import (
 	"net/url"
 	"reflect"
 	"testing"
+
+	"github.com/mogita/oauth"
 )
 
 var (
@@ -173,6 +175,69 @@ func TestNewUploadRequest(t *testing.T) {
 	userAgent := req.Header.Get("User-Agent")
 	if c.UserAgent != userAgent {
 		t.Errorf("NewRequest() User-Agent = %v, want %v", userAgent, c.UserAgent)
+	}
+}
+
+func TestCheckAuthResponse(t *testing.T) {
+	mockRes := http.Response{
+		StatusCode: http.StatusBadRequest,
+		Status:     http.StatusText(http.StatusBadRequest),
+		Request: &http.Request{
+			Method: http.MethodPost,
+			URL: &url.URL{
+				Scheme: "https",
+				Host:   "test.url.com",
+				Path:   "/",
+			},
+		},
+	}
+
+	mockError := oauth.HTTPExecuteError{
+		Response:          &mockRes,
+		RequestHeaders:    "[key: mockheader, val: mockvalue]",
+		ResponseBodyBytes: []byte(`<?xml version="1.0" encoding="UTF-8"?><hash><request>/mock/request</request><error>test_error</error></hash>`),
+		Status:            mockRes.Status,
+		StatusCode:        mockRes.StatusCode,
+	}
+
+	err := CheckAuthResponse(mockError, "test_tag")
+	if err == nil {
+		t.Errorf("CheckAuthResponse() while 400, result %v, want err", err)
+	}
+
+	want := ""
+	actual := err.Error()
+	if reflect.TypeOf(want) != reflect.TypeOf(actual) {
+		t.Errorf("CheckResponse() while 400, err.Error() type is %v, want %v", actual, want)
+	}
+
+	fanfouErr, ok := err.(*ErrorResponse)
+	if !ok {
+		t.Errorf("CheckResponse() while 400, error is not ErrorResponse, want ErrorResponse")
+	}
+
+	want = "400"
+	actual = fanfouErr.GetStatusCode()
+	if want != actual {
+		t.Errorf("CheckResponse() while 400, fanfouErr.GetStatusCode() is %v, want %v", actual, want)
+	}
+
+	want = "POST"
+	actual = fanfouErr.GetRequestMethod()
+	if want != actual {
+		t.Errorf("CheckResponse() while 400, fanfouErr.GetRequestMethod() is %v, want %v", actual, want)
+	}
+
+	want = "https://test.url.com/"
+	actual = fanfouErr.GetRequestURL()
+	if want != actual {
+		t.Errorf("CheckResponse() while 400, fanfouErr.GetRequestURL() is %v, want %v", actual, want)
+	}
+
+	want = "test_error"
+	actual = fanfouErr.GetFanfouError()
+	if want != actual {
+		t.Errorf("CheckResponse() while 400, fanfouErr.GetFanfouError() is %v, want %v", actual, want)
 	}
 }
 
