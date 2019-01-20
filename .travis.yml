@@ -1,4 +1,9 @@
 language: go
+
+env:
+  global:
+    - TMPDIR=/tmp
+
 go:
   - 1.10.x
   - master
