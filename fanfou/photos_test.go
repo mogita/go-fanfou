@@ -92,3 +92,40 @@ func TestPhotosService_Upload(t *testing.T) {
 		t.Errorf("photos.upload returned %+v, want %+v", status, want)
 	}
 }
+
+func TestPhotosService_UploadWithURL(t *testing.T) {
+	setup()
+	defer teardown()
+
+	mux.HandleFunc("/photos/upload.json", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "POST")
+		_, err := fmt.Fprint(w, `{"id": "test_id", "in_reply_to_status_id": "test1", "in_reply_to_user_id": "test2", "repost_status_id": "test3", "source": "test4", "location": "test7"}`)
+		if err != nil {
+			t.Errorf("photos.upload mock server error: %+v", err)
+		}
+	})
+
+	status, _, err := client.Photos.Upload("https://example.com/test.jpg", &PhotosOptParams{
+		Status:   "test_status",
+		Source:   "test_source",
+		Location: "test_location",
+		Mode:     "test5",
+		Format:   "test6",
+	})
+	if err != nil {
+		t.Errorf("photos.upload returned error: %v", err)
+	}
+
+	want := &StatusResult{
+		ID:                "test_id",
+		InReplyToStatusID: "test1",
+		InReplyToUserID:   "test2",
+		RepostStatusID:    "test3",
+		Source:            "test4",
+		Location:          "test7",
+	}
+
+	if !reflect.DeepEqual(status, want) {
+		t.Errorf("photos.upload returned %+v, want %+v", status, want)
+	}
+}
