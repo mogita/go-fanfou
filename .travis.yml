@@ -1,4 +1,9 @@
 language: go
+
+env:
+  global:
+    - TMPDIR=/tmp
+
 go:
   - 1.10.x
   - master
@@ -7,5 +12,5 @@ before_install:
   - go get github.com/mattn/goveralls
 
 script:
-  - go test ./fanfou -v -covermode=count -coverprofile=coverage.out
+  - go test ./fanfou -v -covermode=atomic -coverprofile=coverage.out
   - $GOPATH/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN

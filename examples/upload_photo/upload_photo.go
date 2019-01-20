@@ -72,7 +72,8 @@ func main() {
 	}
 
 	// Step 3: call the endpoints
-	// We'll just ignore the JSON string value here
+	// You can also pass in a web URL for the first parameter
+	// go-fanfou will validate and handle the upload automatically
 	resp, _, err := c.Photos.Upload("examples/upload_photo/fanfou.jpg", &fanfou.PhotosOptParams{
 		Status: "go-fanfou library test",
 	})

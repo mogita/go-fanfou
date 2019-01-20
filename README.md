@@ -128,7 +128,7 @@ Always run tests before committing
 go test ./...
 ```
 
-You can also follow this [Trello board](https://trello.com/b/Z6XTVn7U/go-fanfou) if you're interested in the progress of this project and also its sibling products.
+You can also follow this [Trello board](https://trello.com/b/Z6XTVn7U/go-fanfou) if you're interested in the progress of this project and its sibling products.
 
 ## License
 

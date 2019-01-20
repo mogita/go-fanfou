@@ -2,9 +2,13 @@ package fanfou
 
 import (
 	"fmt"
+	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
+	"time"
 )
 
 // PhotosService handles communication with the saved photos related
@@ -103,6 +107,22 @@ func (s *PhotosService) Upload(filePath string, opt *PhotosOptParams) (*StatusRe
 		}
 	}
 
+	if URL, err := url.Parse(filePath); err == nil && URL.Scheme != "" {
+		localPath, err := fetchFile(URL.String())
+		if err != nil {
+			return nil, nil, err
+		}
+
+		defer func() {
+			err := os.Remove(localPath)
+			if err != nil {
+				fmt.Printf("failed to remove tmp file: %+v\n", err)
+			}
+		}()
+
+		filePath = localPath
+	}
+
 	req, err := s.client.NewUploadRequest(http.MethodPost, u, params, "photo", filePath)
 	if err != nil {
 		return nil, nil, err
@@ -115,4 +135,62 @@ func (s *PhotosService) Upload(filePath string, opt *PhotosOptParams) (*StatusRe
 	}
 
 	return newStatuses, resp.BodyStrPtr, nil
+}
+
+func fetchFile(URL string) (string, error) {
+	resp, err := http.Get(URL)
+	if err != nil {
+		return "", err
+	}
+
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			fmt.Printf("failed to close body: %+v\n", err)
+		}
+	}()
+
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	contentType := http.DetectContentType(bodyBytes)
+
+	suffix := ""
+	switch contentType {
+	case "image/jpeg":
+		suffix = ".jpg"
+	case "image/png":
+		suffix = ".png"
+	case "image/gif":
+		suffix = ".gif"
+	}
+
+	rand.Seed(time.Now().UTC().UnixNano())
+	randStr := randomString(16)
+
+	tmpFile, err := os.Create(os.TempDir() + "/go-fanfou-tmp-" + randStr + suffix)
+	if err != nil {
+		return "", err
+	}
+
+	err = ioutil.WriteFile(tmpFile.Name(), bodyBytes, 0644)
+	if err != nil {
+		return "", err
+	}
+
+	return tmpFile.Name(), nil
+}
+
+func randomString(l int) string {
+	bytes := make([]byte, l)
+	for i := 0; i < l; i++ {
+		bytes[i] = byte(randInt(65, 90))
+	}
+	return string(bytes)
+}
+
+func randInt(min int, max int) int {
+	return min + rand.Intn(max-min)
 }
