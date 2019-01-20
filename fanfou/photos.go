@@ -170,7 +170,7 @@ func fetchFile(URL string) (string, error) {
 	rand.Seed(time.Now().UTC().UnixNano())
 	randStr := randomString(16)
 
-	tmpFile, err := os.Create(os.TempDir() + "go-fanfou-tmp-" + randStr + suffix)
+	tmpFile, err := os.Create(os.TempDir() + "/go-fanfou-tmp-" + randStr + suffix)
 	if err != nil {
 		return "", err
 	}
