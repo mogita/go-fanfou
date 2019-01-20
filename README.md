@@ -38,7 +38,7 @@ func main() {
 }
 ```
 
-Please refer to the `examples` folder for the basic usages of this library. You can run the examples with these commands to see how this library works:
+Check out `examples` folder for working code snippets. You can run the examples with these commands to see how this library works:
 
 ### Standard OAuth
 
