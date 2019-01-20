@@ -16,7 +16,7 @@
 - Simple and intuitive endponits and error wrapping
 - Struct and original JSON output
 - Supports OAuth (safer) and XAuth (simpler)
-- Covers all endpoints of [Fanfou API v1](https://github.com/mogita/FanFouAPIDoc/wiki)
+- Covers all endpoints of [Fanfou API v1](https://github.com/mogita/FanFouAPIDoc/wiki) over HTTPS
 
 ## Installation
 
