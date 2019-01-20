@@ -77,7 +77,7 @@ if err != nil {
 }
 ```
 
-## Code Examples
+## Running the Examples
 
 Check out the `examples` folder for working code snippets. You can run the examples with these commands to see how this library works:
 
