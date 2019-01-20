@@ -36,7 +36,50 @@ func main() {
 }
 ```
 
-Check out `examples` folder for working code snippets. You can run the examples with these commands to see how this library works:
+### Basic
+
+To call an endpoint e.g. `/statuses/public_timeline`, you can call it like this:
+
+```go
+// Every API endpoint has the same return value structure
+data, JSON, err := c.Statuses.PublicTimeline(&fanfou.StatusesOptParams{
+    Count: 10,
+})
+```
+
+All optional parameter types starts with the resource's name. E.g. `Statuses` -> `StatusesOptParams`.
+
+See the `examples` directory to learn how to authenticate the client instance before calling the endpoints.
+
+### Error Handling
+
+Errors default to the format as below:
+
+```
+POST http://api.fanfou.com/photos/upload.json: 400 上传照片失败
+```
+ 
+Meanwhile they can be asserted to extract the specific detail that you can use to handle the errors programmatically. Like this:
+
+```go
+_, _, err := c.Statuses.PublicTimeline(nil)
+
+if err != nil {
+    if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
+    	// Will print only the error message text returned by Fanfou API
+        fmt.Printf("%s\n", fanfouErr.GetFanfouError())
+        return
+    }
+
+    // Will print the default error format
+    fmt.Println(err)
+    return
+}
+```
+
+## Code Examples
+
+Check out the `examples` folder for working code snippets. You can run the examples with these commands to see how this library works:
 
 ### Standard OAuth
 
@@ -64,9 +107,10 @@ $ go run examples/xauth/xauth.go --consumerkey <your_consumer_key> --consumersec
 $ go run examples/upload_photo/upload_photo.go --consumerkey <your_consumer_key> --consumersecret <your_consumer_secret> --username <your_username> --password <your_password>
 ```
 
-## Built With
+## Credits
 
 - [oauth](https://godoc.org/github.com/mogita/oauth) (a fork of [mrjones/oauth](https://godoc.org/github.com/mrjones/oauth)) - OAuth 1.0 implementation in go (golang)
+- [go-github](https://github.com/google/go-github) - This library mimics its structure. A copy of its LICENSE can be found here [go-github-LICENSE](./go-github-LICENSE)
 
 ## Contributing
 
