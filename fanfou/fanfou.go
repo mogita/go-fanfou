@@ -17,16 +17,16 @@ import (
 
 var (
 	// LibraryVersion represents this library version
-	LibraryVersion = "0.1"
+	LibraryVersion = "1"
 
 	// UserAgent represents this client User-Agent
 	UserAgent = "github.com/mogita/go-fanfou v" + LibraryVersion
 
 	// BaseURL represents Fanfou API base URL
-	BaseURL = "http://api.fanfou.com/"
+	BaseURL = "https://api.fanfou.com/"
 
 	// AuthBaseURL represents Fanfou API authorization base URL
-	AuthBaseURL = "http://fanfou.com/"
+	AuthBaseURL = "https://fanfou.com/"
 
 	// Request token URI
 	requestTokenURI = "oauth/request_token"

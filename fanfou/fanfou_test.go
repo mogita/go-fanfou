@@ -88,11 +88,11 @@ func testFormValues(t *testing.T, r *http.Request, values values) {
 func TestNewClient(t *testing.T) {
 	c := NewClient("", "")
 
-	want := "http://api.fanfou.com/"
+	want := "https://api.fanfou.com/"
 	if c.BaseURL.String() != want {
 		t.Errorf("NewClient BaseURL = %v, want %v", c.BaseURL.String(), want)
 	}
-	want = "github.com/mogita/go-fanfou v0.1"
+	want = "github.com/mogita/go-fanfou v1"
 	if c.UserAgent != want {
 		t.Errorf("NewClient UserAgent = %v, want %v", c.UserAgent, want)
 	}
