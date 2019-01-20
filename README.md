@@ -11,8 +11,6 @@
   </p>
 </p>
 
----
-
 ## Key Features
 
 - Simple and intuitive endponits and error wrapping
