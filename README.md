@@ -23,7 +23,7 @@
 ## Installation
 
 ```
-go get -u github.com/mogita/go-fanfou
+$ go get -u github.com/mogita/go-fanfou
 ```
 
 ## Usage
