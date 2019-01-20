@@ -1224,6 +1224,9 @@ func isEscapable(b byte) bool {
 }
 
 func (c *Consumer) requestString(method string, url string, params *OrderedParams) string {
+	// Fanfou API endpoints over HTTPS still expects a basestring over HTTP
+	url = strings.Replace(url, "https://api.fanfou.com", "http://api.fanfou.com", -1)
+
 	result := method + "&" + escape(url)
 	for pos, key := range params.Keys() {
 		for innerPos, value := range params.Get(key) {
