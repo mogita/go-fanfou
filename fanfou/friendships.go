@@ -68,9 +68,7 @@ func (s *FriendshipsService) Create(ID string, opt *FriendshipsOptParams) (*User
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -103,9 +101,7 @@ func (s *FriendshipsService) Destroy(ID string, opt *FriendshipsOptParams) (*Use
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -177,9 +173,7 @@ func (s *FriendshipsService) Deny(ID string, opt *FriendshipsOptParams) (*UserRe
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -212,9 +206,7 @@ func (s *FriendshipsService) Accept(ID string, opt *FriendshipsOptParams) (*User
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -246,19 +238,13 @@ func (s *FriendshipsService) Exists(userA, userB string) (bool, *string, error) 
 		return false, nil, err
 	}
 
-	// Caveat: Fanfou API returns "true" and "false" in string on this endpoint
-	result := new(string)
+	result := new(bool)
 	resp, err := s.client.Do(req, result)
 	if err != nil {
 		return false, nil, err
 	}
 
-	resultBool := false
-	if *result == "true" {
-		resultBool = true
-	}
-
-	return resultBool, resp.BodyStrPtr, nil
+	return *result, resp.BodyStrPtr, nil
 }
 
 // Show shall get the friendship between two users

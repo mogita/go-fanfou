@@ -75,9 +75,7 @@ func (s *SavedSearchesService) Create(query string) (*SavedSearchResult, *string
 		"query": []string{query},
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -100,9 +98,7 @@ func (s *SavedSearchesService) Destroy(ID string) (*SavedSearchResult, *string, 
 		"id": []string{ID},
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}

@@ -302,9 +302,7 @@ func (s *UsersService) CancelRecommendation(ID string, opt *UsersOptParams) (*Us
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}

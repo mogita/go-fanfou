@@ -86,9 +86,7 @@ func (s *FavoritesService) Create(ID string, opt *FavoritesOptParams) (*StatusRe
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -121,9 +119,7 @@ func (s *FavoritesService) Destroy(ID string, opt *FavoritesOptParams) (*StatusR
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}

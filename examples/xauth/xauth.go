@@ -70,10 +70,10 @@ func main() {
 	}
 
 	// Step 3: call the endpoints
-	_, JSON, err := c.Statuses.HomeTimeline(&fanfou.StatusesOptParams{ID: *username, Count: 3, Format: "html"})
+	_, JSON, err := c.Friendships.Accept("asamiya", nil)
 	if err != nil {
 		if fanfouErr, ok := err.(*fanfou.ErrorResponse); ok {
-			fmt.Printf("%s\n", fanfouErr.GetFanfouError())
+			fmt.Printf("error: %s\n", fanfouErr.GetFanfouError())
 			return
 		}
 
@@ -81,5 +81,5 @@ func main() {
 		return
 	}
 
-	fmt.Printf("%+v\n", string(*JSON))
+	fmt.Printf("%+v\n", *JSON)
 }
