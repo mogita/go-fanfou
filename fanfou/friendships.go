@@ -238,7 +238,6 @@ func (s *FriendshipsService) Exists(userA, userB string) (bool, *string, error) 
 		return false, nil, err
 	}
 
-	// Caveat: Fanfou API returns "true" and "false" in string on this endpoint
 	result := new(bool)
 	resp, err := s.client.Do(req, result)
 	if err != nil {
