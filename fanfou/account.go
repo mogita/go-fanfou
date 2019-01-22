@@ -125,9 +125,7 @@ func (s *AccountService) UpdateProfile(opt *AccountOptParams) (*UserResult, *str
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -225,9 +223,7 @@ func (s *AccountService) UpdateNotifyNum(opt *AccountOptParams) (*NotifyNumResul
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}

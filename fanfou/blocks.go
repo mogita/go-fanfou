@@ -135,9 +135,7 @@ func (s *BlocksService) Create(ID string, opt *BlocksOptParams) (*UserResult, *s
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -167,9 +165,7 @@ func (s *BlocksService) Destroy(ID string, opt *BlocksOptParams) (*UserResult, *
 		}
 	}
 
-	u += "?" + params.Encode()
-
-	req, err := s.client.NewRequest(http.MethodPost, u, "")
+	req, err := s.client.NewRequest(http.MethodPost, u, params.Encode())
 	if err != nil {
 		return nil, nil, err
 	}
