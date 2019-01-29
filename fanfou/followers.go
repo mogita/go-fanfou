@@ -24,6 +24,7 @@ type FollowersOptParams struct {
 
 // IDs shall get follower IDs of the specified user, or of the current user
 // if no ID specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/followers.ids

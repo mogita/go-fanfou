@@ -98,6 +98,7 @@ func (s *UsersService) Tagged(Tag string, opt *UsersOptParams) ([]UserResult, *s
 }
 
 // Show shall get a user by ID, or the current user if not specified
+//
 // ID represents user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.show
@@ -204,6 +205,7 @@ func (s *UsersService) Followers(opt *UsersOptParams) ([]UserResult, *string, er
 }
 
 // Friends shall get recently logged in friends
+//
 // ID represents user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.friends
@@ -284,6 +286,7 @@ func (s *UsersService) Recommendation(opt *UsersOptParams) ([]UserResult, *strin
 }
 
 // CancelRecommendation shall dismiss user recommended by Fanfou by ID
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/users.cancel-recommendation

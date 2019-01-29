@@ -85,6 +85,7 @@ func (s *BlocksService) Blocking(opt *BlocksOptParams) ([]UserResult, *string, e
 
 // Exists shall check whether the specified user is blocked by the
 // current user
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.exists
@@ -117,6 +118,7 @@ func (s *BlocksService) Exists(ID string, opt *BlocksOptParams) (*UserResult, *s
 }
 
 // Create shall block a specified user
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.create
@@ -150,6 +152,7 @@ func (s *BlocksService) Create(ID string, opt *BlocksOptParams) (*UserResult, *s
 }
 
 // Destroy shall unblock a specified user
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/blocks.destroy
