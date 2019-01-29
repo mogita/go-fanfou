@@ -53,6 +53,7 @@ type FriendshipsShowOptParams struct {
 }
 
 // Create shall add the specified user as a friend (follow)
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.create
@@ -83,6 +84,7 @@ func (s *FriendshipsService) Create(ID string, opt *FriendshipsOptParams) (*User
 }
 
 // Destroy shall unfriend the specified user (unfollow)
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.destroy
@@ -155,6 +157,7 @@ func (s *FriendshipsService) Requests(opt *FriendshipsOptParams) ([]UserResult, 
 }
 
 // Deny shall reject the friendship request from the specified user
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.deny
@@ -188,6 +191,7 @@ func (s *FriendshipsService) Deny(ID string, opt *FriendshipsOptParams) (*UserRe
 }
 
 // Accept shall accept the friendship request from the specified user
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.accept
@@ -220,7 +224,8 @@ func (s *FriendshipsService) Accept(ID string, opt *FriendshipsOptParams) (*User
 	return newUser, resp.BodyStrPtr, nil
 }
 
-// Exists shall check if user A follows user B
+// Exists shall check if user A follows user B.
+//
 // "userA" and "userB" can be either the user ID or login name
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.exists
@@ -247,8 +252,9 @@ func (s *FriendshipsService) Exists(userA, userB string) (bool, *string, error) 
 	return *result, resp.BodyStrPtr, nil
 }
 
-// Show shall get the friendship between two users
-// Note: Please either supply both a source and a target
+// Show shall get the friendship between two users.
+//
+// Note: Please either supply both a source and a target.
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friendships.show
 func (s *FriendshipsService) Show(opt *FriendshipsShowOptParams) (*FriendshipsShowResult, *string, error) {

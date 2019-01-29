@@ -24,6 +24,7 @@ type FriendsOptParams struct {
 
 // IDs shall get friends IDs of the specified user, or of the current user
 // if no ID specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/friends.ids

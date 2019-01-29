@@ -54,6 +54,7 @@ type DirectMessagesOptParams struct {
 
 // Conversation shall get the conversation of direct messages between the specified
 // user and the current user
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.conversation
@@ -131,6 +132,7 @@ func (s *DirectMessagesService) New(user, text string, opt *DirectMessagesOptPar
 }
 
 // Destroy shall delete a specified direct message
+//
 // ID represents the direct message ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/direct-messages.destroy

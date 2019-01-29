@@ -129,8 +129,10 @@ func NewClient(consumerKey, consumerSecret string) *Client {
 	return c
 }
 
-// GetRequestTokenAndURL returns the request token and the login url for authorizing this token
-// "callbackURL" can be "oob" if you're running your application outside a browser
+// GetRequestTokenAndURL returns the request token and the login url for authorizing this token.
+//
+// "callbackURL" can be "oob" if you're running your application outside a browser.
+//
 // Read more about "oob" authorization at:
 // https://github.com/mogita/FanFouAPIDoc/wiki/Oauth#%E4%BD%BF%E7%94%A8pin%E7%A0%81%E8%8E%B7%E5%BE%97%E6%8E%88%E6%9D%83
 func (c *Client) GetRequestTokenAndURL(callbackURL string) (*RequestToken, string, error) {
@@ -153,6 +155,7 @@ func (c *Client) GetRequestTokenAndURL(callbackURL string) (*RequestToken, strin
 
 // AuthorizeClient completes the OAuth authorization to the client
 // so it can communicate with Fanfou API
+//
 // If you use "oob" mode, you also need to provide the verificationCode
 func (c *Client) AuthorizeClient(requestToken *RequestToken, verificationCode string) (*AccessToken, error) {
 	rToken := oauth.RequestToken{
@@ -209,6 +212,7 @@ func (c *Client) AuthorizeClientWithXAuth(username, password string) error {
 
 // NewRequest creates an API request. A relative URL can be provided in uri,
 // in which case it is resolved relative to the BaseURL of the Client.
+//
 // Relative URLs should always be specified without a preceding slash.
 func (c *Client) NewRequest(method, uri string, body string) (*http.Request, error) {
 	rel, err := url.Parse(uri)
@@ -232,8 +236,10 @@ func (c *Client) NewRequest(method, uri string, body string) (*http.Request, err
 }
 
 // NewUploadRequest creates an API request dedicated to image uploads.
+//
 // A relative URL can be provided in uri, in which case it is resolved
 // relative to the BaseURL of the Client.
+//
 // Relative URLs should always be specified without a preceding slash.
 func (c *Client) NewUploadRequest(method, uri string, params map[string]string, fileParamName, filePath string) (*http.Request, error) {
 	rel, err := url.Parse(uri)
@@ -413,6 +419,7 @@ func CheckResponse(res *http.Response) error {
 
 // CheckAuthResponse checks the API response for error for
 // the requests during authorization, and returns it if present.
+//
 // A response is considered an error if it has non StatusOK code.
 func CheckAuthResponse(err error, tag string) error {
 	r := new(ErrorResponse)

@@ -131,6 +131,7 @@ func (s *StatusesService) Update(status string, opt *StatusesOptParams) (*Status
 }
 
 // Show shall get a status by ID
+//
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.show
@@ -167,6 +168,7 @@ func (s *StatusesService) Show(ID string, opt *StatusesOptParams) (*StatusResult
 
 // HomeTimeline shall get statuses of the specified user and his/her followed users
 // or of the current user if no ID specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.home-timeline
@@ -260,6 +262,7 @@ func (s *StatusesService) PublicTimeline(opt *StatusesOptParams) ([]StatusResult
 
 // UserTimeline shall get statuses of the specified user or of the current
 // user if no ID specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.user-timeline
@@ -308,6 +311,7 @@ func (s *StatusesService) UserTimeline(opt *StatusesOptParams) ([]StatusResult, 
 }
 
 // ContextTimeline shall get contextual statuses of a given status ID
+//
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.context-timeline
@@ -431,6 +435,7 @@ func (s *StatusesService) Mentions(opt *StatusesOptParams) ([]StatusResult, *str
 }
 
 // Destroy shall delete a status by ID
+//
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.destroy
@@ -465,6 +470,7 @@ func (s *StatusesService) Destroy(ID string, opt *StatusesOptParams) (*StatusRes
 
 // Followers shall get followers of the specified user, or of the current user
 // if not specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.followers
@@ -508,6 +514,7 @@ func (s *StatusesService) Followers(opt *StatusesOptParams) ([]UserResult, *stri
 
 // Friends shall get friends of the specified user, or of the current user
 // if not specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/statuses.friends

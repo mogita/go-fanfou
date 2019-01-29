@@ -35,6 +35,7 @@ type PhotosOptParams struct {
 
 // UserTimeline shall get photos of the specified user, or of the current user
 // if no ID specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/photos.user-timeline

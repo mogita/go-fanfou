@@ -26,6 +26,7 @@ type FavoritesOptParams struct {
 
 // IDs shall get favorites of the specified user, or of the current user
 // if no ID specified
+//
 // ID represents the user ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/favorites
@@ -68,6 +69,7 @@ func (s *FavoritesService) IDs(opt *FavoritesOptParams) ([]StatusResult, *string
 }
 
 // Create shall create a favorite
+//
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/favorites.create
@@ -101,6 +103,7 @@ func (s *FavoritesService) Create(ID string, opt *FavoritesOptParams) (*StatusRe
 }
 
 // Destroy shall delete a favorite
+//
 // ID represents the status ID
 //
 // Fanfou API docs: https://github.com/mogita/FanFouAPIDoc/wiki/favorites.destroy
