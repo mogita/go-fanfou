@@ -430,7 +430,7 @@ func CheckAuthResponse(err error, tag string) error {
 	}
 
 	if tag != "" {
-		r.Meta.Error = tag + " error"
+		r.Meta.Error = tag + " error: " + err.Error()
 	}
 
 	if err, ok := err.(oauth.HTTPExecuteError); ok {
