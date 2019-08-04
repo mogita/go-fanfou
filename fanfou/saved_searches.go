@@ -14,6 +14,7 @@ type SavedSearchesService struct {
 	client *Client
 }
 
+// SavedSearchResult is the structure of saved search
 type SavedSearchResult struct {
 	ID        int64  `json:"id,omitempty"`
 	Query     string `json:"query,omitempty"`

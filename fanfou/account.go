@@ -15,6 +15,7 @@ type AccountService struct {
 	client *Client
 }
 
+// RateLimitStatusResult is the structure of rate limit
 type RateLimitStatusResult struct {
 	ResetTime          string `json:"reset_time,omitempty"`
 	RemainingHits      int64  `json:"remaining_hits,omitempty"`
@@ -22,12 +23,14 @@ type RateLimitStatusResult struct {
 	ResetTimeInSeconds int64  `json:"reset_time_in_seconds,omitempty"`
 }
 
+// NotificationResult is the structure of notification
 type NotificationResult struct {
 	Mentions       int64 `json:"mentions,omitempty"`
 	DirectMessages int64 `json:"direct_messages,omitempty"`
 	FriendRequests int64 `json:"friend_requests,omitempty"`
 }
 
+// NotifyNumResult is the structure of notify number
 type NotifyNumResult struct {
 	Result    string `json:"result,omitempty"`
 	NotifyNum int64  `json:"notify_num,omitempty"`

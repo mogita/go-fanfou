@@ -77,7 +77,7 @@ type Client struct {
 	Response *Response
 }
 
-// ReqeustToken provides the structure as oauth.RequestToken
+// RequestToken provides the structure as oauth.RequestToken
 type RequestToken struct {
 	Token  string
 	Secret string

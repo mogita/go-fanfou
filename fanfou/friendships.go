@@ -20,11 +20,13 @@ type FriendshipsShowResult struct {
 	Relationship *RelationshipResult `json:"relationship,omitempty"`
 }
 
+// RelationshipResult is the structure of relationship
 type RelationshipResult struct {
 	Source *RelationshipItem `json:"source,omitempty"`
 	Target *RelationshipItem `json:"target,omitempty"`
 }
 
+// RelationshipItem is the structure of relationship item
 type RelationshipItem struct {
 	ID                   string `json:"id,omitempty"`
 	ScreenName           string `json:"screen_name,omitempty"`

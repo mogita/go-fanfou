@@ -15,6 +15,7 @@ type SearchService struct {
 	client *Client
 }
 
+// SearchUsersResult is the structure of search users
 type SearchUsersResult struct {
 	TotalNumber int64        `json:"total_number,omitempty"`
 	Users       []UserResult `json:"users,omitempty"`

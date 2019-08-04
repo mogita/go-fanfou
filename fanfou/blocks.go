@@ -15,6 +15,7 @@ type BlocksService struct {
 	client *Client
 }
 
+// UserIDs is the structure of user ID slices
 type UserIDs []string
 
 // BlocksOptParams specifies the optional params for blocks API
