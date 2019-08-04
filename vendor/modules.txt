@@ -1,0 +1,2 @@
+# github.com/mogita/oauth v0.0.0-20190804151539-f4354877fe9e
+github.com/mogita/oauth
