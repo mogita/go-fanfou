@@ -154,7 +154,7 @@ func (c *Client) GetRequestTokenAndURL(callbackURL string) (*RequestToken, strin
 }
 
 // AuthorizeClient completes the OAuth authorization to the client
-// so it can communicate with Fanfou API
+// so it can make requests to protected contents
 //
 // If you use "oob" mode, you also need to provide the verificationCode
 func (c *Client) AuthorizeClient(requestToken *RequestToken, verificationCode string) (*AccessToken, error) {
@@ -185,7 +185,7 @@ func (c *Client) AuthorizeClient(requestToken *RequestToken, verificationCode st
 }
 
 // AuthorizeClientWithXAuth completes the OAuth authorization to the client
-// with XAuth so it can communicate with Fanfou API
+// with XAuth so it can make requests to protected contents
 //
 // This method is a simplified OAuth process, taking username and password
 // to authorize the client, without the need to redirect to the web UI
@@ -202,6 +202,26 @@ func (c *Client) AuthorizeClientWithXAuth(username, password string) error {
 	}
 
 	c.client, err = c.oauthConsumer.MakeHttpClient(accessToken)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// AuthorizeClientWithAccessTokens completes the OAuth authorization to the client
+// with provided access token and secret so it can make requests to protected
+// contents
+func (c *Client) AuthorizeClientWithAccessTokens(accessToken, accessTokenSecret string, additionalData map[string]string) error {
+	tokens := oauth.AccessToken{
+		Token:          accessToken,
+		Secret:         accessTokenSecret,
+		AdditionalData: additionalData,
+	}
+
+	var err error
+	c.client, err = c.oauthConsumer.MakeHttpClient(&tokens)
 
 	if err != nil {
 		return err
