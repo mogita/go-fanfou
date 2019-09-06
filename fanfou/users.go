@@ -19,6 +19,7 @@ type UsersService struct {
 type UserResult struct {
 	ID                        string        `json:"id,omitempty"`
 	Name                      string        `json:"name,omitempty"`
+	UniqueID                  string        `json:"unique_id,omitempty"`
 	ScreenName                string        `json:"screen_name,omitempty"`
 	Location                  string        `json:"location,omitempty"`
 	Gender                    string        `json:"gender,omitempty"`
@@ -43,6 +44,9 @@ type UserResult struct {
 	ProfileSidebarBorderColor string        `json:"profile_sidebar_border_color,omitempty"`
 	ProfileBackgroundImageURL string        `json:"profile_background_image_url,omitempty"`
 	ProfileBackgroundTile     bool          `json:"profile_background_tile,omitempty"`
+	ProfileImageOrigin        string        `json:"profile_image_origin,omitempty"`
+	ProfileImageOriginLarge   string        `json:"profile_image_origin_large,omitempty"`
+	SignName                  string        `json:"sign_name,omitempty"`
 	Status                    *StatusResult `json:"status,omitempty"`
 }
 
